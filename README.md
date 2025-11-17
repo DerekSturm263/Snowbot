@@ -4,9 +4,9 @@ Click the above link to invite Snowbot to your server for free! From there, you 
 
 ## Features
 
-- [ ] Collect Snow
+- [x] Collect Snow
 - [ ] Pack Snow
-- [ ] Throw Snow
+- [x] Throw Snow
 - [ ] Build Buildings
 - [ ] Weather Features
   - [ ] Random Weather
