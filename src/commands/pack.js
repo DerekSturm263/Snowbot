@@ -7,7 +7,13 @@ import { bomb, brick, razor_blade, rock, more_snow, twigs, icicle 	} from '../ex
 import { build_new_pack 											} from '../embeds/new_packs.js';
 
 const objects = [
-	bomb, brick, razor_blade, rock, more_snow, twigs, icicle
+	bomb,
+	brick,
+	razor_blade,
+	rock,
+	more_snow,
+	twigs,
+	icicle
 ];
 
 export const command = {

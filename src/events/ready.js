@@ -1,4 +1,4 @@
-import { get_next_weather, get_weather, set_next_weather, set_weather                   }   from '../serialize.js';	
+import { get_next_weather, set_next_weather, set_weather                   }   from '../serialize.js';	
 import { clear, light, regular, heavy, snowstorm    }   from '../exports/weathers.js';
 
 const weathers = [
@@ -6,7 +6,7 @@ const weathers = [
 ];
 
 export const event = {
-    name: 'ready',
+    name: 'clientReady',
     execute(client) {
         console.log(`${client.user.tag} is online.`);
 
@@ -18,7 +18,7 @@ export const event = {
         
         set_weather(weather);
         set_next_weather(weather2);
-        client.user.setActivity(weather.id);
+        client.user.setActivity(weather.name);
         console.log(`Weather set to ${weather.id}.`);
 
         // Update the weather every 2 hours.
@@ -28,9 +28,9 @@ export const event = {
 
         	set_weather(get_next_weather());
             set_next_weather(weather);
-            client.user.setActivity(weather.id);
+            client.user.setActivity(weather.name);
 
-            console.log(`Weather set to ${weather.id}.`);
+            console.log(`Weather set to ${weather.name}.`);
         }, 2 * 60 * 60 * 1000);
     }
 };

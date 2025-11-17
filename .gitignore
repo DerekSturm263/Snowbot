@@ -1,0 +1,10 @@
+# dependencies
+/node_modules
+
+# debug
+npm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+next-env.d.ts
+.env*.local

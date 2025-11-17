@@ -6,13 +6,13 @@ import { get_snow_amount, set_snow_amount, get_building, set_building, get_opt	}
 import { snowman, snow_wall, snow_fort, igloo, snow_castle				} from '../exports/builds.js'
 import { build_new_building 											} from '../embeds/new_builds.js';
 
-const builds = new Map([
-	[ "snowman", 		snowman 	],
-	[ "snow_wall", 		snow_wall 	],
-	[ "igloo", 			igloo 		],
-	[ "snow_fort", 		snow_fort 	],
-	[ "snow_castle",	snow_castle	]
-]);
+const builds = [
+	snowman,
+	snow_wall,
+	igloo,
+	snow_fort,
+	snow_castle
+];
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -22,14 +22,12 @@ export const command = {
 			.setName('build')
 			.setDescription('What to build.')
 			.setRequired(true)
-			.addChoices(
-				{ name: 'Snowman (cost: 2, hits: 2)', 		value: 'snowman' 	},
-				{ name: 'Snow Wall (cost: 4, hits: 3)', 	value: 'snow_wall' 	},
-				{ name: 'Igloo (cost: 5, hits: 4)', 		value: 'igloo' 		},
-				{ name: 'Snow Fort (cost: 8, hits: 5)', 	value: 'snow_fort' 	},
-				{ name: 'Snow Castle (cost: 10, hits: 7)',	value: 'snow_castle'}
-			)),
-			
+			.addChoices(builds.map(item => {
+				name: `${item.name} (cost: ${item.cost}, hits: ${item.hits})`
+				value: item.id
+			}))
+		),
+	
 	async execute(interaction) {
 		console.log(`\n${interaction.member.id} used /build:`);
 

@@ -1,4 +1,5 @@
 export const snowman = {
+    id: "snowman",
     name: "Snowman",
     cost: 2,
     hits: 2,
@@ -6,6 +7,7 @@ export const snowman = {
 };
 
 export const snow_wall = {
+    id: "snow_wall",
     name: "Snow Wall",
     cost: 4,
     hits: 3,
@@ -13,6 +15,7 @@ export const snow_wall = {
 };
 
 export const igloo = {
+    id: "igloo",
     name: "Igloo",
     cost: 5,
     hits: 4,
@@ -20,6 +23,7 @@ export const igloo = {
 };
 
 export const snow_fort = {
+    id: "snow_fort",
     name: "Snow Fort",
     cost: 8,
     hits: 5,
@@ -27,6 +31,7 @@ export const snow_fort = {
 };
 
 export const snow_castle = {
+    id: "snow_castle",
     name: "Snow Castle",
     cost: 10,
     hits: 7,
