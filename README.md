@@ -1,6 +1,6 @@
-## Introducing [Snowbot](discord.com/oauth2/authorize?client_id=1051258033931563118&permissions=1101659162624&integration_type=0&scope=bot), a great way to increase engagement on your server!
+## Introducing [Snowbot](discord.com/oauth2/authorize?client_id=1051258033931563118&permissions=1101659162624&integration_type=0&scope=bot), a great way to increase your server's engagement!
 
-Click the above link to invite Snowbot to your server for free! From then, you can enjoy its variety of features.
+Click the above link to invite Snowbot to your server for free! From there, you can enjoy its variety of features.
 
 ## Features
 
