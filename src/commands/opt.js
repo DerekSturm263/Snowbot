@@ -2,7 +2,7 @@
 
 import { SlashCommandBuilder 	} from 'discord.js';
 import { build_new_opt } from '../embeds/opt_embed.js';
-import { get_opt, set_opt                } from '../serialize.js';
+import { get_user_data, set_opt                } from '../database.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -26,8 +26,10 @@ export const command = {
 
 		console.log(`\n${interaction.member.id} used /opt ${in_msg}:`);
 
+        const user_data = await get_user_data(interaction.member.id);
+
         // Check if they are already opted in or out.
-        if (opt_in == await get_opt(interaction.member.id)) {
+        if (opt_in == user_data.playing) {
             await interaction.reply({ content: `You're already opted ${in_msg}!`, ephemeral: true });
             return;
         }

@@ -15,9 +15,9 @@ export function build_new_help() {
 
             '`/pack`: Packs a snowball with a random item from off the ground. This item increases the timeout time of your snowballs.\n\n' +
 
-            '`/forecast`: Checks the current and upcoming weather. Each weather type impacts the cooldown on `/collect`.\n\n' +
+            '`/forecast`: Checks the current and upcoming weather. Each weather type impacts the cooldown on `/collect`, among other things.\n\n' +
 
-            '`/stats`: Checks your current score, leaderboard standing, snow in-hand, packed object, and building.\n\n' +
+            '`/stats`: Checks your current stats, snow in-hand, packed object, and building.\n\n' +
 
             '`/leaderboard`: Checks this server\'s leaderboard. Leaderboard is organized from who has the most to least points.\n\n' +
             

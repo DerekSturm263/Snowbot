@@ -2,27 +2,41 @@
 
 import { SlashCommandBuilder    }   from 'discord.js';
 import { build_new_stats 		}	from '../embeds/new_stats.js';
-import { get_user_data, get_opt }   from '../serialize.js';
-import { get_score } from '../update_leaderboard.js';
+import { get_user_data, get_current_weather, set_snow_amount, set_building, set_packed_object }   from '../database.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
 		.setName('stats')
-		.setDescription('Check your current stats.'),
+		.setDescription('Check a user\'s stats.')
+		.addUserOption(option => option
+			.setName('user')
+			.setDescription('The user you\'d like to see the stats of. Without one, you will see your own stats.')
+			.setRequired(false)),
 			
 	async execute(interaction) {
 		console.log(`\n${interaction.member.id} used /stats:`);
 
-		if (await get_opt(interaction.member.id) == false) {
-			await interaction.reply({ content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!', ephemeral: true });
+		const target = interaction.options.getMember('user') ?? interaction.member;
+		const user_data = await get_user_data(target.id);
+
+		if (user_data.playing == false) {
+			await interaction.reply({ content: 'The specified user isn\'t currently opted in.', ephemeral: true });
 			return;
 		}
 
-		// Get the data from this user.
-        const data = await get_user_data(interaction.member.id);
-		const score = await get_score(interaction.guild.id, interaction.member.id);
+		const weather = await get_current_weather();
 
-		// Tell the user their stats.
-		await interaction.reply({ embeds: [ build_new_stats(data, score) ], ephemeral: true });
+		if (weather.cooldown == -2) {
+			await set_snow_amount(target.id, 0);
+			await set_packed_object(target.id, null);
+			await set_building(target.id, null);
+
+			user_data.snow_amount = 0;
+			user_data.packed_object = null;
+			user_data.building = null;
+		}
+		
+		// Tell the user the stats.
+		await interaction.reply({ embeds: [ build_new_stats(target.displayName, user_data, target != interaction.member) ], ephemeral: true });
 	}
 };

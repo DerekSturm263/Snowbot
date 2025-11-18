@@ -1,4 +1,4 @@
-export const snowman = {
+const snowman = {
     id: "snowman",
     name: "Snowman",
     cost: 2,
@@ -6,7 +6,7 @@ export const snowman = {
     image: 'https://cdn.shopify.com/s/files/1/0787/7015/articles/pexels-ylanite-koppens-7682431_1_2000x.jpg'
 };
 
-export const snow_wall = {
+const snow_wall = {
     id: "snow_wall",
     name: "Snow Wall",
     cost: 4,
@@ -14,7 +14,7 @@ export const snow_wall = {
     image: 'https://thumbs.dreamstime.com/b/fence-made-snow-bricks-built-playing-forest-fence-made-snow-bricks-built-playing-forest-211850945.jpg'
 };
 
-export const igloo = {
+const igloo = {
     id: "igloo",
     name: "Igloo",
     cost: 5,
@@ -22,7 +22,7 @@ export const igloo = {
     image: 'https://grandshelters.com/wp-content/uploads/2019/06/how-to-build-an-igloo-P0268-live.jpg'
 };
 
-export const snow_fort = {
+const snow_fort = {
     id: "snow_fort",
     name: "Snow Fort",
     cost: 8,
@@ -30,10 +30,18 @@ export const snow_fort = {
     image: 'https://cottagelife.com/wp-content/uploads/2017/02/shutterstock_7615588.jpg'
 };
 
-export const snow_castle = {
+const snow_castle = {
     id: "snow_castle",
     name: "Snow Castle",
     cost: 10,
     hits: 7,
     image: 'https://i.cbc.ca/1.5921736.1613842806!/fileImage/httpImage/image.JPG_gen/derivatives/16x9_780/2021-snow-castle-in-yellowknife.JPG'
 };
+
+export default [
+    snowman,
+    snow_wall,
+    igloo,
+    snow_fort,
+    snow_castle
+];

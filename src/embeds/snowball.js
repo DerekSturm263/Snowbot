@@ -62,17 +62,17 @@ function snowball_hit_backstab_messages(id, item) {
 	];
 }
 
-export function build_snowball_hit(member, item, score, score2, member2) {
+export function build_snowball_hit(member, item, score, score2, member2, crit) {
     const randomImageIndex = Math.floor(Math.random() * snowball_hit_images.length);
     const randomMessageIndex = Math.floor(Math.random() * snowball_hit_messages(0, item).length);
 	
 	return new EmbedBuilder()
 		.setColor(0xFFFFFF)
-		.setTitle('Hit!')
+		.setTitle(crit ? 'Critical Hit!' : 'Hit!')
 		.setDescription(snowball_hit_messages(member.user.id, item)[randomMessageIndex])
 		.addFields(
-			{ name: `${member2.user.username}`,	value: `${score}`,	inline: true },
-			{ name: `${member.user.username}`,	value: `${score2}`,	inline: true }
+			{ name: `${member2.user.username}`,	value: `Score: ${score} (+${crit ? 2 : 1})`,	inline: true },
+			{ name: `${member.user.username}`,	value: `Score: ${score2} (-${crit ? 2 : 1})`,	inline: true }
 		)
 		.setImage(snowball_hit_images[randomImageIndex]);
 };

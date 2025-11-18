@@ -1,8 +1,8 @@
 // Displays the leaderboard based on each user's score.
 
 import { ReactionUserManager, SlashCommandBuilder 	}	from 'discord.js';
+import { get_leaderboard_data		}	from '../database.js';
 import { build_new_leaderboard 	}	from '../embeds/embed_leaderboard.js';
-import { get_leaderboard_data	} 	from '../update_leaderboard.js';
 
 
 export const command = {
@@ -16,21 +16,17 @@ export const command = {
 		// Get the leaderboard data for this server.
 		let leaderboard = await get_leaderboard_data(interaction.guild.id);
 
-		if (leaderboard.all.length == 1) {
+		if (leaderboard.users.length == 0) {
 			await interaction.reply({ content: 'No one\'s on the leaderboard yet! Throw a snowball at someone to get started!', ephemeral: true });
 			return;
 		}
 
 	    // Re-sort the leaderboard.
-    	leaderboard.all.sort((a, b) => -(a.score - b.score));
+    	leaderboard.users.sort((a, b) => -(a.score - b.score));
 
 		let output = '';
-		let num = 1;
-		for (let i = 0; i < leaderboard.all.length; ++i) {
-			if (leaderboard.all[i].id == 'default')
-				continue;
-
-			output += `${num++}: <@${leaderboard.all[i].id}>   -   ${leaderboard.all[i].score} Points\n`;
+		for (let i = 0; i < leaderboard.users.length; ++i) {
+			output += `${i + 1}: <@${leaderboard.users[i].userID}>     -     **${leaderboard.users[i].score} Points**\n`;
 		}
 		
 		// Tell the user the top 10 based on their score.
