@@ -5,17 +5,17 @@ Click the above link to invite Snowbot to your server for free! From there, you 
 ## Features
 
 - [x] Collect Snow
-- [ ] Pack Snow
+- [x] Pack Snow
 - [x] Throw Snow
-- [ ] Build Buildings
-- [ ] Weather Features
-  - [ ] Random Weather
-  - [ ] Forecast Check
+- [x] Build Buildings
+- [x] Weather Features
+  - [x] Random Weather
+  - [x] Forecast Check
 - [ ] Social Features 
   - [ ] Leaderboard
-  - [ ] Stats
-- [ ] Opt In/Out
-- [ ] Help
+  - [x] Stats
+- [x] Opt In/Out
+- [x] Help
 
 ## Issues/Feedback/Proposals
 Please report any issues by adding them to the [GitHub Issues](https://github.com/DerekSturm263/Snowbot/issues) list. Feedback and feature proposals can also be submitted through there. You will be notified if your feedback/proposal is accepted into the feature backlog.
