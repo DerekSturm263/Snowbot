@@ -8,15 +8,13 @@ export const command = {
 	data: new SlashCommandBuilder()
 		.setName('opt')
 		.setDescription('Opt in or out of the bot.')
-        .addSubcommand(subcommand =>
-            subcommand
-                .setName('in')
-                .setDescription('Opt in to the bot.')
+        .addSubcommand(subcommand => subcommand
+            .setName('in')
+            .setDescription('Opt in to the bot.')
         )
-        .addSubcommand(subcommand =>
-            subcommand
-                .setName('out')
-                .setDescription('Opt out of the bot.')
+        .addSubcommand(subcommand => subcommand
+            .setName('out')
+            .setDescription('Opt out of the bot.')
         ),
 
     async execute(interaction) {
