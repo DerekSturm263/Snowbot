@@ -80,7 +80,7 @@ export const command = {
 		// Tell the user the building was a success.
 		await interaction.reply({ embeds: [ build_new_building(buildObj) ], ephemeral: true });
 		
-		const achievements = parseAchievements(user_data);
+		const achievements = await parseAchievements(user_data);
 		await Promise.all(achievements.map(item => {
 			interaction.member.send({ embeds: [ build_new_achievement(item) ] });
 		}));

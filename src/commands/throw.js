@@ -86,7 +86,7 @@ export const command = {
 
 			await set_misses(interaction.member.id, user_data.misses);
 
-			const achievements = parseAchievements(user_data);
+			const achievements = await parseAchievements(user_data);
 			await Promise.all(achievements.map(item => {
 				interaction.member.send({ embeds: [ build_new_achievement(item) ] });
 			}));
@@ -154,7 +154,7 @@ export const command = {
 			msg.delete();
 		}
 		
-		const achievements = parseAchievements(user_data);
+		const achievements = await parseAchievements(user_data);
 		await Promise.all(achievements.map(item => {
 			interaction.member.send({ embeds: [ build_new_achievement(item) ] });
 		}));
