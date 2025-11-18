@@ -6,6 +6,7 @@ import { get_user_data, set_snow_amount, set_building, get_current_weather, set_
 import { build_new_building 							} from '../embeds/new_builds.js';
 import builds from '../exports/builds.js';
 import parseAchievements from '../exports/achievements.js';
+import { build_new_achievement } from '../embeds/new_achievement.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -81,7 +82,7 @@ export const command = {
 		
 		const achievements = parseAchievements(user_data);
 		await Promise.all(achievements.map(item => {
-			interaction.member.send(`# ${item.name}\nitem${item.description}`);
+			interaction.member.send({ embeds: [ build_new_achievement(item) ] });
 		}));
 	}
 };

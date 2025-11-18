@@ -63,7 +63,7 @@ export const command = {
 		
 		const achievements = parseAchievements(user_data);
 		await Promise.all(achievements.map(item => {
-			interaction.member.send(`# ${item.name}\nitem${item.description}`);
+			interaction.member.send({ embeds: [ build_new_achievement(item) ] });
 		}));
 	}
 };
