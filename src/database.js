@@ -45,8 +45,8 @@ export async function get_user_data(id) {
 // Setters.
 
 export async function set_snow_amount(id, val) {
-    if (val > 10)
-        val = 10;
+    if (val > 20)
+        val = 20;
     
     const result = await client.db('database').collection('users').updateOne(
         { userID: id },

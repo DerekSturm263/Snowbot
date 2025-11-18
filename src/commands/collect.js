@@ -45,8 +45,8 @@ export const command = {
 		}
 
 		// Get the amount of snow the user has and check if they already have the max.
-		if (user_data.snow_amount >= 10) {
-			await interaction.reply({ content: `Your arms are full! You already have 10 snow!`, ephemeral: true });
+		if (user_data.snow_amount >= 20) {
+			await interaction.reply({ content: `Your arms are full! You already have 20 snow!`, ephemeral: true });
 			return;
 		}
 
