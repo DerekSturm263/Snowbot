@@ -3,7 +3,8 @@
 
 import { SlashCommandBuilder 													} from 'discord.js';
 import { build_new_collect } from '../embeds/new_collect.js';
-import { get_user_data, set_snow_amount, set_ready, get_current_weather, set_packed_object, set_building	} from '../database.js';
+import { get_user_data, set_snow_amount, set_ready, get_current_weather, set_packed_object, set_building, set_total_snow_amount	} from '../database.js';
+import parseAchievements from '../exports/achievements.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -59,11 +60,20 @@ export const command = {
 			}, weather.cooldown * 1000);
 		}
 
-		const increase = 1;
-		const newAmount = user_data.snow_amount + increase;
+		++user_data.snow_amount;
+		++user_data.total_snow_amount;
 
 		// Increment the user's snow amount and tell them it was a success.
-		await set_snow_amount(interaction.member.id, newAmount);
-		await interaction.reply({ embeds: [ build_new_collect(newAmount) ], ephemeral: true });
+		await Promise.all([
+			set_snow_amount(interaction.member.id, user_data.snow_amount),
+			set_total_snow_amount(interaction.member.id, user_data.total_snow_amount)
+		]);
+		
+		await interaction.reply({ embeds: [ build_new_collect(user_data.snow_amount) ], ephemeral: true });
+
+		const achievements = parseAchievements(user_data);
+		await Promise.all(achievements.map(item => {
+			interaction.member.send(`# ${item.name}\nitem${item.description}`);
+		}));
 	}
 };

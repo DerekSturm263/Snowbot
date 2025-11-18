@@ -54,10 +54,17 @@ const twigs = {
 	image: 'https://i.ebayimg.com/images/g/vsMAAOSwPsFfKozl/s-l500.jpg'
 };
 
+const yellow_snow = {
+	id: "yellow_snow",
+    name: "Yellow Snow",
+	timeout_time: 3,
+	image: 'https://images.squarespace-cdn.com/content/v1/50f07ea4e4b08557c9d05015/1453659258701-P0D46420NT9ISFL9DLTN/image-asset.jpeg'
+};
+
 const more_snow = {
 	id: "more_snow",
     name: "More Snow",
-	timeout_time: 3,
+	timeout_time: 2,
 	image: 'https://media.istockphoto.com/id/472065205/photo/freshly-made-pile-of-snowballs.jpg'
 };
 
@@ -70,5 +77,6 @@ export default [
 	rock,
 	twigs,
 	icicle,
+	yellow_snow,
 	more_snow
 ];

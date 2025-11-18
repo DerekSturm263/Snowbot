@@ -1,9 +1,10 @@
 // Throws a snowball at another user that times them out.
-// Throwing a snowball has a 25% chance to miss.
+// Throwing a snowball has a small chance to miss and a smaller chance to crit.
 
 import { SlashCommandBuilder,  																							} from 'discord.js';
 import { get_user_data, set_packed_object, set_snow_amount, set_building, set_score, set_misses, set_hits, set_crits, set_times_hit, get_current_weather, try_add_to_leaderboard	} from '../database.js';
 import { build_snowball_hit, build_snowball_miss, build_snowball_block, build_snowball_block_break					    } from '../embeds/snowball.js';
+import parseAchievements from '../exports/achievements.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -81,9 +82,16 @@ export const command = {
 
 		// Check if the snowball missed.
 		if (miss) {
+			++user_data.misses;
+
+			await set_misses(interaction.member.id, user_data.misses);
+
+			const achievements = parseAchievements(user_data);
+			await Promise.all(achievements.map(item => {
+				interaction.member.send(`# ${item.name}\nitem${item.description}`);
+			}));
+
 			await interaction.reply({ embeds: [ build_snowball_miss(target) ] });
-			await set_misses(interaction.member.id, user_data.misses + 1);
-			
 			return;
 		}
 
@@ -123,15 +131,18 @@ export const command = {
 		const newScore = user_data.score + (crit ? 2 : 1);
 		const newTargetScore = target_data.score - (crit ? 2 : 1);
 
+		++user_data.hits;
+		++target_data.times_hit;
+
 		await Promise.all([
 			set_score(interaction.member.id, newScore),
 			set_score(target.user.id, newTargetScore),
-			set_hits(interaction.member.id, user_data.hits + 1),
-			set_times_hit(target.user.id, target_data.times_hit + 1),
+			set_hits(interaction.member.id, user_data.hits),
+			set_times_hit(target.user.id, target_data.times_hit),
 			try_add_to_leaderboard(interaction.guild.id, interaction.member.id),
 			try_add_to_leaderboard(interaction.guild.id, target.user.id)
 		]);
-
+		
 		// Tell the user the snowball hit.
 		await interaction.reply({ embeds: [ build_snowball_hit(target, user_data.packed_object, newScore, newTargetScore, interaction.member, crit) ] });
 
@@ -142,5 +153,10 @@ export const command = {
 			const msg = await interaction.channel.send(`<@${target.user.id}>`);
 			msg.delete();
 		}
+		
+		const achievements = parseAchievements(user_data);
+		await Promise.all(achievements.map(item => {
+			interaction.member.send(`# ${item.name}\nitem${item.description}`);
+		}));
 	}
 }

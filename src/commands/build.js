@@ -2,9 +2,10 @@
 // What you build will give you a certain number of shots to block.
 
 import { SlashCommandBuilder 							} from 'discord.js';
-import { get_user_data, set_snow_amount, set_building, get_current_weather	} from '../database.js';
+import { get_user_data, set_snow_amount, set_building, get_current_weather, set_total_buildings	} from '../database.js';
 import { build_new_building 							} from '../embeds/new_builds.js';
 import builds from '../exports/builds.js';
+import parseAchievements from '../exports/achievements.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -66,13 +67,21 @@ export const command = {
 			return;
 		}
 
+		++user_data.total_buildings;
+
 		// Set the new building and decrement the user's snow amount.
 		await Promise.all([
 			set_building(interaction.member.id, buildObj),
+			set_total_buildings(interaction.member.id, user_data.total_buildings),
 			set_snow_amount(interaction.member.id, user_data.snow_amount - buildObj.cost)
 		]);
 
 		// Tell the user the building was a success.
 		await interaction.reply({ embeds: [ build_new_building(buildObj) ], ephemeral: true });
+		
+		const achievements = parseAchievements(user_data);
+		await Promise.all(achievements.map(item => {
+			interaction.member.send(`# ${item.name}\nitem${item.description}`);
+		}));
 	}
 };

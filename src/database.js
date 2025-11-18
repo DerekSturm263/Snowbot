@@ -15,15 +15,19 @@ async function create_user_data(id) {
     const user = {
         userID: id,
         snow_amount: 0,
+        total_snow_amount: 0,
         packed_object: null,
+        total_packed_objects: 0,
         building: null,
+        total_buildings: 0,
         ready: true,
         playing: true,
         score: 0,
         hits: 0,
         crits: 0,
         misses: 0,
-        times_hit: 0
+        times_hit: 0,
+        achievements: []
     };
 
     const result = await client.db('database').collection('users').insertOne(user);
@@ -56,6 +60,18 @@ export async function set_snow_amount(id, val) {
     return result;
 };
 
+export async function set_total_snow_amount(id, val) {
+    if (val > 20)
+        val = 20;
+    
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: id },
+        { $set: { total_snow_amount: val }}
+    );
+
+    return result;
+};
+
 export async function set_packed_object(id, val) {
     const result = await client.db('database').collection('users').updateOne(
         { userID: id },
@@ -65,10 +81,28 @@ export async function set_packed_object(id, val) {
     return result;
 };
 
+export async function set_total_packed_objects(id, val) {
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: id },
+        { $set: { total_packed_objects: val }}
+    );
+
+    return result;
+};
+
 export async function set_building(id, val) {
     const result = await client.db('database').collection('users').updateOne(
         { userID: id },
         { $set: { building: val }}
+    );
+
+    return result;
+};
+
+export async function set_total_buildings(id, val) {
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: id },
+        { $set: { total_buildings: val }}
     );
 
     return result;
@@ -137,6 +171,18 @@ export async function set_times_hit(id, val) {
     return result;
 };
 
+export async function add_achievement(id, val) {
+    const user = await client.db('database').collection('users').findOne({ userID: id }) ?? await create_user_data(id);
+    user.achievements.push(val);
+
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: id },
+        { $set: { achievements: user.achievements }}
+    );
+
+    return result;
+}
+
 
 
 // Weather.
@@ -182,7 +228,7 @@ export async function set_next_weather(weather) {
 async function create_leaderboard_data(id) {
     const leaderboard = {
         guildID: id,
-        users: [  ]
+        users: []
     };
 
     const result = await client.db('database').collection('leaderboards').insertOne(leaderboard);

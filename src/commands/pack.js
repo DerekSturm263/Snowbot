@@ -2,9 +2,10 @@
 // What you put in the snowball impacts how long another user hit with the snowball is timed out for.
 
 import { SlashCommandBuilder				} from 'discord.js';
-import { get_user_data, set_packed_object, get_current_weather	} from '../database.js';
+import { get_user_data, set_packed_object, get_current_weather, set_total_packed_objects	} from '../database.js';
 import { build_new_pack 					} from '../embeds/new_packs.js';
 import objects from '../exports/objects.js';
+import parseAchievements from '../exports/achievements.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -50,8 +51,19 @@ export const command = {
 		const item = objects[randomIndex];
 		item.timeout_time += Math.floor(Math.random() * 4) - 2;
 
+		++user_data.total_packed_objects;
+
 		// Set the packed object and tell the user it was a success.
-		await set_packed_object(interaction.member.id, item);
+		await Promise.all([
+			set_packed_object(interaction.member.id, item),
+			set_total_packed_objects(interaction.member.id, user_data.total_packed_objects)
+		]);
+		
 		await interaction.reply({ embeds: [ build_new_pack(item) ], ephemeral: true });
+		
+		const achievements = parseAchievements(user_data);
+		await Promise.all(achievements.map(item => {
+			interaction.member.send(`# ${item.name}\nitem${item.description}`);
+		}));
 	}
 };
