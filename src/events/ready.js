@@ -24,8 +24,10 @@ export const event = {
         const currentWeather = createWeather(new Date());
         const nextWeather = createWeather(new Date(currentWeather.start_time + interval));
 
-        await set_current_weather(currentWeather);
-        await set_next_weather(nextWeather);
+        await Promise.all([
+            set_current_weather(currentWeather),
+            set_next_weather(nextWeather)
+        ]);
 
         client.user.setActivity(currentWeather.name);
         console.log(`Weather set to ${currentWeather.id}.`);
@@ -35,8 +37,10 @@ export const event = {
             const newCurrentWeather = await get_next_weather();
             const newNextWeather = createWeather(new Date(newCurrentWeather.start_time + interval));
 
-        	await set_current_weather(newCurrentWeather);
-            await set_next_weather(newNextWeather);
+            await Promise.all([
+                set_current_weather(newCurrentWeather),
+                set_next_weather(newNextWeather)
+            ]);
 
             client.user.setActivity(newCurrentWeather.name);
             console.log(`Weather set to ${newCurrentWeather.id}.`);

@@ -2,7 +2,7 @@
 // Throwing a snowball has a 25% chance to miss.
 
 import { SlashCommandBuilder,  																							} from 'discord.js';
-import { get_user_data, set_packed_object, set_snow_amount, set_building, set_score, set_misses, set_hits, set_crits, set_times_hit, get_current_weather	} from '../database.js';
+import { get_user_data, set_packed_object, set_snow_amount, set_building, set_score, set_misses, set_hits, set_crits, set_times_hit, get_current_weather, try_add_to_leaderboard	} from '../database.js';
 import { build_snowball_hit, build_snowball_miss, build_snowball_block, build_snowball_block_break					    } from '../embeds/snowball.js';
 
 export const command = {
@@ -32,9 +32,11 @@ export const command = {
 		const weather = await get_current_weather();
 
 		if (weather.cooldown == -2) {
-			await set_snow_amount(interaction.member.id, 0);
-			await set_packed_object(interaction.member.id, null);
-			await set_building(interaction.member.id, null);
+			await Promise.all([
+				set_snow_amount(interaction.member.id, 0),
+				set_packed_object(interaction.member.id, null),
+				set_building(interaction.member.id, null)
+			]);
 
 			user_data.snow_amount = 0;
 			user_data.packed_object = null;
@@ -74,8 +76,10 @@ export const command = {
 		const crit = state >= 0.9;
 
 		// Decrement the snow amount.
-		await set_snow_amount(interaction.member.id, user_data.snow_amount - 1);
-		await set_packed_object(interaction.member.id, null);
+		await Promise.all([
+			set_snow_amount(interaction.member.id, user_data.snow_amount - 1),
+			set_packed_object(interaction.member.id, null)
+		]);
 
 		// Check if the snowball missed.
 		if (miss) {
@@ -121,10 +125,14 @@ export const command = {
 		const newScore = user_data.score + (crit ? 2 : 1);
 		const newTargetScore = target_data.score - (crit ? 2 : 1);
 
-		await set_score(interaction.member.id, newScore);
-		await set_score(target.user.id, newTargetScore);
-		await set_hits(interaction.member.id, user_data.hits + 1);
-		await set_times_hit(target.user.id, target_data.times_hit + 1);
+		await Promise.all([
+			set_score(interaction.member.id, newScore),
+			set_score(target.user.id, newTargetScore),
+			set_hits(interaction.member.id, user_data.hits + 1),
+			set_times_hit(target.user.id, target_data.times_hit + 1),
+			try_add_to_leaderboard(interaction.guild.id, interaction.member.id),
+			try_add_to_leaderboard(interaction.guild.id, target.user.id)
+		]);
 
 		// Tell the user the snowball hit.
 		await interaction.reply({ embeds: [ build_snowball_hit(target, user_data.packed_object, newScore, newTargetScore, interaction.member, crit) ] });

@@ -182,7 +182,7 @@ export async function set_next_weather(weather) {
 async function create_leaderboard_data(id) {
     const leaderboard = {
         guildID: id,
-        users: [ ]
+        users: [  ]
     };
 
     const result = await client.db('database').collection('leaderboards').insertOne(leaderboard);
@@ -199,25 +199,15 @@ export async function get_leaderboard_data(id) {
     return leaderboard;
 }
 
+export async function try_add_to_leaderboard(guildID, userID) {
+    const leaderboard = await get_leaderboard_data(guildID);
 
-
-// Score.
-
-export async function get_server_data(boardID, userID) {
-    const leaderboard = await get_leaderboard_data(boardID);
-    const user = leaderboard.users.find(item => item.userID == userID);
-
-    if (user != null) {
-        return user.score;
-    } else {
-        leaderboard.users.push({ userID: userID, score: 0 });
-
+    if (!leaderboard.users.includes(userID)) {
+        leaderboard.users.push(userID);
+        
         await client.db('database').collection('leaderboards').updateOne(
-            { guildID: boardID },
+            { guildID: new ObjectId(guildID) },
             { $set: { users: leaderboard.users }}
         );
-
-        return 0;
     }
-};
-
+}

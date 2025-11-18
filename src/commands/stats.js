@@ -27,9 +27,11 @@ export const command = {
 		const weather = await get_current_weather();
 
 		if (weather.cooldown == -2) {
-			await set_snow_amount(target.id, 0);
-			await set_packed_object(target.id, null);
-			await set_building(target.id, null);
+			await Promise.all([
+				set_snow_amount(target.id, 0),
+				set_packed_object(target.id, null),
+				set_building(target.id, null)
+			]);
 
 			user_data.snow_amount = 0;
 			user_data.packed_object = null;

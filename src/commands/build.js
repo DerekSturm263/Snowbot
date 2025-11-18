@@ -33,9 +33,11 @@ export const command = {
 		const weather = await get_current_weather();
 
 		if (weather.cooldown == -2) {
-			await set_snow_amount(interaction.member.id, 0);
-			await set_packed_object(interaction.member.id, null);
-			await set_building(interaction.member.id, null);
+			await Promise.all([
+				set_snow_amount(interaction.member.id, 0),
+				set_packed_object(interaction.member.id, null),
+				set_building(interaction.member.id, null)
+			]);
 
 			user_data.snow_amount = 0;
 			user_data.packed_object = null;
@@ -67,8 +69,10 @@ export const command = {
 		}
 
 		// Set the new building and decrement the user's snow amount.
-		await set_building(interaction.member.id, buildObj);
-		await set_snow_amount(interaction.member.id, user_data.snow_amount - buildObj.cost);
+		await Promise.all([
+			set_building(interaction.member.id, buildObj),
+			set_snow_amount(interaction.member.id, user_data.snow_amount - buildObj.cost)
+		]);
 
 		// Tell the user the building was a success.
 		await interaction.reply({ embeds: [ build_new_building(buildObj) ], ephemeral: true });
