@@ -21,7 +21,7 @@ export const command = {
 			return;
 		}
 
-	    // Re-sort the leaderboard.
+	    // Sort the leaderboard.
     	leaderboard.users.sort((a, b) => -(a.score - b.score));
 
 		let output = '';
@@ -29,7 +29,7 @@ export const command = {
 			output += `${i + 1}: <@${leaderboard.users[i].userID}>     -     **${leaderboard.users[i].score} Points**\n`;
 		}
 		
-		// Tell the user the top 10 based on their score.
+		// Tell the user the top users based on their score.
         await interaction.reply({ embeds: [ build_new_leaderboard(output) ], ephemeral: true });
     }
 };

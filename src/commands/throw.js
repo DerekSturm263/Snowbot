@@ -12,7 +12,12 @@ export const command = {
 		.addUserOption(option => option
 			.setName('target')
 			.setDescription('The unfortunate victim.')
-			.setRequired(true)),
+			.setRequired(true))
+		.addBooleanOption(option => option
+			.setName('ping')
+			.setDescription('Ping the target on hit?')
+			.setRequired(false)
+		),
 
 	async execute(interaction) {
 		console.log(`\n${interaction.member.id} used /throw:`);
@@ -23,9 +28,6 @@ export const command = {
 			await interaction.reply({ content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!', ephemeral: true });
 			return;
 		}
-
-		// Get the target of the snowball.
-		const target = interaction.options.getMember('target');
 
 		const weather = await get_current_weather();
 
@@ -44,6 +46,9 @@ export const command = {
 			await interaction.reply({ content: 'You don\'t have any snow! Use `/collect` to get some.', ephemeral: true });
 			return;
 		}
+
+		// Get the target of the snowball.
+		const target = interaction.options.getMember('target');
 
 		// Check if the user is trying to throw a snowball at themselves.
 		if (interaction.member.id == target.user.id) {
@@ -78,6 +83,7 @@ export const command = {
 		if (miss) {
 			await interaction.reply({ embeds: [ build_snowball_miss(target) ] });
 			await set_misses(interaction.member.id, user_data.misses + 1);
+			
 			return;
 		}
 
@@ -91,12 +97,14 @@ export const command = {
 				// Remove the building and tell the user it was broken.
 				await set_building(target.user.id, null);
 				await interaction.reply({ embeds: [ build_snowball_block_break(target, target_data.building.name) ] });
+				
 				return;
 			}
 
 			// Update the building and tell the user it was hit.
 			await set_building(target.user.id, target_data.building);
 			await interaction.reply({ embeds: [ build_snowball_block(target, target_data.building) ] });
+			
 			return;
 		}
 		
@@ -114,17 +122,21 @@ export const command = {
 		// Increment the user's score.
 		const newScore = user_data.score + (crit ? 2 : 1);
 		const newTargetScore = target_data.score - (crit ? 2 : 1);
+
 		await set_score(interaction.member.id, newScore);
 		await set_score(target.user.id, newTargetScore);
-
 		await set_hits(interaction.member.id, user_data.hits + 1);
 		await set_times_hit(target.user.id, target_data.times_hit + 1);
 
 		// Tell the user the snowball hit.
 		await interaction.reply({ embeds: [ build_snowball_hit(target, user_data.packed_object, newScore, target_data.score, interaction.member, crit) ] });
-		
-		// Actually ping the user then delete the message to make it look like the embed pinged them.
-		let msg = await interaction.channel.send(`<@${target.user.id}>`);
-		msg.delete();
+
+		const ping = interaction.options.getMember('ping');
+
+		if (ping) {
+			// Actually ping the user then delete the message to make it look like the embed pinged them.
+			const msg = await interaction.channel.send(`<@${target.user.id}>`);
+			msg.delete();
+		}
 	}
 }

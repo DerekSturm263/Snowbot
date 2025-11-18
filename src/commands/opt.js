@@ -16,8 +16,8 @@ export const command = {
         .addSubcommand(subcommand =>
             subcommand
                 .setName('out')
-                .setDescription('Opt out of the bot.'
-        )),
+                .setDescription('Opt out of the bot.')
+        ),
 
     async execute(interaction) {
         // Get whether the user chose to opt in or not.
