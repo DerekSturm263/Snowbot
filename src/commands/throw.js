@@ -65,19 +65,17 @@ export const command = {
 		}
 
 		const state = Math.random();
+
+		if (target.presence.status != "online") {
+			state += 0.5;
+		}
+
 		const miss = state < 0.15;
-		const crit = state > 0.9;
+		const crit = state >= 0.9;
 
 		// Decrement the snow amount.
 		await set_snow_amount(interaction.member.id, user_data.snow_amount - 1);
 		await set_packed_object(interaction.member.id, null);
-
-		/*
-		if (target.presence == null) {
-			await interaction.reply({ embeds: [ build_snowball_hit_backstab(target, obj) ] });
-			return;
-		}
-		*/
 
 		// Check if the snowball missed.
 		if (miss) {

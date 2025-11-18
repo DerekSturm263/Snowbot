@@ -54,14 +54,6 @@ function snowball_block_break_messages(id, build) {
 	];
 };
 
-function snowball_hit_backstab_messages(id, item) {
-	return [
-		`You hit <@${id}> with a ${item != null ? item.name + '-packed ' : ''}snowball while they weren't looking!`,
-		`You threw a ${item != null ? item.name + '-packed ' : ''}snowball at <@${id}> while they were busy!`,
-		`You gave it your all, and hit <@${id}> with a ${item != null ? item.name + '-packed ' : ''}snowball while they weren't looking!`
-	];
-}
-
 export function build_snowball_hit(member, item, score, score2, member2, crit) {
     const randomImageIndex = Math.floor(Math.random() * snowball_hit_images.length);
     const randomMessageIndex = Math.floor(Math.random() * snowball_hit_messages(0, item).length);
@@ -103,12 +95,3 @@ export function build_snowball_block_break(member, build) {
 		.setTitle('Defense Broken!')
 		.setDescription(snowball_block_break_messages(member.user.id, build)[randomMessageIndex]);
 };
-
-export function build_snowball_hit_backstab(member, item) {
-	const randomMessageIndex = Math.floor(Math.random() * snowball_hit_backstab_messages(0, item).length);
-
-	return new EmbedBuilder()
-		.setColor(0xFFFFFF)
-		.setTitle('Backstab!')
-		.setDescription(snowball_hit_backstab_messages(member.user.id, item)[randomMessageIndex]);
-}
