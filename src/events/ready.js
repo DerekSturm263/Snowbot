@@ -33,7 +33,7 @@ export const event = {
             const newCurrentWeather = await get_next_weather();
             const newNextWeather = createWeather(new Date(newCurrentWeather.start_time + (2 * 60 * 60 * 1000)));
 
-        	await set_current_weather();
+        	await set_current_weather(newCurrentWeather);
             await set_next_weather(newNextWeather);
 
             client.user.setActivity(newCurrentWeather.name);
