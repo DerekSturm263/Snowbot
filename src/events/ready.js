@@ -1,6 +1,8 @@
 import { get_next_weather, set_next_weather, set_current_weather    } from '../database.js';	
 import weathers from '../exports/weathers.js';
 
+const interval = 60 * 60 * 1000;
+
 function createWeather(now) {
     const randomIndex = Math.floor(Math.random() * weathers.length);
     const weather = weathers[randomIndex];
@@ -20,7 +22,7 @@ export const event = {
         console.log(`${client.user.tag} is online.`);
 
         const currentWeather = createWeather(new Date());
-        const nextWeather = createWeather(new Date(currentWeather.start_time + (2 * 60 * 60 * 1000)));
+        const nextWeather = createWeather(new Date(currentWeather.start_time + interval));
 
         await set_current_weather(currentWeather);
         await set_next_weather(nextWeather);
@@ -28,16 +30,16 @@ export const event = {
         client.user.setActivity(currentWeather.name);
         console.log(`Weather set to ${currentWeather.id}.`);
 
-        // Update the weather every 2 hours.
+        // Update the weather ever hour.
         setInterval(() => async () => {
             const newCurrentWeather = await get_next_weather();
-            const newNextWeather = createWeather(new Date(newCurrentWeather.start_time + (2 * 60 * 60 * 1000)));
+            const newNextWeather = createWeather(new Date(newCurrentWeather.start_time + interval));
 
         	await set_current_weather(newCurrentWeather);
             await set_next_weather(newNextWeather);
 
             client.user.setActivity(newCurrentWeather.name);
             console.log(`Weather set to ${newCurrentWeather.name}.`);
-        }, 2 * 60 * 60 * 1000);
+        }, interval);
     }
 };
