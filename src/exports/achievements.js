@@ -280,7 +280,7 @@ const snow_stuffer5 = {
     value: 100
 };
 
-const achievements = [
+export const achievements = [
     snow_hoarder,
     snow_hoarder2,
     snow_hoarder3,

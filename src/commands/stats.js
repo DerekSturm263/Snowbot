@@ -17,7 +17,7 @@ export const command = {
 		console.log(`\n${interaction.member.id} used /stats:`);
 
 		const target = interaction.options.getMember('user') ?? interaction.member;
-		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), await get_current_weather() ];
+		const [ user_data, weather ] = [ await get_user_data(target.id), await get_current_weather() ];
 
 		if (user_data.playing == false) {
 			await interaction.reply({ content: 'The specified user isn\'t currently opted in.', ephemeral: true });
