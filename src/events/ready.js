@@ -30,7 +30,7 @@ export const event = {
         client.user.setActivity(currentWeather.name);
         console.log(`Weather set to ${currentWeather.id}.`);
 
-        // Update the weather ever hour.
+        // Update the weather every interval.
         setInterval(() => async () => {
             const newCurrentWeather = await get_next_weather();
             const newNextWeather = createWeather(new Date(newCurrentWeather.start_time + interval));
@@ -39,7 +39,7 @@ export const event = {
             await set_next_weather(newNextWeather);
 
             client.user.setActivity(newCurrentWeather.name);
-            console.log(`Weather set to ${newCurrentWeather.name}.`);
+            console.log(`Weather set to ${newCurrentWeather.id}.`);
         }, interval);
     }
 };
