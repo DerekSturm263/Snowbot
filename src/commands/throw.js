@@ -147,7 +147,7 @@ export const command = {
 		// Tell the user the snowball hit.
 		await interaction.reply({ embeds: [ build_snowball_hit(target, user_data.packed_object, newScore, newTargetScore, interaction.member, crit) ] });
 
-		const ping = interaction.options.getMember('ping') ?? false;
+		const ping = interaction.options.getBoolean('ping') ?? false;
 
 		if (ping) {
 			// Actually ping the user then delete the message to make it look like the embed pinged them.

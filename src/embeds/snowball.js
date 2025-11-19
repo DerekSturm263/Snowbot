@@ -63,8 +63,8 @@ export function build_snowball_hit(member, item, score, score2, member2, crit) {
 		.setTitle(crit ? 'Critical Hit!' : 'Hit!')
 		.setDescription(snowball_hit_messages(member.user.id, item)[randomMessageIndex])
 		.addFields(
-			{ name: `${member2.user.username}`,	value: `Score: ${score} (+${crit ? 2 : 1})`,	inline: true },
-			{ name: `${member.user.username}`,	value: `Score: ${score2} (-${crit ? 2 : 1})`,	inline: true }
+			{ name: `${member2.user.displayName}`,	value: `Score: ${score} (+${crit ? 2 : 1})`,	inline: true },
+			{ name: `${member.user.displayName}`,	value: `Score: ${score2} (-${crit ? 2 : 1})`,	inline: true }
 		)
 		.setImage(snowball_hit_images[randomImageIndex]);
 };
