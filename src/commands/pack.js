@@ -4,6 +4,7 @@
 import { SlashCommandBuilder				} from 'discord.js';
 import { parseAchievements, get_user_data, set_packed_object, get_current_weather, set_total_packed_objects	} from '../database.js';
 import { build_new_pack 					} from '../embeds/new_packs.js';
+import { build_new_achievement } from '../embeds/new_achievement.js';
 import objects from '../exports/objects.js';
 
 export const command = {
@@ -49,6 +50,8 @@ export const command = {
 		const randomIndex = Math.floor(Math.random() * objects.length);
 		const item = objects[randomIndex];
 		item.timeout_time += Math.floor(Math.random() * 4) - 2;
+		if (item.timeout_time < 1)
+			item.timeout_time = 1;
 
 		++user_data.total_packed_objects;
 
@@ -61,7 +64,7 @@ export const command = {
 		await interaction.reply({ embeds: [ build_new_pack(item) ], ephemeral: true });
 		
 		const achievements = await parseAchievements(user_data);
-		await Promise.all(achievements.map(item => {
+		await Promise.all(achievements.map(async item => {
 			interaction.member.send({ embeds: [ build_new_achievement(item) ] });
 		}));
 	}

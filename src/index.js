@@ -6,7 +6,8 @@ import { init_commands, init_events             } 	from './deployments.js';
 // Initialize client.
 const client = new Client({ intents: [
     GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMembers
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.DirectMessages
 ]});
 
 // Initialize all commands and events.

@@ -5,13 +5,14 @@ const interval = 60 * 60 * 1000;
 
 function createWeather(now) {
     const randomIndex = Math.floor(Math.random() * weathers.length);
-    const weather = weathers[randomIndex];
+    const weather = structuredClone(weathers[randomIndex]);
     
     weather.start_time = now.getTime();
+
     if (weather.cooldown > 0)
         weather.cooldown += Math.floor(Math.random() * 4) - 2;
 
-    weather.end_time = now.getTime() + (2 * 60 * 60 * 1000);
+    weather.end_time = weather.start_time + interval;
 
     return weather;
 }
@@ -30,7 +31,8 @@ export const event = {
         ]);
 
         client.user.setActivity(currentWeather.name);
-        console.log(`Weather set to ${currentWeather.id}.`);
+        console.log(`Current weather set to ${currentWeather.id}.`);
+        console.log(`Next weather set to ${nextWeather.id}.`);
 
         // Update the weather every interval.
         setInterval(() => async () => {
@@ -43,7 +45,8 @@ export const event = {
             ]);
 
             client.user.setActivity(newCurrentWeather.name);
-            console.log(`Weather set to ${newCurrentWeather.id}.`);
+            console.log(`Current weather set to ${newCurrentWeather.id}.`);
+            console.log(`Next weather set to ${newNextWeather.id}.`);
         }, interval);
     }
 };

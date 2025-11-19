@@ -22,14 +22,15 @@ export const command = {
 		}
 
 		// Parse and sort user IDs. TODO: Make sure this works.
-		const scores = (await leaderboard.users.map(async (item) => ({
+		const scores = leaderboard.users.map(async (item) => ({
 			userID: item,
-			score: await get_user_data(item).score
-		}))).sort((a, b) => -(a.score - b.score));
+			score: (await get_user_data(item)).score
+		}));
+		const awaitedScores = (await Promise.all(scores)).sort((a, b) => -(a.score - b.score));
 
 		let output = '';
-		for (let i = 0; i < scores.length; ++i) {
-			output += `${i + 1}: <@${scores[i].userID}>     -     **${scores[i].score} Points**\n`;
+		for (let i = 0; i < awaitedScores.length; ++i) {
+			output += `${i + 1}: <@${awaitedScores[i].userID}>     -     **${awaitedScores[i].score} Points**\n`;
 		}
 		
 		// Tell the user the top users based on their score.

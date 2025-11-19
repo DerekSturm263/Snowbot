@@ -17,11 +17,13 @@ export function build_new_help() {
 
             '`/forecast`: Checks the current and upcoming weather. Each weather type impacts the cooldown on `/collect`, among other things.\n\n' +
 
-            '`/stats`: Checks your current stats, snow collected, packed object, and building.\n\n' +
+            '`/stats`: Checks a user\'s stats, including snow collected, packed object, building, and more.\n\n' +
+
+            '`/achievements`: Shows you all achievements, including hidden ones (with limited information).\n\n' + 
 
             '`/leaderboard`: Checks this server\'s leaderboard. Leaderboard is organized from who has the most to least points.\n\n' +
             
-            '`/opt in`: Opts in to using Snowbot. You will have access to all commands, and be able to be hit by snowballs.\n\n' +
+            '`/opt in`: Opts in to using Snowbot. You will have access to all commands and be able to be hit by snowballs.\n\n' +
 
             '`/opt out`: Opts out of using Snowbot. You will no longer be able to use most commands or be hit by snowballs.'
         );

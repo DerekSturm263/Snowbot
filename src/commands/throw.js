@@ -4,6 +4,7 @@
 import { SlashCommandBuilder,  																							} from 'discord.js';
 import { parseAchievements, get_user_data, set_packed_object, set_snow_amount, set_building, set_score, set_misses, set_hits, set_crits, set_times_hit, get_current_weather, try_add_to_leaderboard	} from '../database.js';
 import { build_snowball_hit, build_snowball_miss, build_snowball_block, build_snowball_block_break					    } from '../embeds/snowball.js';
+import { build_new_achievement } from '../embeds/new_achievement.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -66,7 +67,7 @@ export const command = {
 
 		const state = Math.random();
 
-		if (target.presence.status != "online") {
+		if (target.presence && target.presence.status != "online") {
 			state += 0.5;
 		}
 
@@ -86,7 +87,7 @@ export const command = {
 			await set_misses(interaction.member.id, user_data.misses);
 
 			const achievements = await parseAchievements(user_data);
-			await Promise.all(achievements.map(item => {
+			await Promise.all(achievements.map(async item => {
 				interaction.member.send({ embeds: [ build_new_achievement(item) ] });
 			}));
 
@@ -154,7 +155,7 @@ export const command = {
 		}
 		
 		const achievements = await parseAchievements(user_data);
-		await Promise.all(achievements.map(item => {
+		await Promise.all(achievements.map(async item => {
 			interaction.member.send({ embeds: [ build_new_achievement(item) ] });
 		}));
 	}

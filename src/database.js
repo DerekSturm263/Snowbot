@@ -268,7 +268,7 @@ export async function try_add_to_leaderboard(guildID, userID) {
         leaderboard.users.push(userID);
         
         await client.db('database').collection('leaderboards').updateOne(
-            { guildID: new ObjectId(guildID) },
+            { guildID: guildID },
             { $set: { users: leaderboard.users }}
         );
     }

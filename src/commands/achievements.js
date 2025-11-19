@@ -2,7 +2,7 @@
 
 import { SlashCommandBuilder    }   from 'discord.js';
 import { get_user_data }   from '../database.js';
-import { build_new_achievements } from '../embeds/new_achievements.js';
+import { build_new_achievements_unlocked, build_new_achievements_locked } from '../embeds/new_achievements.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -25,6 +25,6 @@ export const command = {
 		}
 		
 		// Tell the user the stats.
-		await interaction.reply({ embeds: [ build_new_achievements(target.displayName, user_data, target != interaction.member) ], ephemeral: true });
+		await interaction.reply({ embeds: [ build_new_achievements_unlocked(user_data), build_new_achievements_locked(user_data) ], ephemeral: true });
 	}
 };

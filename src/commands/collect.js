@@ -4,6 +4,7 @@
 import { SlashCommandBuilder 													} from 'discord.js';
 import { build_new_collect } from '../embeds/new_collect.js';
 import { parseAchievements, get_user_data, set_snow_amount, set_ready, get_current_weather, set_packed_object, set_building, set_total_snow_amount	} from '../database.js';
+import { build_new_achievement } from '../embeds/new_achievement.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -71,7 +72,7 @@ export const command = {
 		await interaction.reply({ embeds: [ build_new_collect(user_data.snow_amount) ], ephemeral: true });
 
 		const achievements = await parseAchievements(user_data);
-		await Promise.all(achievements.map(item => {
+		await Promise.all(achievements.map(async item => {
 			interaction.member.send({ embeds: [ build_new_achievement(item) ] });
 		}));
 	}

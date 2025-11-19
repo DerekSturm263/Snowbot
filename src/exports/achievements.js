@@ -2,39 +2,39 @@ const snow_hoarder = {
     id: "snow_hoarder",
     name: "Snow Hoarder",
     description: "Collect a total of 10 snow.",
-    property: "total_snow_collected",
+    property: "total_snow_amount",
     value: 10
 };
 
 const snow_hoarder2 = {
-    id: "snow_hoarder",
+    id: "snow_hoarder2",
     name: "Snow Hoarder",
     description: "Collect a total of 25 snow.",
-    property: "total_snow_collected",
+    property: "total_snow_amount",
     value: 25
 };
 
 const snow_hoarder3 = {
-    id: "snow_hoarder",
+    id: "snow_hoarder3",
     name: "Snow Hoarder",
     description: "Collect a total of 50 snow.",
-    property: "total_snow_collected",
+    property: "total_snow_amount",
     value: 50
 };
 
 const snow_hoarder4 = {
-    id: "snow_hoarder",
+    id: "snow_hoarder4",
     name: "Snow Hoarder",
     description: "Collect a total of 100 snow.",
-    property: "total_snow_collected",
+    property: "total_snow_amount",
     value: 100
 };
 
 const snow_hoarder5 = {
-    id: "snow_hoarder",
+    id: "snow_hoarder5",
     name: "Snow Hoarder",
     description: "Collect a total of 200 snow.",
-    property: "total_snow_collected",
+    property: "total_snow_amount",
     value: 200
 };
 
@@ -47,7 +47,7 @@ const sharpshooter = {
 };
 
 const sharpshooter2 = {
-    id: "sharpshooter",
+    id: "sharpshooter2",
     name: "Sharpshooter",
     description: "Hit users with snowballs 10 times.",
     property: "hits",
@@ -55,7 +55,7 @@ const sharpshooter2 = {
 };
 
 const sharpshooter3 = {
-    id: "sharpshooter",
+    id: "sharpshooter3",
     name: "Sharpshooter",
     description: "Hit users with snowballs 25 times.",
     property: "hits",
@@ -63,7 +63,7 @@ const sharpshooter3 = {
 };
 
 const sharpshooter4 = {
-    id: "sharpshooter",
+    id: "sharpshooter4",
     name: "Sharpshooter",
     description: "Hit users with snowballs 50 times.",
     property: "hits",
@@ -71,7 +71,7 @@ const sharpshooter4 = {
 };
 
 const sharpshooter5 = {
-    id: "sharpshooter",
+    id: "sharpshooter5",
     name: "Sharpshooter",
     description: "Hit users with snowballs 100 times.",
     property: "hits",
@@ -87,7 +87,7 @@ const lucky_shot = {
 };
 
 const lucky_shot2 = {
-    id: "lucky_shot",
+    id: "lucky_shot2",
     name: "Lucky Shot",
     description: "Get 10 critical hits.",
     property: "crits",
@@ -95,7 +95,7 @@ const lucky_shot2 = {
 };
 
 const lucky_shot3 = {
-    id: "lucky_shot",
+    id: "lucky_shot3",
     name: "Lucky Shot",
     description: "Get 25 critical hits.",
     property: "crits",
@@ -103,7 +103,7 @@ const lucky_shot3 = {
 };
 
 const lucky_shot4 = {
-    id: "lucky_shot",
+    id: "lucky_shot4",
     name: "Lucky Shot",
     description: "Get 50 critical hits.",
     property: "crits",
@@ -111,7 +111,7 @@ const lucky_shot4 = {
 };
 
 const lucky_shot5 = {
-    id: "lucky_shot",
+    id: "lucky_shot5",
     name: "Lucky Shot",
     description: "Get 100 critical hits.",
     property: "crits",
@@ -127,7 +127,7 @@ const blindfolded = {
 };
 
 const blindfolded2 = {
-    id: "blindfolded",
+    id: "blindfolded2",
     name: "Blindfolded",
     description: "Miss 10 shots.",
     property: "misses",
@@ -135,7 +135,7 @@ const blindfolded2 = {
 };
 
 const blindfolded3 = {
-    id: "blindfolded",
+    id: "blindfolded3",
     name: "Blindfolded",
     description: "Miss 25 shots.",
     property: "misses",
@@ -143,7 +143,7 @@ const blindfolded3 = {
 };
 
 const blindfolded4 = {
-    id: "blindfolded",
+    id: "blindfolded4",
     name: "Blindfolded",
     description: "Miss 50 shots.",
     property: "misses",
@@ -151,7 +151,7 @@ const blindfolded4 = {
 };
 
 const blindfolded5 = {
-    id: "blindfolded",
+    id: "blindfolded5",
     name: "Blindfolded",
     description: "Miss 100 shots.",
     property: "misses",
@@ -167,7 +167,7 @@ const target_practice = {
 };
 
 const target_practice2 = {
-    id: "target_practice",
+    id: "target_practice2",
     name: "Target Practice",
     description: "Get hit with 10 snowballs.",
     property: "times_hit",
@@ -175,7 +175,7 @@ const target_practice2 = {
 };
 
 const target_practice3 = {
-    id: "target_practice",
+    id: "target_practice3",
     name: "Target Practice",
     description: "Get hit with 25 snowballs.",
     property: "times_hit",
@@ -183,7 +183,7 @@ const target_practice3 = {
 };
 
 const target_practice4 = {
-    id: "target_practice",
+    id: "target_practice4",
     name: "Target Practice",
     description: "Get hit with 50 snowballs.",
     property: "times_hit",
@@ -191,7 +191,7 @@ const target_practice4 = {
 };
 
 const target_practice5 = {
-    id: "target_practice",
+    id: "target_practice5",
     name: "Target Practice",
     description: "Get hit with 100 snowballs.",
     property: "times_hit",
@@ -207,7 +207,7 @@ const snow_novice = {
 };
 
 const snow_novice2 = {
-    id: "snow_novice",
+    id: "snow_novice2",
     name: "Snow Novice",
     description: "Create 10 snow buildings.",
     property: "total_buildings",
@@ -215,7 +215,7 @@ const snow_novice2 = {
 };
 
 const snow_novice3 = {
-    id: "snow_novice",
+    id: "snow_novice3",
     name: "Snow Novice",
     description: "Create 25 snow buildings.",
     property: "total_buildings",
@@ -223,7 +223,7 @@ const snow_novice3 = {
 };
 
 const snow_novice4 = {
-    id: "snow_novice",
+    id: "snow_novice4",
     name: "Snow Novice",
     description: "Create 50 snow buildings.",
     property: "total_buildings",
@@ -231,7 +231,7 @@ const snow_novice4 = {
 };
 
 const snow_novice5 = {
-    id: "snow_novice",
+    id: "snow_novice5",
     name: "Snow Novice",
     description: "Create 100 snow buildings.",
     property: "total_buildings",
@@ -247,7 +247,7 @@ const snow_stuffer = {
 };
 
 const snow_stuffer2 = {
-    id: "snow_stuffer",
+    id: "snow_stuffer2",
     name: "Snow Stuffer",
     description: "Pack 10 objects inside snow.",
     property: "total_objects_packed",
@@ -255,7 +255,7 @@ const snow_stuffer2 = {
 };
 
 const snow_stuffer3 = {
-    id: "snow_stuffer",
+    id: "snow_stuffer3",
     name: "Snow Stuffer",
     description: "Pack 25 objects inside snow.",
     property: "total_objects_packed",
@@ -263,7 +263,7 @@ const snow_stuffer3 = {
 };
 
 const snow_stuffer4 = {
-    id: "snow_stuffer",
+    id: "snow_stuffer4",
     name: "Snow Stuffer",
     description: "Pack 50 objects inside snow.",
     property: "total_objects_packed",
@@ -271,7 +271,7 @@ const snow_stuffer4 = {
 };
 
 const snow_stuffer5 = {
-    id: "snow_stuffer",
+    id: "snow_stuffer5",
     name: "Snow Stuffer",
     description: "Pack 100 objects inside snow.",
     property: "total_objects_packed",
