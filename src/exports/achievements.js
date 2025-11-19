@@ -242,7 +242,7 @@ const snow_stuffer = {
     id: "snow_stuffer",
     name: "Snow Stuffer",
     description: "Pack your first object inside snow.",
-    property: "total_objects_packed",
+    property: "total_packed_objects",
     value: 1
 };
 
@@ -250,7 +250,7 @@ const snow_stuffer2 = {
     id: "snow_stuffer2",
     name: "Snow Stuffer",
     description: "Pack 10 objects inside snow.",
-    property: "total_objects_packed",
+    property: "total_packed_objects",
     value: 10
 };
 
@@ -258,7 +258,7 @@ const snow_stuffer3 = {
     id: "snow_stuffer3",
     name: "Snow Stuffer",
     description: "Pack 25 objects inside snow.",
-    property: "total_objects_packed",
+    property: "total_packed_objects",
     value: 25
 };
 
@@ -266,7 +266,7 @@ const snow_stuffer4 = {
     id: "snow_stuffer4",
     name: "Snow Stuffer",
     description: "Pack 50 objects inside snow.",
-    property: "total_objects_packed",
+    property: "total_packed_objects",
     value: 50
 };
 
@@ -274,7 +274,7 @@ const snow_stuffer5 = {
     id: "snow_stuffer5",
     name: "Snow Stuffer",
     description: "Pack 100 objects inside snow.",
-    property: "total_objects_packed",
+    property: "total_packed_objects",
     value: 100
 };
 

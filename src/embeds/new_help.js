@@ -25,6 +25,8 @@ export function build_new_help() {
             
             '`/opt in`: Opts in to using Snowbot. You will have access to all commands and be able to be hit by snowballs.\n\n' +
 
-            '`/opt out`: Opts out of using Snowbot. You will no longer be able to use most commands or be hit by snowballs.'
+            '`/opt out`: Opts out of using Snowbot. You will no longer be able to use most commands or be hit by snowballs.\n\n' +
+
+            '`/reset`: Resets all of your stats and achievements permanently.'
         );
 };

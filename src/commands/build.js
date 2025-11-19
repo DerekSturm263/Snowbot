@@ -47,7 +47,7 @@ export const command = {
 		const build = interaction.options.get('build').value;
 		const buildObj = builds.find(item => item.id == build);
 
-		buildObj.cost -= weather.building_cost_modifier;
+		buildObj.cost += weather.building_cost_modifier;
 
 		// Check if the user entered an invalid value.
 		if (buildObj == null) {
@@ -81,7 +81,7 @@ export const command = {
 		
 		const achievements = await parseAchievements(user_data);
 		await Promise.all(achievements.map(async item => {
-			interaction.member.send({ embeds: [ build_new_achievement(item) ] });
+			interaction.member.send({ embeds: [ build_new_achievement(item, true, true) ] });
 		}));
 	}
 };

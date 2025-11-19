@@ -88,7 +88,7 @@ export const command = {
 
 			const achievements = await parseAchievements(user_data);
 			await Promise.all(achievements.map(async item => {
-				interaction.member.send({ embeds: [ build_new_achievement(item) ] });
+				interaction.member.send({ embeds: [ build_new_achievement(item, true, true) ] });
 			}));
 
 			await interaction.reply({ embeds: [ build_snowball_miss(target) ] });
@@ -117,7 +117,8 @@ export const command = {
 		}
 		
 		if (crit) {
-			await set_crits(interaction.member.id, user_data.crits + 1);
+			++user_data.crits;
+			await set_crits(interaction.member.id, user_data.crits);
 		}
 
 		// Set the timeout time based on the packed object.
@@ -156,7 +157,7 @@ export const command = {
 		
 		const achievements = await parseAchievements(user_data);
 		await Promise.all(achievements.map(async item => {
-			interaction.member.send({ embeds: [ build_new_achievement(item) ] });
+			interaction.member.send({ embeds: [ build_new_achievement(item, true, true) ] });
 		}));
 	}
 }

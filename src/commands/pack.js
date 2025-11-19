@@ -42,7 +42,7 @@ export const command = {
 
 		// Check if the user doesn't have enough snow.
 		if (user_data.snow_amount < 2) {
-			await interaction.reply({ content: `You must have at least 2 snow in your hand to pack something in! Use `/collect` to get some.`, ephemeral: true });
+			await interaction.reply({ content: 'You must have at least 2 snow in your hand to pack something in! Use `/collect` to get some.', ephemeral: true });
 			return;
 		}
 
@@ -65,7 +65,7 @@ export const command = {
 		
 		const achievements = await parseAchievements(user_data);
 		await Promise.all(achievements.map(async item => {
-			interaction.member.send({ embeds: [ build_new_achievement(item) ] });
+			interaction.member.send({ embeds: [ build_new_achievement(item, true, true) ] });
 		}));
 	}
 };

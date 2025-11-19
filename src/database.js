@@ -45,6 +45,30 @@ export async function get_user_data(id) {
     return user;
 }
 
+export async function reset_user_data(id) {
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: id },
+        { $set: {
+            snow_amount: 0,
+            total_snow_amount: 0,
+            packed_object: null,
+            total_packed_objects: 0,
+            building: null,
+            total_buildings: 0,
+            ready: true,
+            playing: true,
+            score: 0,
+            hits: 0,
+            crits: 0,
+            misses: 0,
+            times_hit: 0,
+            achievements: []
+        }}
+    );
+
+    return result;
+}
+
 
 
 // Setters.

@@ -2,7 +2,8 @@
 
 import { SlashCommandBuilder    }   from 'discord.js';
 import { get_user_data }   from '../database.js';
-import { build_new_achievements_unlocked, build_new_achievements_locked } from '../embeds/new_achievements.js';
+import { build_new_achievement } from '../embeds/new_achievement.js';
+import achievements from '../exports/achievements.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -19,12 +20,16 @@ export const command = {
 		const target = interaction.options.getMember('user') ?? interaction.member;
 		const user_data = await get_user_data(target.id);
 
-		if (user_data.playing == false) {
-			await interaction.reply({ content: 'The specified user isn\'t currently opted in.', ephemeral: true });
-			return;
-		}
+		const unlocked = achievements.filter(achievement => user_data.achievements.includes(achievement.id)).map(achievement => {
+            return build_new_achievement(achievement, false, true);
+        });
+
+		const locked = achievements.filter(achievement => !user_data.achievements.includes(achievement.id)).map(achievement => {
+            return build_new_achievement(achievement, false, false);
+        });
 		
 		// Tell the user the stats.
-		await interaction.reply({ embeds: [ build_new_achievements_unlocked(user_data), build_new_achievements_locked(user_data) ], ephemeral: true });
+		await interaction.reply({ embeds: unlocked, ephemeral: true });
+		await interaction.reply({ embeds: locked, ephemeral: true });
 	}
 };

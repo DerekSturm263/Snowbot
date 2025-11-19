@@ -19,11 +19,6 @@ export const command = {
 		const target = interaction.options.getMember('user') ?? interaction.member;
 		const [ user_data, weather ] = [ await get_user_data(target.id), await get_current_weather() ];
 
-		if (user_data.playing == false) {
-			await interaction.reply({ content: 'The specified user isn\'t currently opted in.', ephemeral: true });
-			return;
-		}
-
 		if (weather.cooldown == -2) {
 			await Promise.all([
 				set_snow_amount(target.id, 0),
