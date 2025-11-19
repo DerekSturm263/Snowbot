@@ -1,4 +1,4 @@
-## Introducing [Snowbot](https://discord.com/oauth2/authorize?client_id=1051258033931563118&permissions=1101659162624&integration_type=0&scope=bot), a great way to increase your server engagement!
+## Introducing [Snowbot](https://discord.com/oauth2/authorize?client_id=1051258033931563118&permissions=1099511678976&response_type=code&redirect_uri=https%3A%2F%2Fdiscordapp.com%2Foauth2%2Fauthorize%3F%26client_id%3D1051258033931563118%26scope%3Dbot&integration_type=0&scope=bot+dm_channels.messages.write), a great way to increase your server engagement!
 
 Click the above link to invite Snowbot to your server for free! From there, you can enjoy its variety of features.
 
