@@ -1,4 +1,5 @@
 import { MongoClient, ObjectId } from "mongodb";
+import achievements from "./exports/achievements.js";
 
 const client = new MongoClient(process.env.MONGODB_URI ?? '', {
     serverSelectionTimeoutMS: 120000,
@@ -58,7 +59,7 @@ export async function set_snow_amount(id, val) {
     );
 
     return result;
-};
+}
 
 export async function set_total_snow_amount(id, val) {
     if (val > 20)
@@ -70,7 +71,7 @@ export async function set_total_snow_amount(id, val) {
     );
 
     return result;
-};
+}
 
 export async function set_packed_object(id, val) {
     const result = await client.db('database').collection('users').updateOne(
@@ -79,7 +80,7 @@ export async function set_packed_object(id, val) {
     );
 
     return result;
-};
+}
 
 export async function set_total_packed_objects(id, val) {
     const result = await client.db('database').collection('users').updateOne(
@@ -88,7 +89,7 @@ export async function set_total_packed_objects(id, val) {
     );
 
     return result;
-};
+}
 
 export async function set_building(id, val) {
     const result = await client.db('database').collection('users').updateOne(
@@ -97,7 +98,7 @@ export async function set_building(id, val) {
     );
 
     return result;
-};
+}
 
 export async function set_total_buildings(id, val) {
     const result = await client.db('database').collection('users').updateOne(
@@ -106,7 +107,7 @@ export async function set_total_buildings(id, val) {
     );
 
     return result;
-};
+}
 
 export async function set_ready(id, val) {
     const result = await client.db('database').collection('users').updateOne(
@@ -115,7 +116,7 @@ export async function set_ready(id, val) {
     );
 
     return result;
-};
+}
 
 export async function set_opt(id, val) {
     const result = await client.db('database').collection('users').updateOne(
@@ -133,7 +134,7 @@ export async function set_score(id, val) {
     );
 
     return result;
-};
+}
 
 export async function set_hits(id, val) {
     const result = await client.db('database').collection('users').updateOne(
@@ -142,7 +143,7 @@ export async function set_hits(id, val) {
     );
 
     return result;
-};
+}
 
 export async function set_crits(id, val) {
     const result = await client.db('database').collection('users').updateOne(
@@ -151,7 +152,7 @@ export async function set_crits(id, val) {
     );
 
     return result;
-};
+}
 
 export async function set_misses(id, val) {
     const result = await client.db('database').collection('users').updateOne(
@@ -160,7 +161,7 @@ export async function set_misses(id, val) {
     );
 
     return result;
-};
+}
 
 export async function set_times_hit(id, val) {
     const result = await client.db('database').collection('users').updateOne(
@@ -169,9 +170,24 @@ export async function set_times_hit(id, val) {
     );
 
     return result;
+}
+
+export async function parseAchievements(userData) {
+    let achievementsOut = [];
+
+    for (let i = 0; i < achievements.length; ++i) {
+        const achievement = achievements[i];
+
+        if (userData[achievement.property] >= achievement.value && !userData.achievements.includes(achievement.id)) {
+            await add_achievement(userData.userID, achievement.id);
+            achievementsOut.push(achievement);
+        }
+    }
+
+    return achievementsOut;
 };
 
-export async function add_achievement(id, val) {
+async function add_achievement(id, val) {
     const user = await client.db('database').collection('users').findOne({ userID: id }) ?? await create_user_data(id);
     user.achievements.push(val);
 
@@ -234,7 +250,7 @@ async function create_leaderboard_data(id) {
     const result = await client.db('database').collection('leaderboards').insertOne(leaderboard);
 
     return leaderboard;
-};
+}
 
 export async function get_leaderboard_data(id) {
     console.log("get");

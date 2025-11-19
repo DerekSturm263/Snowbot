@@ -3,8 +3,7 @@
 
 import { SlashCommandBuilder 													} from 'discord.js';
 import { build_new_collect } from '../embeds/new_collect.js';
-import { get_user_data, set_snow_amount, set_ready, get_current_weather, set_packed_object, set_building, set_total_snow_amount	} from '../database.js';
-import parseAchievements from '../exports/achievements.js';
+import { parseAchievements, get_user_data, set_snow_amount, set_ready, get_current_weather, set_packed_object, set_building, set_total_snow_amount	} from '../database.js';
 
 export const command = {
 	data: new SlashCommandBuilder()

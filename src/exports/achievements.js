@@ -1,5 +1,3 @@
-import { add_achievement } from "../database";
-
 const snow_hoarder = {
     id: "snow_hoarder",
     name: "Snow Hoarder",
@@ -280,7 +278,7 @@ const snow_stuffer5 = {
     value: 100
 };
 
-export const achievements = [
+export default [
     snow_hoarder,
     snow_hoarder2,
     snow_hoarder3,
@@ -317,18 +315,3 @@ export const achievements = [
     snow_stuffer4,
     snow_stuffer5
 ];
-
-export default async function parseAchievements(userData) {
-    let achievementsOut = [];
-
-    for (let i = 0; i < achievements.length; ++i) {
-        const achievement = achievements[i];
-
-        if (userData[achievement.property] >= achievement.value && !userData.achievements.includes(achievement.id)) {
-            await add_achievement(userData.userID, achievement.id);
-            achievementsOut.push(achievement);
-        }
-    }
-
-    return achievementsOut;
-};
