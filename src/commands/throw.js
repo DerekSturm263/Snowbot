@@ -3,7 +3,7 @@
 
 import { SlashCommandBuilder,  																							} from 'discord.js';
 import { parseAchievements, get_user_data, set_packed_object, set_snow_amount, set_building, set_score, set_misses, set_hits, set_crits, set_times_hit, get_current_weather, try_add_to_leaderboard	} from '../database.js';
-import { build_snowball_hit, build_snowball_miss, build_snowball_block, build_snowball_block_break					    } from '../embeds/snowball.js';
+import { build_snowball_hit, build_snowball_miss, build_snowball_block, build_snowball_block_break, build_snowball_hit_dm					    } from '../embeds/snowball.js';
 import { build_new_achievement } from '../embeds/new_achievement.js';
 
 export const command = {
@@ -153,11 +153,18 @@ export const command = {
 			// Actually ping the user then delete the message to make it look like the embed pinged them.
 			const msg = await interaction.channel.send(`<@${target.user.id}>`);
 			msg.delete();
+
+			await target.user.send({ embeds: [ build_snowball_hit_dm(target, user_data.packed_object, newScore, newTargetScore, interaction.member, crit) ] });
 		}
 		
 		const achievements = await parseAchievements(user_data);
 		await Promise.all(achievements.map(async item => {
 			interaction.member.send({ embeds: [ build_new_achievement(item, true, true) ] });
+		}));
+
+		const achievements2 = await parseAchievements(target_data);
+		await Promise.all(achievements2.map(async item => {
+			target.user.send({ embeds: [ build_new_achievement(item, true, true) ] });
 		}));
 	}
 }

@@ -21,7 +21,7 @@ export const command = {
 			return;
 		}
 
-		// Parse and sort user IDs. TODO: Make sure this works.
+		// Parse and sort user IDs.
 		const scores = leaderboard.users.map(async (item) => ({
 			userID: item,
 			score: (await get_user_data(item)).score
