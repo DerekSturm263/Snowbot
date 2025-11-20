@@ -103,14 +103,3 @@ export function build_snowball_block_break(member, build) {
 		.setTitle('Defense Broken!')
 		.setDescription(snowball_block_break_messages(member.user.id, build)[randomMessageIndex]);
 };
-
-export function build_snowball_hit_dm(member, item, score, score2, member2, crit) {
-    const randomImageIndex = Math.floor(Math.random() * snowball_hit_images.length);
-	const randomMessageIndex = Math.floor(Math.random() * snowball_hit_dm_messages(0, item).length);
-	
-	return new EmbedBuilder()
-		.setColor(0xFFFFFF)
-		.setTitle('You\'re under attack!')
-		.setDescription(snowball_hit_dm_messages(member2.user.id, item)[randomMessageIndex])
-		.setImage(snowball_hit_images[randomImageIndex]);
-};
