@@ -1,7 +1,7 @@
 // Packs a snowball with something random.
 // What you put in the snowball impacts how long another user hit with the snowball is timed out for.
 
-import { SlashCommandBuilder				} from 'discord.js';
+import { MessageFlags, SlashCommandBuilder				} from 'discord.js';
 import { parseAchievements, get_user_data, set_packed_object, get_current_weather, set_total_packed_objects	} from '../database.js';
 import { build_new_pack 					} from '../embeds/new_packs.js';
 import { build_new_achievement } from '../embeds/new_achievement.js';
@@ -18,7 +18,7 @@ export const command = {
 		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), await get_current_weather() ];
 
 		if (!user_data.playing) {
-			await interaction.reply({ content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!', ephemeral: true });
+			await interaction.reply({ content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!', flags: MessageFlags.Ephemeral });
 			return;
 		}
 
@@ -36,13 +36,13 @@ export const command = {
 		
 		// Check if the user is already packed something.
 		if (user_data.packed_object != null) {
-			await interaction.reply({ content: `You already have a ${user_data.packed_object.name} in your snowball!`, ephemeral: true });
+			await interaction.reply({ content: `You already have a ${user_data.packed_object.name} in your snowball!`, flags: MessageFlags.Ephemeral });
 			return;
 		}
 
 		// Check if the user doesn't have enough snow.
 		if (user_data.snow_amount < 2) {
-			await interaction.reply({ content: 'You must have at least 2 snow in your hand to pack something in! Use `/collect` to get some.', ephemeral: true });
+			await interaction.reply({ content: 'You must have at least 2 snow in your hand to pack something in! Use `/collect` to get some.', flags: MessageFlags.Ephemeral });
 			return;
 		}
 
@@ -61,7 +61,7 @@ export const command = {
 			set_total_packed_objects(interaction.member.id, user_data.total_packed_objects)
 		]);
 		
-		await interaction.reply({ embeds: [ build_new_pack(item) ], ephemeral: true });
+		await interaction.reply({ embeds: [ build_new_pack(item) ], flags: MessageFlags.Ephemeral });
 		
 		const achievements = await parseAchievements(user_data);
 		await Promise.all(achievements.map(async item => {

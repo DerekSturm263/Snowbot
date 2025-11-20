@@ -1,6 +1,6 @@
 // Checks the user's current stats and builds, packs, etc.
 
-import { SlashCommandBuilder    }   from 'discord.js';
+import { MessageFlags, SlashCommandBuilder    }   from 'discord.js';
 import { build_new_stats 		}	from '../embeds/new_stats.js';
 import { get_user_data, get_current_weather, set_snow_amount, set_building, set_packed_object }   from '../database.js';
 
@@ -32,6 +32,6 @@ export const command = {
 		}
 		
 		// Tell the user the stats.
-		await interaction.reply({ embeds: [ build_new_stats(target.displayName, user_data, target != interaction.member) ], ephemeral: true });
+		await interaction.reply({ embeds: [ build_new_stats(target.displayName, user_data, target != interaction.member) ], flags: MessageFlags.Ephemeral });
 	}
 };

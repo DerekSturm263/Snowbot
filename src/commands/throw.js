@@ -1,7 +1,7 @@
 // Throws a snowball at another user that times them out.
 // Throwing a snowball has a small chance to miss and a smaller chance to crit.
 
-import { SlashCommandBuilder,  																							} from 'discord.js';
+import { MessageFlags, SlashCommandBuilder,  																							} from 'discord.js';
 import { parseAchievements, get_user_data, set_packed_object, set_snow_amount, set_building, set_score, set_misses, set_hits, set_crits, set_times_hit, get_current_weather, try_add_to_leaderboard	} from '../database.js';
 import { build_snowball_hit, build_snowball_miss, build_snowball_block, build_snowball_block_break, build_snowball_hit_dm					    } from '../embeds/snowball.js';
 import { build_new_achievement } from '../embeds/new_achievement.js';
@@ -26,7 +26,7 @@ export const command = {
 		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), await get_current_weather() ];
 
 		if (!user_data.playing) {
-			await interaction.reply({ content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!', ephemeral: true });
+			await interaction.reply({ content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!', flags: MessageFlags.Ephemeral });
 			return;
 		}
 
@@ -44,7 +44,7 @@ export const command = {
 		
 		// Get the snow amount and check if the user has any snow.
 		if (user_data.snow_amount == 0) {
-			await interaction.reply({ content: 'You don\'t have any snow! Use `/collect` to get some.', ephemeral: true });
+			await interaction.reply({ content: 'You don\'t have any snow! Use `/collect` to get some.', flags: MessageFlags.Ephemeral });
 			return;
 		}
 
@@ -53,7 +53,7 @@ export const command = {
 
 		// Check if the user is trying to throw a snowball at themselves.
 		if (interaction.member.id == target.user.id) {
-			await interaction.reply({ content: 'You can\'t throw a snowball at yourself!', ephemeral: true });
+			await interaction.reply({ content: 'You can\'t throw a snowball at yourself!', flags: MessageFlags.Ephemeral });
 			return;
 		}
 		
@@ -61,7 +61,7 @@ export const command = {
 
 		// Check if the user is opted in to playing.
 		if (!target_data.playing) {
-			await interaction.reply({ content: 'The target isn\'t opted in!', ephemeral: true });
+			await interaction.reply({ content: 'The target isn\'t opted in!', flags: MessageFlags.Ephemeral });
 			return;
 		}
 
@@ -145,16 +145,14 @@ export const command = {
 		]);
 		
 		// Tell the user the snowball hit.
-		await interaction.reply({ embeds: [ build_snowball_hit(target, user_data.packed_object, newScore, newTargetScore, interaction.member, crit) ] });
+		const message = await interaction.reply({ embeds: [ build_snowball_hit(target, user_data.packed_object, newScore, newTargetScore, interaction.member, crit) ], withResponse: true });
 
 		const ping = interaction.options.getBoolean('ping') ?? false;
 
 		if (ping) {
-			// Actually ping the user then delete the message to make it look like the embed pinged them.
-			const msg = await interaction.channel.send(`<@${target.user.id}>`);
-			msg.delete();
-
-			await target.user.send({ embeds: [ build_snowball_hit_dm(target, user_data.packed_object, newScore, newTargetScore, interaction.member, crit) ] });
+			// Send the target a DM telling them about the shot.
+			await target.user.send({ content: `You're under attack by <@${interaction.member.id}>! Click the link at the bottom to fight back!` });
+			await message.resource.message.forward(target.user.dmChannel);
 		}
 		
 		const achievements = await parseAchievements(user_data);

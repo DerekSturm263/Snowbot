@@ -1,6 +1,6 @@
 // Checks the user's current achievements.
 
-import { SlashCommandBuilder    }   from 'discord.js';
+import { MessageFlags, SlashCommandBuilder    }   from 'discord.js';
 import { get_user_data }   from '../database.js';
 import { build_new_achievement } from '../embeds/new_achievement.js';
 import achievements from '../exports/achievements.js';
@@ -29,7 +29,7 @@ export const command = {
         });
 		
 		// Tell the user the stats.
-		await interaction.reply({ embeds: unlocked, ephemeral: true });
-		await interaction.reply({ embeds: locked, ephemeral: true });
+		await interaction.reply({ embeds: unlocked, flags: MessageFlags.Ephemeral });
+		await interaction.reply({ embeds: locked, flags: MessageFlags.Ephemeral });
 	}
 };

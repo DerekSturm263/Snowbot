@@ -1,6 +1,6 @@
 // Gives some basic information about each command to the user.
 
-import { SlashCommandBuilder 											} from 'discord.js';
+import { MessageFlags, SlashCommandBuilder 											} from 'discord.js';
 import { build_new_help } from '../embeds/new_help.js';
 
 export const command = {
@@ -12,6 +12,6 @@ export const command = {
 		console.log(`\n${interaction.member.id} used /help:`);
 
         // Tell the user everything about the bot.
-		await interaction.reply({ embeds: [ build_new_help() ], ephemeral: true });
+		await interaction.reply({ embeds: [ build_new_help() ], flags: MessageFlags.Ephemeral });
 	}
 };

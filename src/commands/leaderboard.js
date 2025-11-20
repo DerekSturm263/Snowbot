@@ -1,6 +1,6 @@
 // Displays the leaderboard based on each user's score.
 
-import { ReactionUserManager, SlashCommandBuilder 	}	from 'discord.js';
+import { MessageFlags, SlashCommandBuilder 	}	from 'discord.js';
 import { get_leaderboard_data, get_user_data		}	from '../database.js';
 import { build_new_leaderboard 	}	from '../embeds/embed_leaderboard.js';
 
@@ -17,7 +17,7 @@ export const command = {
 		const leaderboard = await get_leaderboard_data(interaction.guild.id);
 
 		if (leaderboard.users.length == 0) {
-			await interaction.reply({ content: 'No one\'s on the leaderboard yet! Throw a snowball at someone to get started!', ephemeral: true });
+			await interaction.reply({ content: 'No one\'s on the leaderboard yet! Throw a snowball at someone to get started!', flags: MessageFlags.Ephemeral });
 			return;
 		}
 
@@ -34,6 +34,6 @@ export const command = {
 		}
 		
 		// Tell the user the top users based on their score.
-        await interaction.reply({ embeds: [ build_new_leaderboard(output) ], ephemeral: true });
+        await interaction.reply({ embeds: [ build_new_leaderboard(output) ], flags: MessageFlags.Ephemeral });
     }
 };

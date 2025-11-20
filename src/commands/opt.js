@@ -1,6 +1,6 @@
 // Collects snow from off the ground.
 
-import { SlashCommandBuilder 	} from 'discord.js';
+import { MessageFlags, SlashCommandBuilder 	} from 'discord.js';
 import { build_new_opt } from '../embeds/opt_embed.js';
 import { get_user_data, set_opt                } from '../database.js';
 
@@ -28,12 +28,12 @@ export const command = {
 
         // Check if they are already opted in or out.
         if (opt_in == user_data.playing) {
-            await interaction.reply({ content: `You're already opted ${in_msg}!`, ephemeral: true });
+            await interaction.reply({ content: `You're already opted ${in_msg}!`, flags: MessageFlags.Ephemeral });
             return;
         }
 
         // Tell them if they opted in or out.
         await set_opt(interaction.member.id, opt_in);
-        await interaction.reply({ embeds: [ build_new_opt(opt_in ? 0 : 1) ], ephemeral: true });
+        await interaction.reply({ embeds: [ build_new_opt(opt_in ? 0 : 1) ], flags: MessageFlags.Ephemeral });
     }
 };

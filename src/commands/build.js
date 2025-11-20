@@ -1,7 +1,7 @@
 // Builds something using snow from your hand.
 // What you build will give you a certain number of shots to block.
 
-import { SlashCommandBuilder 							} from 'discord.js';
+import { MessageFlags, SlashCommandBuilder 							} from 'discord.js';
 import { parseAchievements, get_user_data, set_snow_amount, set_building, get_current_weather, set_total_buildings	} from '../database.js';
 import { build_new_building 							} from '../embeds/new_builds.js';
 import builds from '../exports/builds.js';
@@ -16,7 +16,7 @@ export const command = {
 			.setDescription('What to build.')
 			.setRequired(true)
 			.addChoices(builds.map(item => ({
-				name: `${item.name} (cost: ${item.cost}, hits: ${item.hits})`,
+				name: `${item.name} (cost: ${item.cost} snow, blocks: ${item.hits} hits)`,
 				value: item.id
 			})))
 		),
@@ -27,7 +27,7 @@ export const command = {
 		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), await get_current_weather() ];
 
 		if (!user_data.playing) {
-			await interaction.reply({ content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!', ephemeral: true });
+			await interaction.reply({ content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!', flags: MessageFlags.Ephemeral });
 			return;
 		}
 
@@ -51,19 +51,19 @@ export const command = {
 
 		// Check if the user entered an invalid value.
 		if (buildObj == null) {
-			await interaction.reply({ content: 'Please enter a valid building name.', ephemeral: true });
+			await interaction.reply({ content: 'Please enter a valid building name.', flags: MessageFlags.Ephemeral });
 			return;
 		}
 
 		// Check if the user already has something built.
 		if (user_data.building != null) {
-			await interaction.reply({ content: `You already have a ${user_data.building.name} built!`, ephemeral: true });
+			await interaction.reply({ content: `You already have a ${user_data.building.name} built!`, flags: MessageFlags.Ephemeral });
 			return;
 		}
 
 		// Check if the user doesn't have enough snow to build.
 		if (user_data.snow_amount < buildObj.cost) {
-			await interaction.reply({ content: 'You don\'t have enough snow! Use `/collect` to get some more!', ephemeral: true });
+			await interaction.reply({ content: 'You don\'t have enough snow! Use `/collect` to get some more!', flags: MessageFlags.Ephemeral });
 			return;
 		}
 
@@ -77,7 +77,7 @@ export const command = {
 		]);
 
 		// Tell the user the building was a success.
-		await interaction.reply({ embeds: [ build_new_building(buildObj) ], ephemeral: true });
+		await interaction.reply({ embeds: [ build_new_building(buildObj) ], flags: MessageFlags.Ephemeral });
 		
 		const achievements = await parseAchievements(user_data);
 		await Promise.all(achievements.map(async item => {

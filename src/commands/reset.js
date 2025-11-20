@@ -1,6 +1,6 @@
 // Resets the user's stats and achievements.
 
-import { SlashCommandBuilder 											} from 'discord.js';
+import { MessageFlags, SlashCommandBuilder 											} from 'discord.js';
 import { reset_user_data } from '../database.js';
 
 export const command = {
@@ -14,6 +14,6 @@ export const command = {
 		reset_user_data(interaction.member.id);
 
         // Tell the user everything about the bot.
-		await interaction.reply({ content: 'All progress has been reset.', ephemeral: true });
+		await interaction.reply({ content: 'All progress has been reset.', flags: MessageFlags.Ephemeral });
 	}
 };

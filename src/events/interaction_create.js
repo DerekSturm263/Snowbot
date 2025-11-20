@@ -15,7 +15,7 @@ export const event = {
                 .catch(err => console.error(err));
         } catch (err) {
             console.error(err);
-            await interaction.reply({ content: 'The command could not be executed.', ephemeral: true });
+            await interaction.reply({ content: 'The command could not be executed.', flags: MessageFlags.Ephemeral });
         }
     }
 };
