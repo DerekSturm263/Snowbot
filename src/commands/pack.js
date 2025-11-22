@@ -13,7 +13,7 @@ export const command = {
 		.setDescription('Pack a snowball with something random! Requires that you\'re holding at least 2 snow.'),
 		
 	async execute(interaction) {
-    	await interaction.deferReply({ ephemeral: true });
+    	await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
 		console.log(`\n${interaction.member.id} used /pack:`);
 

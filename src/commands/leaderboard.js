@@ -11,7 +11,7 @@ export const command = {
 		.setDescription('Check the leaderboard for this server.'),
 
 	async execute(interaction) {
-    	await interaction.deferReply({ ephemeral: true });
+    	await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
 		console.log(`\n${interaction.member.id} used /leaderboard:`);
 

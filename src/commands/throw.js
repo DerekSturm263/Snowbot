@@ -21,7 +21,7 @@ export const command = {
 		),
 
 	async execute(interaction) {
-		await interaction.deferReply({ ephemeral: true });
+		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
 		console.log(`\n${interaction.member.id} used /throw:`);
 

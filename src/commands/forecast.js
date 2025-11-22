@@ -19,7 +19,7 @@ export const command = {
 		.setDescription('Checks the current and upcoming weather.'),
 
 	async execute(interaction) {
-		await interaction.deferReply({ ephemeral: true });
+		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
 		console.log(`\n${interaction.member.id} used /forecast:`);
 

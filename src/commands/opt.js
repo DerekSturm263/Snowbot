@@ -18,7 +18,7 @@ export const command = {
         ),
 
     async execute(interaction) {
-    	await interaction.deferReply({ ephemeral: true });
+    	await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
         // Get whether the user chose to opt in or not.
         const opt_in = interaction.options.getSubcommand() == 'in';

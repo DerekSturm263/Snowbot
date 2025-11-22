@@ -5,9 +5,7 @@ import { get_user_data }   from '../database.js';
 import { build_new_list_achievement } from '../embeds/new_achievement.js';
 import achievements from '../exports/achievements.js';
 
-async function build_achievements(row, target, page, itemCount) {
-	const user_data = await get_user_data(target.id);
-
+async function build_achievements(row, user_data, page, itemCount) {
 	return {
 		embeds: achievements.slice(page * itemCount, page * itemCount + itemCount).map(achievement => {
 	        return build_new_list_achievement(achievement, user_data.achievements.includes(achievement.id));
@@ -27,7 +25,7 @@ export const command = {
 			.setRequired(false)),
 			
 	async execute(interaction) {
-		await interaction.deferReply({ ephemeral: true });
+		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
 		console.log(`\n${interaction.member.id} used /achievements:`);
 
@@ -47,9 +45,10 @@ export const command = {
 			);
 
 		const target = interaction.options.getMember('user') ?? interaction.member;
+		const user_data = await get_user_data(target.id);
 
 		// Tell the user the achievements.
-		await interaction.editReply(await build_achievements(row, target, page, 5));
+		await interaction.editReply(await build_achievements(row, user_data, page, 5));
 
 		const collector = interaction.channel.createMessageComponentCollector({ time: 2 * 60 * 1000 });
 		collector.on('collect', async i => {
@@ -61,7 +60,7 @@ export const command = {
 				row.components[0].setDisabled(page == 0);
 				row.components[1].setDisabled(false);
 
-				await interaction.editReply(await build_achievements(row, target, page, 5));
+				await interaction.editReply(build_achievements(row, user_data, page, 5));
 			} else if (i.customId == 'next') {
 				await i.deferUpdate();
 
@@ -70,7 +69,7 @@ export const command = {
 				row.components[0].setDisabled(false);
 				row.components[1].setDisabled(page == Math.floor(achievements.length / 5) - 1);
 
-				await interaction.editReply(await build_achievements(row, target, page, 5));
+				await interaction.editReply(build_achievements(row, user_data, page, 5));
 			}
 		});
 	}
