@@ -62,7 +62,16 @@ export const command = {
 		// Check if the user is trying to throw a snowball at themselves.
 		if (interaction.member.id == target.user.id) {
 			await interaction.editReply({
-				content: 'You can\'t throw a snowball at yourself!',
+				content: 'You can\'t throw snowballs at yourself!',
+				flags: MessageFlags.Ephemeral
+			});
+			return;
+		}
+		
+		// Check if the user is trying to throw a snowball at a bot.
+		if (target.user.bot) {
+			await interaction.editReply({
+				content: 'You can\'t throw snowballs at bots!',
 				flags: MessageFlags.Ephemeral
 			});
 			return;
