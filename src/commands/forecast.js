@@ -39,7 +39,7 @@ export const command = {
 			);
 
 		// Tell the user the current and upcoming weather.
-		const message = await interaction.editReply(build_weather(row, offset));
+		await interaction.editReply(build_weather(row, offset));
 
 		const collector = interaction.channel.createMessageComponentCollector({ time: 2 * 60 * 1000 });
 		collector.on('collect', async i => {
@@ -51,7 +51,7 @@ export const command = {
 				row.components[0].setDisabled(offset == 0);
 				row.components[1].setDisabled(false);
 
-				message.edit(build_weather(row, offset));
+				await interaction.editReply(build_weather(row, offset));
 			} else if (i.customId == 'next') {
 				await i.deferUpdate();
 
@@ -60,7 +60,7 @@ export const command = {
 				row.components[0].setDisabled(false);
 				row.components[1].setDisabled(offset == 24 * 7);
 
-				message.edit(build_weather(row, offset));
+				await interaction.editReply(build_weather(row, offset));
 			}
 		});
 	}

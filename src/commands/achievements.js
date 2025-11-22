@@ -49,7 +49,7 @@ export const command = {
 		const target = interaction.options.getMember('user') ?? interaction.member;
 
 		// Tell the user the achievements.
-		const message = await interaction.editReply(await build_achievements(row, target, page, 5));
+		await interaction.editReply(await build_achievements(row, target, page, 5));
 
 		const collector = interaction.channel.createMessageComponentCollector({ time: 2 * 60 * 1000 });
 		collector.on('collect', async i => {
@@ -61,7 +61,7 @@ export const command = {
 				row.components[0].setDisabled(page == 0);
 				row.components[1].setDisabled(false);
 
-				message.edit(await build_achievements(row, target, page, 5));
+				await interaction.editReply(await build_achievements(row, target, page, 5));
 			} else if (i.customId == 'next') {
 				await i.deferUpdate();
 
@@ -70,7 +70,7 @@ export const command = {
 				row.components[0].setDisabled(false);
 				row.components[1].setDisabled(page == Math.floor(achievements.length / 5) - 1);
 
-				message.edit(await build_achievements(row, target, page, 5));
+				await interaction.editReply(await build_achievements(row, target, page, 5));
 			}
 		});
 	}
