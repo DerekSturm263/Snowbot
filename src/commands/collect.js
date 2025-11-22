@@ -3,7 +3,7 @@
 
 import { MessageFlags, SlashCommandBuilder 													} from 'discord.js';
 import { build_new_collect } from '../embeds/new_collect.js';
-import { parseAchievements, get_user_data, set_snow_amount, set_ready, get_weather, set_packed_object, set_building, set_total_snow_amount	} from '../database.js';
+import { parseAchievements, get_user_data, set_snow_amount, set_ready_time, get_weather, set_packed_object, set_building, set_total_snow_amount	} from '../database.js';
 import { build_new_achievement } from '../embeds/new_achievement.js';
 
 export const command = {
@@ -46,9 +46,12 @@ export const command = {
 		}
 
 		// Check if the user isn't ready to collect more snow.
-		if (!user_data.ready) {
+		if (user_data.ready_time > new Date().getTime()) {
+			const difference = user_data.ready_time - new Date().getTime();
+			const seconds = Math.ceil(difference / 1000);
+
 			await interaction.reply({
-				content: `You have to wait before you can collect more snow!`,
+				content: `You have to wait ${seconds} more seconds before you can collect more snow!`,
 				flags: MessageFlags.Ephemeral
 			});
 			return;
@@ -63,13 +66,8 @@ export const command = {
 			return;
 		}
 
-		// Set the user as not ready and set them as ready after some time.
 		if (weather.cooldown != 0) {
-			await set_ready(interaction.user.id, false);
-
-			setTimeout(() => {
-				set_ready(interaction.user.id, true);
-			}, weather.cooldown * 1000);
+			await set_ready_time(interaction.user.id, new Date().getTime() + (weather.cooldown * 1000));
 		}
 
 		++user_data.snow_amount;

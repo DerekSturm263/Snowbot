@@ -135,15 +135,6 @@ export async function set_total_buildings(id, val) {
     return result;
 }
 
-export async function set_ready(id, val) {
-    const result = await client.db('database').collection('users').updateOne(
-        { userID: id },
-        { $set: { ready: val }}
-    );
-
-    return result;
-}
-
 export async function set_opt(id, val) {
     const result = await client.db('database').collection('users').updateOne(
         { userID: id },
@@ -193,6 +184,15 @@ export async function set_times_hit(id, val) {
     const result = await client.db('database').collection('users').updateOne(
         { userID: id },
         { $set: { times_hit: val }}
+    );
+
+    return result;
+}
+
+export async function set_ready_time(id, val) {
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: id },
+        { $set: { ready_time: val }}
     );
 
     return result;
