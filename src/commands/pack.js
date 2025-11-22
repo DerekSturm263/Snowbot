@@ -10,7 +10,7 @@ import objects from '../exports/objects.js';
 export const command = {
 	data: new SlashCommandBuilder()
 		.setName('pack')
-		.setDescription('Pack a snowball with something random! Requires that you\'re holding snow.'),
+		.setDescription('Pack a snowball with something random! Requires that you\'re holding at least 2 snow.'),
 		
 	async execute(interaction) {
 		console.log(`\n${interaction.member.id} used /pack:`);

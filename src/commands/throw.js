@@ -142,7 +142,7 @@ export const command = {
 		}
 
 		// Set the timeout time based on the packed object.
-		const timeout_time = (5 + user_data.packed_object?.timeout_time) * crit ? 1.5 : 1;
+		const timeout_time = (3 + user_data.packed_object?.timeout_time) * crit ? 1.5 : 1;
 
 		// Time the target out.
 		target.timeout(timeout_time * 1000, 'Covered in snow!')

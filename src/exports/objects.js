@@ -62,10 +62,26 @@ const brick = {
     requirement: ""
 };
 
+const knife = {
+	id: "knife",
+	name: "Knife",
+	timeout_time: 30,
+	image: 'https://www.coldland.ca/cdn/shop/files/CL-AXE-1002_600x.jpg?v=1722341670',
+    requirement: "https://grimfrost.com/cdn/shop/products/3946_2.jpg?v=1625819562"
+};
+
+const crowbar = {
+	id: "crowbar",
+	name: "Crowbar",
+	timeout_time: 40,
+	image: 'https://preview.redd.it/how-would-you-rate-a-crowbar-as-a-melee-weapon-v0-eulpcos8qghe1.jpeg?auto=webp&s=f805c8fa63b67196e352c8cd7bd6ba19eb94b184',
+    requirement: ""
+};
+
 const axe = {
 	id: "axe",
 	name: "Axe",
-	timeout_time: 40,
+	timeout_time: 50,
 	image: 'https://www.coldland.ca/cdn/shop/files/CL-AXE-1002_600x.jpg?v=1722341670',
     requirement: ""
 };
@@ -73,12 +89,11 @@ const axe = {
 const bomb = {
 	id: "bomb",
 	name: "Bomb",
-	timeout_time: 55,
+	timeout_time: 60,
 	image: 'https://www.enterprisehealth.com/hubfs/B20-07-28_COVID-Bomb.jpg',
     requirement: ""
 };
 
-// TODO: Add more objects, at least 15.
 export default [
 	more_snow,
 	yellow_snow,
@@ -88,6 +103,8 @@ export default [
 	razor_blade,
 	needle,
 	brick,
+	knife,
+	crowbar,
 	axe,
 	bomb
 ];

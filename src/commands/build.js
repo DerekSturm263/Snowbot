@@ -16,7 +16,7 @@ export const command = {
 			.setDescription('What to build.')
 			.setRequired(true)
 			.addChoices(builds.map(item => ({
-				name: `${item.name} (cost: ${item.cost} snow, blocks: ${item.hits} hits)`,
+				name: `${item.name} (cost: ${item.cost} snow, blocks: ${item.hits} hit${item.hits == 1 ? '' : 's'})`,
 				value: item.id
 			})))
 		),
