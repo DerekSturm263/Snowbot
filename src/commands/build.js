@@ -2,7 +2,7 @@
 // What you build will give you a certain number of shots to block.
 
 import { MessageFlags, SlashCommandBuilder 							} from 'discord.js';
-import { parseAchievements, get_user_data, set_snow_amount, set_building, get_current_weather, set_total_buildings	} from '../database.js';
+import { parseAchievements, get_user_data, set_snow_amount, set_building, get_weather, set_total_buildings	} from '../database.js';
 import { build_new_building 							} from '../embeds/new_builds.js';
 import builds from '../exports/builds.js';
 import { build_new_achievement } from '../embeds/new_achievement.js';
@@ -24,7 +24,7 @@ export const command = {
 	async execute(interaction) {
 		console.log(`\n${interaction.member.id} used /build:`);
 
-		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), await get_current_weather() ];
+		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), await get_weather(0) ];
 
 		if (!user_data.playing) {
 			await interaction.reply({ content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!', flags: MessageFlags.Ephemeral });

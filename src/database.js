@@ -1,5 +1,7 @@
 import { MongoClient, ObjectId } from "mongodb";
 import achievements from "./exports/achievements.js";
+import weather from "./exports/weathers.js";
+import seedrandom from "seedrandom";
 
 const client = new MongoClient(process.env.MONGODB_URI ?? '', {
     serverSelectionTimeoutMS: 120000,
@@ -227,38 +229,16 @@ async function add_achievement(id, val) {
 
 // Weather.
 
-export async function get_current_weather() {
-    const weather = await client.db('database').collection('weather').findOne(
-        { _id: new ObjectId("691acb0a45118463c7cc7d6f") }
-    );
+export function get_weather(hourOffset) {
+    const now = new Date();
+    const withOffset = new Date(now.getTime() + (hourOffset * 60 * 60 * 1000));
+    const dayIndex = withOffset.getUTCDay();
+    const hourIndex = withOffset.getUTCHours();
 
-    return weather.currentWeather;
-}
+    const rng = seedrandom((hourIndex + dayIndex).toString());
+    const random = Math.floor(rng() * weather.length);
 
-export async function set_current_weather(weather) {
-    const result = await client.db('database').collection('weather').updateOne(
-        { _id: new ObjectId("691acb0a45118463c7cc7d6f") },
-        { $set: { currentWeather: weather }}
-    );
-
-    return result;
-}
-
-export async function get_next_weather() {
-    const weather = await client.db('database').collection('weather').findOne(
-        { _id: new ObjectId("691acb0a45118463c7cc7d6f") }
-    );
-
-    return weather.nextWeather;
-}
-
-export async function set_next_weather(weather) {
-    const result = await client.db('database').collection('weather').updateOne(
-        { _id: new ObjectId("691acb0a45118463c7cc7d6f") },
-        { $set: { nextWeather: weather }}
-    );
-
-    return result;
+    return weather[random];
 }
 
 

@@ -78,6 +78,7 @@ const bomb = {
     requirement: ""
 };
 
+// TODO: Add more objects, at least 15.
 export default [
 	more_snow,
 	yellow_snow,

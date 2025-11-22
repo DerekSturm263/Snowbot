@@ -2,7 +2,7 @@
 // Weather is updated every 2 hours and is static across servers. Updated randomly.
 
 import { MessageFlags, SlashCommandBuilder						} 	from 'discord.js';
-import { get_current_weather, get_user_data, get_next_weather		}	from '../database.js';
+import { get_weather, get_user_data	}	from '../database.js';
 import { build_new_weather	}	from '../embeds/new_weather.js';
 
 export const command = {
@@ -21,9 +21,10 @@ export const command = {
 		}
 		
 		// Get the current weather.
-		const [ curr_weather, next_weather ] = [ await get_current_weather(), await get_next_weather() ];
+		const curr_weather = get_weather(0);
+		const next_weather = get_weather(1);
 
 		// Tell the user the current and upcoming weather.
-		await interaction.reply({ embeds: [ build_new_weather(curr_weather, "Current Weather"), build_new_weather(next_weather, "Upcoming Weather") ], flags: MessageFlags.Ephemeral });
+		await interaction.reply({ embeds: [ build_new_weather(curr_weather, "Current Weather", 0), build_new_weather(next_weather, "Upcoming Weather", 1) ], flags: MessageFlags.Ephemeral });
 	}
 };

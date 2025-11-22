@@ -1,5 +1,6 @@
 import { EmbedBuilder } from 'discord.js';
 
+// TODO: Add more gifs. At least 50
 const snowball_hit_images = [
 	'https://media4.giphy.com/media/xUySTqYAa9n6awCiSk/giphy.gif',
 	'https://media4.giphy.com/media/xUySTZhLpepqXCl5Dy/giphy.gif',
@@ -22,6 +23,7 @@ const snowball_hit_images = [
 	'https://media1.giphy.com/media/3019zizFQTcGh1Nmcs/giphy.gif'
 ];
 
+// TODO: Add more messages, at least 5.
 function snowball_hit_messages(id, item) {
 	return [
 		`You threw a ${item != null ? item.name + '-packed ' : ''}snowball at <@${id}>! Good job!`,
@@ -30,14 +32,7 @@ function snowball_hit_messages(id, item) {
 	];
 };
 
-function snowball_hit_dm_messages(id, item) {
-	return [
-		`<@${id}> just threw a ${item != null ? item.name + '-packed ' : ''}snowball at you! Are you gonna stand for that?`,
-		`<@${id}> pelted you with a ${item != null ? item.name + '-packed ' : ''}snowball! What are you gonna do about it?`,
-		`<@${id}> gave it everything they got and hit you with a ${item != null ? item.name + '-packed ' : ''}snowball! Now it's your turn!`
-	];
-};
-
+// TODO: Add more messages, at least 5.
 function snowball_miss_messages(id) {
 	return [
 		`You tried pelting <@${id}> with a snowball, but missed!`,
@@ -46,6 +41,7 @@ function snowball_miss_messages(id) {
 	];
 };
 
+// TODO: Add more messages, at least 5.
 function snowball_block_messages(id, build) {
 	return [
 		`You tried throwing a snowball at <@${id}>, but it was blocked by their ${build.name}! It has ${build.hits} hit(s) left until it breaks!`,
@@ -54,6 +50,7 @@ function snowball_block_messages(id, build) {
 	];
 };
 
+// TODO: Add more messages, at least 5.
 function snowball_block_break_messages(id, build) {
 	return [
 		`You threw a snowball at <@${id}> and broke their ${build}!`,

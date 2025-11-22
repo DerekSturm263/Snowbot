@@ -3,7 +3,7 @@
 
 import { MessageFlags, SlashCommandBuilder 													} from 'discord.js';
 import { build_new_collect } from '../embeds/new_collect.js';
-import { parseAchievements, get_user_data, set_snow_amount, set_ready, get_current_weather, set_packed_object, set_building, set_total_snow_amount	} from '../database.js';
+import { parseAchievements, get_user_data, set_snow_amount, set_ready, get_weather, set_packed_object, set_building, set_total_snow_amount	} from '../database.js';
 import { build_new_achievement } from '../embeds/new_achievement.js';
 
 export const command = {
@@ -14,7 +14,7 @@ export const command = {
 	async execute(interaction) {
 		console.log(`\n${interaction.member.id} used /collect:`);
 
-		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), await get_current_weather() ];
+		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), await get_weather(0) ];
 
 		if (!user_data.playing) {
 			await interaction.reply({ content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!', flags: MessageFlags.Ephemeral });

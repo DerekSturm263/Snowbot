@@ -5,6 +5,7 @@ import { get_user_data }   from '../database.js';
 import { build_new_achievement } from '../embeds/new_achievement.js';
 import achievements from '../exports/achievements.js';
 
+// TODO: Update to use a pagination.
 export const command = {
 	data: new SlashCommandBuilder()
 		.setName('achievements')
