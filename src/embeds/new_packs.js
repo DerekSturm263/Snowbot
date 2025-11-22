@@ -5,5 +5,8 @@ export function build_new_pack(obj) {
 		.setColor(0xFFFFFF)
 		.setTitle(`You packed a **${obj.name}** in your snowball!`)
         .setImage(obj.image)
-        .addFields({ name: 'Timeout Time', value: `+${obj.timeout_time} Seconds` });
+        .addFields({
+			name: 'Timeout Time',
+			value: `+${obj.timeout_time} Seconds`
+		});
 };

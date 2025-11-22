@@ -5,5 +5,8 @@ export function build_new_building(build) {
 		.setColor(0xFFFFFF)
 		.setTitle(`You built a **${build.name}**!`)
         .setImage(build.image)
-        .addFields({ name: 'Hits Left', value: `${build.hits}` });
+        .addFields({
+			name: 'Hits Left',
+			value: `${build.hits}`
+		});
 };
