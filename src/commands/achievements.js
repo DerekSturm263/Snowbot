@@ -1,11 +1,22 @@
 // Checks the user's current achievements.
 
-import { MessageFlags, SlashCommandBuilder    }   from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, MessageFlags, SlashCommandBuilder    }   from 'discord.js';
 import { get_user_data }   from '../database.js';
-import { build_new_achievement } from '../embeds/new_achievement.js';
+import { build_new_list_achievement } from '../embeds/new_achievement.js';
 import achievements from '../exports/achievements.js';
 
-// TODO: Update to use a pagination.
+async function build_achievements(row, target, page, itemCount) {
+	const user_data = await get_user_data(target.id);
+
+	return {
+		embeds: achievements.slice(page * itemCount, page * itemCount + itemCount).map(achievement => {
+	        return build_new_list_achievement(achievement, user_data.achievements.includes(achievement.id));
+    	}),
+		components: [ row ],
+		flags: MessageFlags.Ephemeral
+	};
+}
+
 export const command = {
 	data: new SlashCommandBuilder()
 		.setName('achievements')
@@ -16,29 +27,51 @@ export const command = {
 			.setRequired(false)),
 			
 	async execute(interaction) {
+		await interaction.deferReply({ ephemeral: true });
+
 		console.log(`\n${interaction.member.id} used /achievements:`);
 
+		let page = 0;
+
+		const row = new ActionRowBuilder()
+			.addComponents(
+				new ButtonBuilder()
+					.setCustomId('prev')
+					.setEmoji('◀️')
+					.setStyle('Primary')
+					.setDisabled(true),
+				new ButtonBuilder()
+					.setCustomId('next')
+					.setEmoji('▶️')
+					.setStyle('Primary')
+			);
+
 		const target = interaction.options.getMember('user') ?? interaction.member;
-		const user_data = await get_user_data(target.id);
 
-		const unlocked = achievements.filter(achievement => user_data.achievements.includes(achievement.id)).map(achievement => {
-            return build_new_achievement(achievement, false, true);
-        });
+		// Tell the user the achievements.
+		const message = await interaction.editReply(await build_achievements(row, target, page, 5));
 
-		const locked = achievements.filter(achievement => !user_data.achievements.includes(achievement.id)).map(achievement => {
-            return build_new_achievement(achievement, false, false);
-        });
-		
-		// Tell the user the unlocked achievements.
-		await interaction.reply({
-			embeds: unlocked,
-			flags: MessageFlags.Ephemeral
-		});
+		const collector = interaction.channel.createMessageComponentCollector({ time: 2 * 60 * 1000 });
+		collector.on('collect', async i => {
+			if (i.customId == 'prev') {
+				await i.deferUpdate();
 
-		// Tell the user the locked achievements.
-		await interaction.reply({
-			embeds: locked,
-			flags: MessageFlags.Ephemeral
+				--page;
+
+				row.components[0].setDisabled(page == 0);
+				row.components[1].setDisabled(false);
+
+				message.edit(await build_achievements(row, target, page, 5));
+			} else if (i.customId == 'next') {
+				await i.deferUpdate();
+
+				++page;
+
+				row.components[0].setDisabled(false);
+				row.components[1].setDisabled(page == Math.floor(achievements.length / 5) - 1);
+
+				message.edit(await build_achievements(row, target, page, 5));
+			}
 		});
 	}
 };

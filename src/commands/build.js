@@ -5,7 +5,7 @@ import { MessageFlags, SlashCommandBuilder 							} from 'discord.js';
 import { parseAchievements, get_user_data, set_snow_amount, set_building, get_weather, set_total_buildings	} from '../database.js';
 import { build_new_building 							} from '../embeds/new_builds.js';
 import builds from '../exports/builds.js';
-import { build_new_achievement } from '../embeds/new_achievement.js';
+import { build_new_get_achievement } from '../embeds/new_achievement.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -22,12 +22,14 @@ export const command = {
 		),
 	
 	async execute(interaction) {
+		await interaction.deferReply({ ephemeral: true });
+
 		console.log(`\n${interaction.member.id} used /build:`);
 
 		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), get_weather(0) ];
 
 		if (!user_data.playing) {
-			await interaction.reply({
+			await interaction.editReply({
 				content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!',
 				flags: MessageFlags.Ephemeral
 			});
@@ -54,7 +56,7 @@ export const command = {
 
 		// Check if the user entered an invalid value.
 		if (buildObj == null) {
-			await interaction.reply({
+			await interaction.editReply({
 				content: 'Please enter a valid building name.',
 				flags: MessageFlags.Ephemeral
 			});
@@ -63,7 +65,7 @@ export const command = {
 
 		// Check if the user already has something built.
 		if (user_data.building != null) {
-			await interaction.reply({
+			await interaction.editReply({
 				content: `You already have a ${user_data.building.name} built!`,
 				flags: MessageFlags.Ephemeral
 			});
@@ -72,7 +74,7 @@ export const command = {
 
 		// Check if the user doesn't have enough snow to build.
 		if (user_data.snow_amount < buildObj.cost) {
-			await interaction.reply({
+			await interaction.editReply({
 				content: 'You don\'t have enough snow! Use `/collect` to get some more!',
 				flags: MessageFlags.Ephemeral
 			});
@@ -89,7 +91,7 @@ export const command = {
 		]);
 
 		// Tell the user the building was a success.
-		await interaction.reply({
+		await interaction.editReply({
 			embeds: [ build_new_building(buildObj) ],
 			flags: MessageFlags.Ephemeral
 		});
@@ -97,7 +99,7 @@ export const command = {
 		const achievements = await parseAchievements(user_data);
 		await Promise.all(achievements.map(async item => {
 			interaction.member.send({
-				embeds: [ build_new_achievement(item, true, true) ]
+				embeds: [ build_new_get_achievement(item) ]
 			});
 		}));
 	}

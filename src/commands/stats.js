@@ -14,6 +14,8 @@ export const command = {
 			.setRequired(false)),
 			
 	async execute(interaction) {
+		await interaction.deferReply({ ephemeral: true });
+
 		console.log(`\n${interaction.member.id} used /stats:`);
 
 		const target = interaction.options.getMember('user') ?? interaction.member;
@@ -32,7 +34,7 @@ export const command = {
 		}
 		
 		// Tell the user the stats.
-		await interaction.reply({
+		await interaction.editReply({
 			embeds: [ build_new_stats(target.displayName, user_data, target != interaction.member) ],
 			flags: MessageFlags.Ephemeral
 		});

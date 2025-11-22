@@ -18,6 +18,8 @@ export const command = {
         ),
 
     async execute(interaction) {
+    	await interaction.deferReply({ ephemeral: true });
+
         // Get whether the user chose to opt in or not.
         const opt_in = interaction.options.getSubcommand() == 'in';
         const in_msg = opt_in ? 'in' : 'out';
@@ -28,7 +30,7 @@ export const command = {
 
         // Check if they are already opted in or out.
         if (opt_in == user_data.playing) {
-            await interaction.reply({
+            await interaction.editReply({
                 content: `You're already opted ${in_msg}!`,
                 flags: MessageFlags.Ephemeral
             });
@@ -38,7 +40,7 @@ export const command = {
         await set_opt(interaction.member.id, opt_in);
 
         // Tell them if they opted in or out.
-        await interaction.reply({
+        await interaction.editReply({
             embeds: [ build_new_opt(opt_in ? 0 : 1) ],
             flags: MessageFlags.Ephemeral
         });

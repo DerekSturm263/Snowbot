@@ -4,7 +4,7 @@
 import { MessageFlags, SlashCommandBuilder 													} from 'discord.js';
 import { build_new_collect } from '../embeds/new_collect.js';
 import { parseAchievements, get_user_data, set_snow_amount, set_ready_time, get_weather, set_packed_object, set_building, set_total_snow_amount	} from '../database.js';
-import { build_new_achievement } from '../embeds/new_achievement.js';
+import { build_new_get_achievement } from '../embeds/new_achievement.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -12,12 +12,14 @@ export const command = {
 		.setDescription('Collect some fresh snow from off the ground.'),
 
 	async execute(interaction) {
+		await interaction.deferReply({ ephemeral: true });
+
 		console.log(`\n${interaction.member.id} used /collect:`);
 
 		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), get_weather(0) ];
 
 		if (!user_data.playing) {
-			await interaction.reply({
+			await interaction.editReply({
 				content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!',
 				flags: MessageFlags.Ephemeral
 			});
@@ -38,7 +40,7 @@ export const command = {
 		
 		// Check if it isn't snowing.
 		if (weather.cooldown < 0) {
-			await interaction.reply({
+			await interaction.editReply({
 				content: `It isn't snowing! Wait for the weather to change!`,
 				flags: MessageFlags.Ephemeral
 			});
@@ -50,7 +52,7 @@ export const command = {
 			const difference = user_data.ready_time - new Date().getTime();
 			const seconds = Math.ceil(difference / 1000);
 
-			await interaction.reply({
+			await interaction.editReply({
 				content: `You have to wait ${seconds} more seconds before you can collect more snow!`,
 				flags: MessageFlags.Ephemeral
 			});
@@ -59,7 +61,7 @@ export const command = {
 
 		// Get the amount of snow the user has and check if they already have the max.
 		if (user_data.snow_amount >= 20) {
-			await interaction.reply({
+			await interaction.editReply({
 				content: `Your arms are full! You already have 20 snow!`,
 				flags: MessageFlags.Ephemeral
 			});
@@ -79,7 +81,7 @@ export const command = {
 			set_total_snow_amount(interaction.member.id, user_data.total_snow_amount)
 		]);
 		
-		await interaction.reply({
+		await interaction.editReply({
 			embeds: [ build_new_collect(user_data.snow_amount) ],
 			flags: MessageFlags.Ephemeral
 		});
@@ -87,7 +89,7 @@ export const command = {
 		const achievements = await parseAchievements(user_data);
 		await Promise.all(achievements.map(async item => {
 			interaction.member.send({
-				embeds: [ build_new_achievement(item, true, true) ]
+				embeds: [ build_new_get_achievement(item) ]
 			});
 		}));
 	}

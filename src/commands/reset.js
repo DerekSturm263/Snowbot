@@ -9,12 +9,14 @@ export const command = {
 		.setDescription('Reset all stats and achievements.'),
 			
 	async execute(interaction) {
+		await interaction.deferReply({ ephemeral: true });
+
 		console.log(`\n${interaction.member.id} used /stats:`);
 
 		reset_user_data(interaction.member.id);
 
         // Tell the user everything about the bot.
-		await interaction.reply({
+		await interaction.editReply({
 			content: 'All progress has been reset.',
 			flags: MessageFlags.Ephemeral
 		});

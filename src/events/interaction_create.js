@@ -1,3 +1,5 @@
+import { MessageFlags } from "discord.js";
+
 export const event = {
     name: 'interactionCreate',
     async execute(interaction) {
@@ -15,7 +17,11 @@ export const event = {
                 .catch(err => console.error(err));
         } catch (err) {
             console.error(err);
-            await interaction.reply({ content: 'The command could not be executed.', flags: MessageFlags.Ephemeral });
+            
+            await interaction.reply({
+                content: 'The command could not be executed.',
+                flags: MessageFlags.Ephemeral
+            });
         }
     }
 };

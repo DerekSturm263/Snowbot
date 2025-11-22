@@ -4,7 +4,7 @@
 import { MessageFlags, SlashCommandBuilder,  																							} from 'discord.js';
 import { parseAchievements, get_user_data, set_packed_object, set_snow_amount, set_building, set_score, set_misses, set_hits, set_crits, set_times_hit, get_weather, try_add_to_leaderboard	} from '../database.js';
 import { build_snowball_hit, build_snowball_miss, build_snowball_block, build_snowball_block_break					    } from '../embeds/snowball.js';
-import { build_new_achievement } from '../embeds/new_achievement.js';
+import { build_new_get_achievement } from '../embeds/new_achievement.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -21,12 +21,14 @@ export const command = {
 		),
 
 	async execute(interaction) {
+		await interaction.deferReply({ ephemeral: true });
+
 		console.log(`\n${interaction.member.id} used /throw:`);
 
 		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), get_weather(0) ];
 
 		if (!user_data.playing) {
-			await interaction.reply({
+			await interaction.editReply({
 				content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!',
 				flags: MessageFlags.Ephemeral
 			});
@@ -47,7 +49,7 @@ export const command = {
 		
 		// Get the snow amount and check if the user has any snow.
 		if (user_data.snow_amount == 0) {
-			await interaction.reply({
+			await interaction.editReply({
 				content: 'You don\'t have any snow! Use `/collect` to get some.',
 				flags: MessageFlags.Ephemeral
 			});
@@ -59,7 +61,7 @@ export const command = {
 
 		// Check if the user is trying to throw a snowball at themselves.
 		if (interaction.member.id == target.user.id) {
-			await interaction.reply({
+			await interaction.editReply({
 				content: 'You can\'t throw a snowball at yourself!',
 				flags: MessageFlags.Ephemeral
 			});
@@ -70,7 +72,7 @@ export const command = {
 
 		// Check if the user is opted in to playing.
 		if (!target_data.playing) {
-			await interaction.reply({
+			await interaction.editReply({
 				content: 'The target isn\'t opted in!',
 				flags: MessageFlags.Ephemeral
 			});
@@ -101,11 +103,11 @@ export const command = {
 			const achievements = await parseAchievements(user_data);
 			await Promise.all(achievements.map(async item => {
 				interaction.member.send({
-					embeds: [ build_new_achievement(item, true, true) ]
+					embeds: [ build_new_get_achievement(item) ]
 				});
 			}));
 
-			await interaction.reply({
+			await interaction.editReply({
 				embeds: [ build_snowball_miss(target) ]
 			});
 			return;
@@ -120,7 +122,7 @@ export const command = {
 			if (target_data.building.hits == 0) {
 				// Remove the building and tell the user it was broken.
 				await set_building(target.user.id, null);
-				await interaction.reply({
+				await interaction.editReply({
 					embeds: [ build_snowball_block_break(target, target_data.building.name) ]
 				});
 				
@@ -129,7 +131,7 @@ export const command = {
 
 			// Update the building and tell the user it was hit.
 			await set_building(target.user.id, target_data.building);
-			await interaction.reply({
+			await interaction.editReply({
 				embeds: [ build_snowball_block(target, target_data.building) ]
 			});
 			
@@ -165,7 +167,7 @@ export const command = {
 		]);
 		
 		// Tell the user the snowball hit.
-		const message = await interaction.reply({
+		const message = await interaction.editReply({
 			embeds: [ build_snowball_hit(target, user_data.packed_object, newScore, newTargetScore, interaction.member, crit) ],
 			withResponse: true
 		});
@@ -183,14 +185,14 @@ export const command = {
 		const achievements = await parseAchievements(user_data);
 		await Promise.all(achievements.map(async item => {
 			interaction.member.send({
-				embeds: [ build_new_achievement(item, true, true) ]
+				embeds: [ build_new_get_achievement(item) ]
 			});
 		}));
 
 		const achievements2 = await parseAchievements(target_data);
 		await Promise.all(achievements2.map(async item => {
 			target.user.send({
-				embeds: [ build_new_achievement(item, true, true) ]
+				embeds: [ build_new_get_achievement(item) ]
 			});
 		}));
 	}

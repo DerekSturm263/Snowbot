@@ -4,7 +4,7 @@
 import { MessageFlags, SlashCommandBuilder				} from 'discord.js';
 import { parseAchievements, get_user_data, set_packed_object, get_weather, set_total_packed_objects	} from '../database.js';
 import { build_new_pack 					} from '../embeds/new_packs.js';
-import { build_new_achievement } from '../embeds/new_achievement.js';
+import { build_new_get_achievement } from '../embeds/new_achievement.js';
 import objects from '../exports/objects.js';
 
 export const command = {
@@ -13,12 +13,14 @@ export const command = {
 		.setDescription('Pack a snowball with something random! Requires that you\'re holding at least 2 snow.'),
 		
 	async execute(interaction) {
+    	await interaction.deferReply({ ephemeral: true });
+
 		console.log(`\n${interaction.member.id} used /pack:`);
 
 		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), get_weather(0) ];
 
 		if (!user_data.playing) {
-			await interaction.reply({
+			await interaction.editReply({
 				content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!',
 				flags: MessageFlags.Ephemeral
 			});
@@ -39,7 +41,7 @@ export const command = {
 		
 		// Check if the user is already packed something.
 		if (user_data.packed_object != null) {
-			await interaction.reply({
+			await interaction.editReply({
 				content: `You already have a ${user_data.packed_object.name} in your snowball!`,
 				flags: MessageFlags.Ephemeral
 			});
@@ -48,7 +50,7 @@ export const command = {
 
 		// Check if the user doesn't have enough snow.
 		if (user_data.snow_amount < 2) {
-			await interaction.reply({
+			await interaction.editReply({
 				content: 'You must have at least 2 snow in your hand to pack something in! Use `/collect` to get some.',
 				flags: MessageFlags.Ephemeral
 			});
@@ -70,7 +72,7 @@ export const command = {
 			set_total_packed_objects(interaction.member.id, user_data.total_packed_objects)
 		]);
 		
-		await interaction.reply({
+		await interaction.editReply({
 			embeds: [ build_new_pack(item) ],
 			flags: MessageFlags.Ephemeral
 		});
@@ -78,7 +80,7 @@ export const command = {
 		const achievements = await parseAchievements(user_data);
 		await Promise.all(achievements.map(async item => {
 			interaction.member.send({
-				embeds: [ build_new_achievement(item, true, true) ]
+				embeds: [ build_new_get_achievement(item) ]
 			});
 		}));
 	}

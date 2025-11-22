@@ -9,10 +9,12 @@ export const command = {
 		.setDescription('Learn more about each of the commands and the bot itself.'),
 			
 	async execute(interaction) {
+		await interaction.deferReply({ ephemeral: true });
+
 		console.log(`\n${interaction.member.id} used /help:`);
 
         // Tell the user everything about the bot.
-		await interaction.reply({
+		await interaction.editReply({
 			embeds: [ build_new_help() ],
 			flags: MessageFlags.Ephemeral
 		});

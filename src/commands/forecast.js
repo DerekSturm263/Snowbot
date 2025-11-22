@@ -5,12 +5,22 @@ import { ActionRowBuilder, ButtonBuilder, MessageFlags, SlashCommandBuilder					
 import { get_weather	}	from '../database.js';
 import { build_new_weather	}	from '../embeds/new_weather.js';
 
+function build_weather(row, offset) {
+	return {
+		embeds: [ build_new_weather(get_weather(offset), offset) ],
+		components: [ row ],
+		flags: MessageFlags.Ephemeral
+	}
+}
+
 export const command = {
 	data: new SlashCommandBuilder()
 		.setName('forecast')
 		.setDescription('Checks the current and upcoming weather.'),
 
 	async execute(interaction) {
+		await interaction.deferReply({ ephemeral: true });
+
 		console.log(`\n${interaction.member.id} used /forecast:`);
 
 		let offset = 0;
@@ -21,20 +31,15 @@ export const command = {
 					.setCustomId('prev')
 					.setEmoji('◀️')
 					.setStyle('Primary')
-					.setDisabled(offset == 0),
+					.setDisabled(true),
 				new ButtonBuilder()
 					.setCustomId('next')
 					.setEmoji('▶️')
 					.setStyle('Primary')
-					.setDisabled(offset == 24 * 7)
 			);
 
 		// Tell the user the current and upcoming weather.
-		const message = await interaction.reply({
-			embeds: [ build_new_weather(get_weather(offset), offset) ],
-			components: [ row ],
-			flags: MessageFlags.Ephemeral
-		});
+		const message = await interaction.editReply(build_weather(row, offset));
 
 		const collector = interaction.channel.createMessageComponentCollector({ time: 2 * 60 * 1000 });
 		collector.on('collect', async i => {
@@ -45,22 +50,17 @@ export const command = {
 
 				row.components[0].setDisabled(offset == 0);
 				row.components[1].setDisabled(false);
-				message.edit({
-					embeds: [ build_new_weather(get_weather(offset), offset) ],
-					components: [ row ],
-					flags: MessageFlags.Ephemeral
-				});
+
+				message.edit(build_weather(row, offset));
 			} else if (i.customId == 'next') {
 				await i.deferUpdate();
 
 				++offset;
-				row.components[1].setDisabled(offset == 24 * 7);
+
 				row.components[0].setDisabled(false);
-				message.edit({
-					embeds: [ build_new_weather(get_weather(offset), offset) ],
-					components: [ row ],
-					flags: MessageFlags.Ephemeral
-				});
+				row.components[1].setDisabled(offset == 24 * 7);
+
+				message.edit(build_weather(row, offset));
 			}
 		});
 	}
