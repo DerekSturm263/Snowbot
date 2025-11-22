@@ -15,10 +15,13 @@ export const command = {
 	async execute(interaction) {
 		console.log(`\n${interaction.member.id} used /pack:`);
 
-		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), await get_weather(0) ];
+		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), get_weather(0) ];
 
 		if (!user_data.playing) {
-			await interaction.reply({ content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!', flags: MessageFlags.Ephemeral });
+			await interaction.reply({
+				content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!',
+				flags: MessageFlags.Ephemeral
+			});
 			return;
 		}
 
@@ -36,13 +39,19 @@ export const command = {
 		
 		// Check if the user is already packed something.
 		if (user_data.packed_object != null) {
-			await interaction.reply({ content: `You already have a ${user_data.packed_object.name} in your snowball!`, flags: MessageFlags.Ephemeral });
+			await interaction.reply({
+				content: `You already have a ${user_data.packed_object.name} in your snowball!`,
+				flags: MessageFlags.Ephemeral
+			});
 			return;
 		}
 
 		// Check if the user doesn't have enough snow.
 		if (user_data.snow_amount < 2) {
-			await interaction.reply({ content: 'You must have at least 2 snow in your hand to pack something in! Use `/collect` to get some.', flags: MessageFlags.Ephemeral });
+			await interaction.reply({
+				content: 'You must have at least 2 snow in your hand to pack something in! Use `/collect` to get some.',
+				flags: MessageFlags.Ephemeral
+			});
 			return;
 		}
 
@@ -61,11 +70,16 @@ export const command = {
 			set_total_packed_objects(interaction.member.id, user_data.total_packed_objects)
 		]);
 		
-		await interaction.reply({ embeds: [ build_new_pack(item) ], flags: MessageFlags.Ephemeral });
+		await interaction.reply({
+			embeds: [ build_new_pack(item) ],
+			flags: MessageFlags.Ephemeral
+		});
 		
 		const achievements = await parseAchievements(user_data);
 		await Promise.all(achievements.map(async item => {
-			interaction.member.send({ embeds: [ build_new_achievement(item, true, true) ] });
+			interaction.member.send({
+				embeds: [ build_new_achievement(item, true, true) ]
+			});
 		}));
 	}
 };

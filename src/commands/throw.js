@@ -23,10 +23,13 @@ export const command = {
 	async execute(interaction) {
 		console.log(`\n${interaction.member.id} used /throw:`);
 
-		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), await get_weather(0) ];
+		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), get_weather(0) ];
 
 		if (!user_data.playing) {
-			await interaction.reply({ content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!', flags: MessageFlags.Ephemeral });
+			await interaction.reply({
+				content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!',
+				flags: MessageFlags.Ephemeral
+			});
 			return;
 		}
 
@@ -44,7 +47,10 @@ export const command = {
 		
 		// Get the snow amount and check if the user has any snow.
 		if (user_data.snow_amount == 0) {
-			await interaction.reply({ content: 'You don\'t have any snow! Use `/collect` to get some.', flags: MessageFlags.Ephemeral });
+			await interaction.reply({
+				content: 'You don\'t have any snow! Use `/collect` to get some.',
+				flags: MessageFlags.Ephemeral
+			});
 			return;
 		}
 
@@ -53,7 +59,10 @@ export const command = {
 
 		// Check if the user is trying to throw a snowball at themselves.
 		if (interaction.member.id == target.user.id) {
-			await interaction.reply({ content: 'You can\'t throw a snowball at yourself!', flags: MessageFlags.Ephemeral });
+			await interaction.reply({
+				content: 'You can\'t throw a snowball at yourself!',
+				flags: MessageFlags.Ephemeral
+			});
 			return;
 		}
 		
@@ -61,7 +70,10 @@ export const command = {
 
 		// Check if the user is opted in to playing.
 		if (!target_data.playing) {
-			await interaction.reply({ content: 'The target isn\'t opted in!', flags: MessageFlags.Ephemeral });
+			await interaction.reply({
+				content: 'The target isn\'t opted in!',
+				flags: MessageFlags.Ephemeral
+			});
 			return;
 		}
 
@@ -88,10 +100,14 @@ export const command = {
 
 			const achievements = await parseAchievements(user_data);
 			await Promise.all(achievements.map(async item => {
-				interaction.member.send({ embeds: [ build_new_achievement(item, true, true) ] });
+				interaction.member.send({
+					embeds: [ build_new_achievement(item, true, true) ]
+				});
 			}));
 
-			await interaction.reply({ embeds: [ build_snowball_miss(target) ] });
+			await interaction.reply({
+				embeds: [ build_snowball_miss(target) ]
+			});
 			return;
 		}
 
@@ -104,14 +120,18 @@ export const command = {
 			if (target_data.building.hits == 0) {
 				// Remove the building and tell the user it was broken.
 				await set_building(target.user.id, null);
-				await interaction.reply({ embeds: [ build_snowball_block_break(target, target_data.building.name) ] });
+				await interaction.reply({
+					embeds: [ build_snowball_block_break(target, target_data.building.name) ]
+				});
 				
 				return;
 			}
 
 			// Update the building and tell the user it was hit.
 			await set_building(target.user.id, target_data.building);
-			await interaction.reply({ embeds: [ build_snowball_block(target, target_data.building) ] });
+			await interaction.reply({
+				embeds: [ build_snowball_block(target, target_data.building) ]
+			});
 			
 			return;
 		}
@@ -145,24 +165,33 @@ export const command = {
 		]);
 		
 		// Tell the user the snowball hit.
-		const message = await interaction.reply({ embeds: [ build_snowball_hit(target, user_data.packed_object, newScore, newTargetScore, interaction.member, crit) ], withResponse: true });
+		const message = await interaction.reply({
+			embeds: [ build_snowball_hit(target, user_data.packed_object, newScore, newTargetScore, interaction.member, crit) ],
+			withResponse: true
+		});
 
 		const ping = interaction.options.getBoolean('ping') ?? false;
 
 		if (ping) {
 			// Send the target a DM telling them about the shot.
-			await target.user.send({ content: `You're under attack by <@${interaction.member.id}>! Click the link at the bottom to fight back!` });
+			await target.user.send({
+				content: `You're under attack by <@${interaction.member.id}>! Click the link at the bottom to fight back!`
+			});
 			await message.resource.message.forward(target.user.dmChannel);
 		}
 		
 		const achievements = await parseAchievements(user_data);
 		await Promise.all(achievements.map(async item => {
-			interaction.member.send({ embeds: [ build_new_achievement(item, true, true) ] });
+			interaction.member.send({
+				embeds: [ build_new_achievement(item, true, true) ]
+			});
 		}));
 
 		const achievements2 = await parseAchievements(target_data);
 		await Promise.all(achievements2.map(async item => {
-			target.user.send({ embeds: [ build_new_achievement(item, true, true) ] });
+			target.user.send({
+				embeds: [ build_new_achievement(item, true, true) ]
+			});
 		}));
 	}
 }

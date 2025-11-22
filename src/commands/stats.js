@@ -17,7 +17,7 @@ export const command = {
 		console.log(`\n${interaction.member.id} used /stats:`);
 
 		const target = interaction.options.getMember('user') ?? interaction.member;
-		const [ user_data, weather ] = [ await get_user_data(target.id), await get_weather(0) ];
+		const [ user_data, weather ] = [ await get_user_data(target.id), get_weather(0) ];
 
 		if (weather.cooldown == -2) {
 			await Promise.all([
@@ -32,6 +32,9 @@ export const command = {
 		}
 		
 		// Tell the user the stats.
-		await interaction.reply({ embeds: [ build_new_stats(target.displayName, user_data, target != interaction.member) ], flags: MessageFlags.Ephemeral });
+		await interaction.reply({
+			embeds: [ build_new_stats(target.displayName, user_data, target != interaction.member) ],
+			flags: MessageFlags.Ephemeral
+		});
 	}
 };

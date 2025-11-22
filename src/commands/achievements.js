@@ -29,8 +29,16 @@ export const command = {
             return build_new_achievement(achievement, false, false);
         });
 		
-		// Tell the user the stats.
-		await interaction.reply({ embeds: unlocked, flags: MessageFlags.Ephemeral });
-		await interaction.reply({ embeds: locked, flags: MessageFlags.Ephemeral });
+		// Tell the user the unlocked achievements.
+		await interaction.reply({
+			embeds: unlocked,
+			flags: MessageFlags.Ephemeral
+		});
+
+		// Tell the user the locked achievements.
+		await interaction.reply({
+			embeds: locked,
+			flags: MessageFlags.Ephemeral
+		});
 	}
 };

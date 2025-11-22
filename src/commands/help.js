@@ -12,6 +12,9 @@ export const command = {
 		console.log(`\n${interaction.member.id} used /help:`);
 
         // Tell the user everything about the bot.
-		await interaction.reply({ embeds: [ build_new_help() ], flags: MessageFlags.Ephemeral });
+		await interaction.reply({
+			embeds: [ build_new_help() ],
+			flags: MessageFlags.Ephemeral
+		});
 	}
 };

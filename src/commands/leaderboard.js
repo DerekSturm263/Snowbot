@@ -17,7 +17,10 @@ export const command = {
 		const leaderboard = await get_leaderboard_data(interaction.guild.id);
 
 		if (leaderboard.users.length == 0) {
-			await interaction.reply({ content: 'No one\'s on the leaderboard yet! Throw a snowball at someone to get started!', flags: MessageFlags.Ephemeral });
+			await interaction.reply({
+				content: 'No one\'s on the leaderboard yet! Throw a snowball at someone to get started!',
+				flags: MessageFlags.Ephemeral
+			});
 			return;
 		}
 
@@ -34,6 +37,9 @@ export const command = {
 		}
 		
 		// Tell the user the top users based on their score.
-        await interaction.reply({ embeds: [ build_new_leaderboard(output) ], flags: MessageFlags.Ephemeral });
+        await interaction.reply({
+			embeds: [ build_new_leaderboard(output) ],
+			flags: MessageFlags.Ephemeral
+		});
     }
 };

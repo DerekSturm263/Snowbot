@@ -58,7 +58,7 @@ const blizzard = {
     cooldown: 0,
     building_cost_modifier: -2,
     image: "https://www.farmersalmanac.com/wp-content/uploads/2013/02/Snowy-Blizzard-Forest-Winter-Landscape-as_131962244-945x630.jpeg",
-    description: "It's a blizzard! You can collect snow without any cooldown. Buildings cost way less snow than well."
+    description: "It's a blizzard! You can collect snow without any cooldown. Buildings cost way less snow than usual."
 };
 
 export default [

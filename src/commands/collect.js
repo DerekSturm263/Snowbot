@@ -14,10 +14,13 @@ export const command = {
 	async execute(interaction) {
 		console.log(`\n${interaction.member.id} used /collect:`);
 
-		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), await get_weather(0) ];
+		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), get_weather(0) ];
 
 		if (!user_data.playing) {
-			await interaction.reply({ content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!', flags: MessageFlags.Ephemeral });
+			await interaction.reply({
+				content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!',
+				flags: MessageFlags.Ephemeral
+			});
 			return;
 		}
 
@@ -35,19 +38,28 @@ export const command = {
 		
 		// Check if it isn't snowing.
 		if (weather.cooldown < 0) {
-			await interaction.reply({ content: `It isn't snowing! Wait for the weather to change!`, flags: MessageFlags.Ephemeral });
+			await interaction.reply({
+				content: `It isn't snowing! Wait for the weather to change!`,
+				flags: MessageFlags.Ephemeral
+			});
 			return;
 		}
 
 		// Check if the user isn't ready to collect more snow.
 		if (!user_data.ready) {
-			await interaction.reply({ content: `You have to wait before you can collect more snow!`, flags: MessageFlags.Ephemeral });
+			await interaction.reply({
+				content: `You have to wait before you can collect more snow!`,
+				flags: MessageFlags.Ephemeral
+			});
 			return;
 		}
 
 		// Get the amount of snow the user has and check if they already have the max.
 		if (user_data.snow_amount >= 20) {
-			await interaction.reply({ content: `Your arms are full! You already have 20 snow!`, flags: MessageFlags.Ephemeral });
+			await interaction.reply({
+				content: `Your arms are full! You already have 20 snow!`,
+				flags: MessageFlags.Ephemeral
+			});
 			return;
 		}
 
@@ -69,11 +81,16 @@ export const command = {
 			set_total_snow_amount(interaction.member.id, user_data.total_snow_amount)
 		]);
 		
-		await interaction.reply({ embeds: [ build_new_collect(user_data.snow_amount) ], flags: MessageFlags.Ephemeral });
+		await interaction.reply({
+			embeds: [ build_new_collect(user_data.snow_amount) ],
+			flags: MessageFlags.Ephemeral
+		});
 
 		const achievements = await parseAchievements(user_data);
 		await Promise.all(achievements.map(async item => {
-			interaction.member.send({ embeds: [ build_new_achievement(item, true, true) ] });
+			interaction.member.send({
+				embeds: [ build_new_achievement(item, true, true) ]
+			});
 		}));
 	}
 };

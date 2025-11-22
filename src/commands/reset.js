@@ -14,6 +14,9 @@ export const command = {
 		reset_user_data(interaction.member.id);
 
         // Tell the user everything about the bot.
-		await interaction.reply({ content: 'All progress has been reset.', flags: MessageFlags.Ephemeral });
+		await interaction.reply({
+			content: 'All progress has been reset.',
+			flags: MessageFlags.Ephemeral
+		});
 	}
 };

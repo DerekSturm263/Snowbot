@@ -28,12 +28,19 @@ export const command = {
 
         // Check if they are already opted in or out.
         if (opt_in == user_data.playing) {
-            await interaction.reply({ content: `You're already opted ${in_msg}!`, flags: MessageFlags.Ephemeral });
+            await interaction.reply({
+                content: `You're already opted ${in_msg}!`,
+                flags: MessageFlags.Ephemeral
+            });
             return;
         }
 
-        // Tell them if they opted in or out.
         await set_opt(interaction.member.id, opt_in);
-        await interaction.reply({ embeds: [ build_new_opt(opt_in ? 0 : 1) ], flags: MessageFlags.Ephemeral });
+
+        // Tell them if they opted in or out.
+        await interaction.reply({
+            embeds: [ build_new_opt(opt_in ? 0 : 1) ],
+            flags: MessageFlags.Ephemeral
+        });
     }
 };

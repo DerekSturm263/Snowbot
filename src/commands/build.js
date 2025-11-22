@@ -24,10 +24,13 @@ export const command = {
 	async execute(interaction) {
 		console.log(`\n${interaction.member.id} used /build:`);
 
-		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), await get_weather(0) ];
+		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), get_weather(0) ];
 
 		if (!user_data.playing) {
-			await interaction.reply({ content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!', flags: MessageFlags.Ephemeral });
+			await interaction.reply({
+				content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!',
+				flags: MessageFlags.Ephemeral
+			});
 			return;
 		}
 
@@ -51,19 +54,28 @@ export const command = {
 
 		// Check if the user entered an invalid value.
 		if (buildObj == null) {
-			await interaction.reply({ content: 'Please enter a valid building name.', flags: MessageFlags.Ephemeral });
+			await interaction.reply({
+				content: 'Please enter a valid building name.',
+				flags: MessageFlags.Ephemeral
+			});
 			return;
 		}
 
 		// Check if the user already has something built.
 		if (user_data.building != null) {
-			await interaction.reply({ content: `You already have a ${user_data.building.name} built!`, flags: MessageFlags.Ephemeral });
+			await interaction.reply({
+				content: `You already have a ${user_data.building.name} built!`,
+				flags: MessageFlags.Ephemeral
+			});
 			return;
 		}
 
 		// Check if the user doesn't have enough snow to build.
 		if (user_data.snow_amount < buildObj.cost) {
-			await interaction.reply({ content: 'You don\'t have enough snow! Use `/collect` to get some more!', flags: MessageFlags.Ephemeral });
+			await interaction.reply({
+				content: 'You don\'t have enough snow! Use `/collect` to get some more!',
+				flags: MessageFlags.Ephemeral
+			});
 			return;
 		}
 
@@ -77,11 +89,16 @@ export const command = {
 		]);
 
 		// Tell the user the building was a success.
-		await interaction.reply({ embeds: [ build_new_building(buildObj) ], flags: MessageFlags.Ephemeral });
+		await interaction.reply({
+			embeds: [ build_new_building(buildObj) ],
+			flags: MessageFlags.Ephemeral
+		});
 		
 		const achievements = await parseAchievements(user_data);
 		await Promise.all(achievements.map(async item => {
-			interaction.member.send({ embeds: [ build_new_achievement(item, true, true) ] });
+			interaction.member.send({
+				embeds: [ build_new_achievement(item, true, true) ]
+			});
 		}));
 	}
 };
