@@ -250,6 +250,11 @@ export function get_weather(hourOffset) {
 
 // Leaderboard.
 
+export async function get_leaderboard_count() {
+    const count = await client.db('database').collection('leaderboards').countDocuments();
+    return count;
+}
+
 async function create_leaderboard_data(id) {
     const leaderboard = {
         guildID: id,

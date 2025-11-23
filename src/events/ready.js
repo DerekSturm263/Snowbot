@@ -1,7 +1,11 @@
+import { get_leaderboard_count } from "../database";
+
 export const event = {
     name: 'clientReady',
     async execute(client) {
         console.log(`${client.user.tag} is online.`);
-        client.user.setActivity('/help');
+
+        const serverCount = await get_leaderboard_count();
+        client.user.setActivity(`/help | ${serverCount} servers`);
     }
 };
