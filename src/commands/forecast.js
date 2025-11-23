@@ -39,9 +39,9 @@ export const command = {
 			);
 
 		// Tell the user the current and upcoming weather.
-		await interaction.editReply(build_weather(row, offset));
+		const message = await interaction.editReply(build_weather(row, offset));
 
-		const collector = interaction.channel.createMessageComponentCollector({ time: 2 * 60 * 1000 });
+		const collector = message.createMessageComponentCollector({ time: 2 * 60 * 1000 });
 		collector.on('collect', async i => {
 			if (i.customId == 'prev') {
 				await i.deferUpdate();

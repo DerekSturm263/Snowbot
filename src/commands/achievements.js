@@ -5,7 +5,7 @@ import { get_user_data }   from '../database.js';
 import { build_new_list_achievement } from '../embeds/new_achievement.js';
 import achievements from '../exports/achievements.js';
 
-async function build_achievements(row, user_data, page, itemCount) {
+function build_achievements(row, user_data, page, itemCount) {
 	return {
 		embeds: achievements.slice(page * itemCount, page * itemCount + itemCount).map(achievement => {
 	        return build_new_list_achievement(achievement, user_data.achievements.includes(achievement.id));
@@ -31,6 +31,9 @@ export const command = {
 
 		let page = 0;
 
+		const target = interaction.options.getMember('user') ?? interaction.member;
+		const user_data = await get_user_data(target.id);
+
 		const row = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
@@ -44,13 +47,10 @@ export const command = {
 					.setStyle('Primary')
 			);
 
-		const target = interaction.options.getMember('user') ?? interaction.member;
-		const user_data = await get_user_data(target.id);
-
 		// Tell the user the achievements.
-		await interaction.editReply(await build_achievements(row, user_data, page, 5));
+		const message = await interaction.editReply(build_achievements(row, user_data, page, 5));
 
-		const collector = interaction.channel.createMessageComponentCollector({ time: 2 * 60 * 1000 });
+		const collector = message.createMessageComponentCollector({ time: 2 * 60 * 1000 });
 		collector.on('collect', async i => {
 			if (i.customId == 'prev') {
 				await i.deferUpdate();
