@@ -1,4 +1,4 @@
-import { get_leaderboard_count } from "../database";
+import { get_leaderboard_count } from "../database.js";
 
 export const event = {
     name: 'clientReady',
