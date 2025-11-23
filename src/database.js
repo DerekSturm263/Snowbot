@@ -238,7 +238,12 @@ export function get_weather(hourOffset) {
     const rng = seedrandom((hourIndex + dayIndex).toString());
     const random = Math.floor(rng() * weather.length);
 
-    return weather[random];
+    const newWeather = structuredClone(weather[random]);
+
+    if (newWeather.cooldown > 0)
+        newWeather.cooldown += Math.floor(rng() * 5) - 2;
+
+    return newWeather;
 }
 
 

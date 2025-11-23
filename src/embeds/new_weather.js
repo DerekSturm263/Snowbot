@@ -10,7 +10,7 @@ function getHourRoundedDown(offset) {
 export function build_new_weather(weather, offset) {
     return new EmbedBuilder()
 		.setColor(0xFFFFFF)
-		.setTitle(`${offset == 0 ? "Current" : "Upcoming"} Weather: **${weather.name}**`)
+		.setTitle(`${offset == 0 ? "Current" : "Upcoming"} Weather: ${weather.icon} **${weather.name}**`)
 		.setImage(weather.image)
 		.addFields(
 			{
