@@ -192,7 +192,7 @@ export const command = {
 			await target.user.send({
 				content: `You're under attack by <@${interaction.member.id}>! Click the link at the bottom to fight back!`
 			});
-			await message.resource.message.forward(target.user.dmChannel);
+			await message.forward(target.user.dmChannel);
 		}
 		
 		const achievements = await parseAchievements(user_data);
