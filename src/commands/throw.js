@@ -21,11 +21,18 @@ export const command = {
 		),
 
 	async execute(interaction) {
-		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
-
 		console.log(`\n${interaction.member.id} used /throw:`);
 
-		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), get_weather(0) ];
+		const target = interaction.options.getMember('target');
+		const [ user_data, target_data, weather ] = [
+			await get_user_data(interaction.member.id),
+			await get_user_data(target.user.id),
+			get_weather(0)
+		];
+
+		if (!user_data.playing || user_data.snow_amount == 0 || interaction.member.id == target.user.id || target.user.bot || !target_data.playing) {
+			await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+		}
 
 		if (!user_data.playing) {
 			await interaction.editReply({
@@ -56,9 +63,6 @@ export const command = {
 			return;
 		}
 
-		// Get the target of the snowball.
-		const target = interaction.options.getMember('target');
-
 		// Check if the user is trying to throw a snowball at themselves.
 		if (interaction.member.id == target.user.id) {
 			await interaction.editReply({
@@ -77,8 +81,6 @@ export const command = {
 			return;
 		}
 		
-		const target_data = await get_user_data(target.user.id);
-
 		// Check if the user is opted in to playing.
 		if (!target_data.playing) {
 			await interaction.editReply({
@@ -87,6 +89,8 @@ export const command = {
 			});
 			return;
 		}
+
+		await interaction.deferReply();
 
 		const state = Math.random();
 
