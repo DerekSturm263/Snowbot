@@ -3,8 +3,10 @@
 
 import { MessageFlags, SlashCommandBuilder 													} from 'discord.js';
 import { build_new_collect } from '../embeds/new_collect.js';
-import { parseAchievements, get_user_data, set_snow_amount, set_ready_time, get_weather, set_packed_object, set_building, set_total_snow_amount	} from '../database.js';
+import { parseAchievements, get_user_data, set_snow_amount, set_ready_time, get_weather, set_packed_object, set_building, set_total_snow_amount, add_pet	} from '../database.js';
 import { build_new_get_achievement } from '../embeds/new_achievement.js';
+import { build_new_pet_unlocked } from '../embeds/new_pet.js';
+import pets from '../exports/pets.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -60,15 +62,12 @@ export const command = {
 			return;
 		}
 
-		if (weather.cooldown != 0) {
-			await set_ready_time(interaction.user.id, new Date().getTime() + (weather.cooldown * 1000));
-		}
-
 		++user_data.snow_amount;
 		++user_data.total_snow_amount;
 
 		// Increment the user's snow amount and tell them it was a success.
 		await Promise.all([
+			set_ready_time(interaction.user.id, new Date().getTime() + (weather.cooldown * 1000)),
 			set_snow_amount(interaction.member.id, user_data.snow_amount),
 			set_total_snow_amount(interaction.member.id, user_data.total_snow_amount)
 		]);
@@ -77,6 +76,19 @@ export const command = {
 			embeds: [ build_new_collect(user_data.snow_amount) ],
 			flags: MessageFlags.Ephemeral
 		});
+
+		const petChance = Math.random() < 0.05;
+		if (petChance) {
+			const randomIndex = Math.floor(Math.random() * pets.length);
+			const pet = pets[randomIndex];
+
+			await add_pet(interaction.member.id, pet);
+
+			await interaction.followUp({
+				embeds: [ build_new_pet_unlocked() ],
+				flags: MessageFlags.Ephemeral
+			});
+		}
 
 		const achievements = await parseAchievements(user_data);
 

@@ -23,7 +23,7 @@ async function create_user_data(id) {
         total_packed_objects: 0,
         building: null,
         total_buildings: 0,
-        ready: true,
+        ready_time: 0,
         show_pet_updates: true,
         show_achievements: true,
         show_pings: true,
@@ -32,6 +32,7 @@ async function create_user_data(id) {
         crits: 0,
         misses: 0,
         times_hit: 0,
+        pets: [],
         achievements: []
     };
 
@@ -59,7 +60,7 @@ export async function reset_user_data(id) {
             total_packed_objects: 0,
             building: null,
             total_buildings: 0,
-            ready: true,
+            ready_time: 0,
             show_pet_updates: true,
             show_achievements: true,
             show_pings: true,
@@ -68,6 +69,7 @@ export async function reset_user_data(id) {
             crits: 0,
             misses: 0,
             times_hit: 0,
+            pets: [],
             achievements: []
         }}
     );
@@ -92,9 +94,6 @@ export async function set_snow_amount(id, val) {
 }
 
 export async function set_total_snow_amount(id, val) {
-    if (val > 20)
-        val = 20;
-    
     const result = await client.db('database').collection('users').updateOne(
         { userID: id },
         { $set: { total_snow_amount: val }}
@@ -242,6 +241,23 @@ async function add_achievement(id, val) {
     const result = await client.db('database').collection('users').updateOne(
         { userID: id },
         { $set: { achievements: user.achievements }}
+    );
+
+    return result;
+}
+
+export async function add_pet(id, val) {
+    const now = new Date();
+    const later = new Date(now.getTime() + 60 * 60 * 1000);
+
+    val.hatch_time = later.getTime();
+
+    const user = await client.db('database').collection('users').findOne({ userID: id }) ?? await create_user_data(id);
+    user.pets.push(val);
+
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: id },
+        { $set: { pets: user.pets }}
     );
 
     return result;
