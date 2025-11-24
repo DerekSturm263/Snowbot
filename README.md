@@ -12,18 +12,16 @@ Click the above link to invite Snowbot to your server for free! From there, you 
   - [x] Random Weather
   - [x] Forecast Check
 - [ ] Pets
-- [ ] Custom Server Content
 - [x] Social Features 
   - [x] Leaderboard
   - [x] Stats
   - [x] Achievements
 - [x] Settings
-  - [x] Opt In/Out
-  - [ ] Notifications On/Off
 - [x] Help
 - [x] Reset
 
 ## Issues/Feedback/Proposals
+
 Please report any issues by adding them to the [GitHub Issues](https://github.com/DerekSturm263/Snowbot/issues) list. Feedback and feature proposals can also be submitted through there. You will be notified if your feedback/proposal is accepted into the feature backlog.
 
 ### [Join the discussion on Discord!](https://discord.gg/Xctg4ffRz5)

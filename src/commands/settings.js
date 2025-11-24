@@ -1,4 +1,4 @@
-// Collects snow from off the ground.
+// Manages user settings.
 
 import { ActionRowBuilder, ButtonBuilder, MessageFlags, SlashCommandBuilder 	} from 'discord.js';
 import { build_new_settings } from '../embeds/new_settings.js';

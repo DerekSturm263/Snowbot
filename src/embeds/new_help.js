@@ -15,6 +15,8 @@ export function build_new_help() {
 
             '`/pack`: Packs a snowball with a random item from off the ground. This item increases the damage of your snowballs.\n\n' +
 
+            '`/pets`: Lets you manage your pets by feeding them, selecting which is the active pet, and more.\n\n' +            
+            
             '`/forecast`: Checks the current and upcoming weather. Each weather type impacts the cooldown on `/collect`, among other things.\n\n' +
 
             '`/stats`: Checks a user\'s stats, including snow collected, current packed object, current building, and more.\n\n' +
@@ -23,9 +25,7 @@ export function build_new_help() {
 
             '`/leaderboard`: Checks this server\'s leaderboard. The leaderboard is organized from who has the most to least points.\n\n' +
             
-            '`/opt in`: Opts in to using Snowbot. You will have access to all commands and be able to be hit by snowballs.\n\n' +
-
-            '`/opt out`: Opts out of using Snowbot. You will no longer be able to use most commands or be hit by snowballs.\n\n' +
+            '`/settings`: Lets the user change personal settings related to the bot.\n\n' +
 
             '`/reset`: Resets all of your stats and achievements to their defaults.'
         );

@@ -58,6 +58,7 @@ export function build_new_stats(name, data, hide_data) {
 			{
 				name: 'Total Buildings',
 				value: `${data.total_buildings}`,
-				inline: true }
+				inline: true
+			}
 		);
 };
