@@ -30,16 +30,8 @@ export const command = {
 			get_weather(0)
 		];
 
-		if (!user_data.playing || user_data.snow_amount == 0 || interaction.member.id == target.user.id || target.user.bot || !target_data.playing) {
+		if (user_data.snow_amount == 0 || interaction.member.id == target.user.id || target.user.bot) {
 			await interaction.deferReply({ flags: MessageFlags.Ephemeral });
-		}
-
-		if (!user_data.playing) {
-			await interaction.editReply({
-				content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!',
-				flags: MessageFlags.Ephemeral
-			});
-			return;
 		}
 
 		if (weather.cooldown == -2) {
@@ -81,15 +73,6 @@ export const command = {
 			return;
 		}
 		
-		// Check if the user is opted in to playing.
-		if (!target_data.playing) {
-			await interaction.editReply({
-				content: 'The target isn\'t opted in!',
-				flags: MessageFlags.Ephemeral
-			});
-			return;
-		}
-
 		await interaction.deferReply();
 
 		const state = Math.random();
@@ -114,11 +97,14 @@ export const command = {
 			await set_misses(interaction.member.id, user_data.misses);
 
 			const achievements = await parseAchievements(user_data);
-			await Promise.all(achievements.map(async item => {
-				interaction.member.send({
-					embeds: [ build_new_get_achievement(item) ]
-				});
-			}));
+
+			if (user_data.show_achievements) {
+				await Promise.all(achievements.map(async item => {
+					interaction.member.send({
+						embeds: [ build_new_get_achievement(item) ]
+					});
+				}));
+			}
 
 			await interaction.editReply({
 				embeds: [ build_snowball_miss(target) ]
@@ -175,13 +161,6 @@ export const command = {
 			await set_crits(interaction.member.id, user_data.crits);
 		}
 
-		// Set the timeout time based on the packed object.
-		const timeout_time = (3 + user_data.packed_object?.timeout_time) * crit ? 1.5 : 1;
-
-		// Time the target out.
-		target.timeout(timeout_time * 1000, 'Covered in snow!')
-			.catch(err => console.error("User can't be timed out."));
-
 		// Increment the user's score.
 		const newScore = user_data.score + amount;
 
@@ -204,7 +183,7 @@ export const command = {
 
 		const ping = interaction.options.getBoolean('ping') ?? false;
 
-		if (ping) {
+		if (target_data.show_pings && ping) {
 			// Send the target a DM telling them about the shot.
 			await target.user.send({
 				content: `You're under attack by <@${interaction.member.id}>! Click the link at the bottom to fight back!`
@@ -213,17 +192,23 @@ export const command = {
 		}
 		
 		const achievements = await parseAchievements(user_data);
-		await Promise.all(achievements.map(async item => {
-			interaction.member.send({
-				embeds: [ build_new_get_achievement(item) ]
-			});
-		}));
+
+		if (user_data.show_achievements) {
+			await Promise.all(achievements.map(async item => {
+				interaction.member.send({
+					embeds: [ build_new_get_achievement(item) ]
+				});
+			}));
+		}
 
 		const achievements2 = await parseAchievements(target_data);
-		await Promise.all(achievements2.map(async item => {
-			target.user.send({
-				embeds: [ build_new_get_achievement(item) ]
-			});
-		}));
+
+		if (target_data.show_achievements) {
+			await Promise.all(achievements2.map(async item => {
+				target.user.send({
+					embeds: [ build_new_get_achievement(item) ]
+				});
+			}));
+		}
 	}
 }

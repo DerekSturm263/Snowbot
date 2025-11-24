@@ -19,14 +19,6 @@ export const command = {
 
 		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), get_weather(0) ];
 
-		if (!user_data.playing) {
-			await interaction.editReply({
-				content: 'You can\'t play if you\'re not opted in! Use `/opt in` to start playing!',
-				flags: MessageFlags.Ephemeral
-			});
-			return;
-		}
-
 		if (weather.cooldown == -2) {
 			await Promise.all([
 				set_snow_amount(interaction.member.id, 0),
@@ -60,9 +52,6 @@ export const command = {
 		// Pick a random item to pack.
 		const randomIndex = Math.floor(Math.random() * objects.length);
 		const item = objects[randomIndex];
-		item.timeout_time += Math.floor(Math.random() * 4) - 2;
-		if (item.timeout_time < 1)
-			item.timeout_time = 1;
 
 		++user_data.total_packed_objects;
 
@@ -78,10 +67,13 @@ export const command = {
 		});
 		
 		const achievements = await parseAchievements(user_data);
-		await Promise.all(achievements.map(async item => {
-			interaction.member.send({
-				embeds: [ build_new_get_achievement(item) ]
-			});
-		}));
+
+		if (user_data.show_achievements) {
+			await Promise.all(achievements.map(async item => {
+				interaction.member.send({
+					embeds: [ build_new_get_achievement(item) ]
+				});
+			}));
+		}
 	}
 };

@@ -37,7 +37,7 @@ export function build_new_stats(name, data, hide_data) {
 			},
 			{
 				name: 'Current Packed Item',
-				value: hide_data ? '???' : `${data.packed_object ? `${data.packed_object.name}\n(Timeout: +${data.packed_object.timeout_time}s)` : 'None'}`,
+				value: hide_data ? '???' : `${data.packed_object ? `${data.packed_object.name}\n(Damage: +${data.packed_object.damage})` : 'None'}`,
 				inline: true
 			},
 			{

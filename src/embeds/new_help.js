@@ -13,7 +13,7 @@ export function build_new_help() {
 
             '`/build`: Builds something out of snow to take hits for you. Each build will block hits until it eventually breaks.\n\n' +
 
-            '`/pack`: Packs a snowball with a random item from off the ground. This item increases the timeout time of your snowballs.\n\n' +
+            '`/pack`: Packs a snowball with a random item from off the ground. This item increases the damage of your snowballs.\n\n' +
 
             '`/forecast`: Checks the current and upcoming weather. Each weather type impacts the cooldown on `/collect`, among other things.\n\n' +
 

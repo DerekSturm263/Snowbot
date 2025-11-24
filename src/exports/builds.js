@@ -42,8 +42,8 @@ const snow_tower = {
     id: "snow_tower",
     name: "Snow Tower",
     cost: 12,
-    original_hits: 8,
-    hits: 8,
+    original_hits: 9,
+    hits: 9,
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0iUdEn3y8fl7g34FQqfBOu5_cSrBgvLAMDw&s',
     requirement: ""
 };
@@ -52,8 +52,8 @@ const snow_castle = {
     id: "snow_castle",
     name: "Snow Castle",
     cost: 16,
-    original_hits: 11,
-    hits: 11,
+    original_hits: 12,
+    hits: 12,
     image: 'https://i.cbc.ca/1.5921736.1613842806!/fileImage/httpImage/image.JPG_gen/derivatives/16x9_780/2021-snow-castle-in-yellowknife.JPG',
     requirement: ""
 };
@@ -62,8 +62,8 @@ const snow_fortress = {
     id: "snow_fortress",
     name: "Snow Fortress",
     cost: 20,
-    original_hits: 15,
-    hits: 15,
+    original_hits: 16,
+    hits: 16,
     image: 'https://i.ytimg.com/vi/n-dBmc3lmFc/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCkUJMWc65EFLT-7KrEbKq4W5foQg',
     requirement: ""
 };

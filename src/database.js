@@ -24,7 +24,9 @@ async function create_user_data(id) {
         building: null,
         total_buildings: 0,
         ready: true,
-        playing: true,
+        show_pet_updates: true,
+        show_achievements: true,
+        show_pings: true,
         score: 0,
         hits: 0,
         crits: 0,
@@ -58,7 +60,9 @@ export async function reset_user_data(id) {
             building: null,
             total_buildings: 0,
             ready: true,
-            playing: true,
+            show_pet_updates: true,
+            show_achievements: true,
+            show_pings: true,
             score: 0,
             hits: 0,
             crits: 0,
@@ -135,10 +139,28 @@ export async function set_total_buildings(id, val) {
     return result;
 }
 
-export async function set_opt(id, val) {
+export async function set_show_pet_updates(id, val) {
     const result = await client.db('database').collection('users').updateOne(
         { userID: id },
-        { $set: { playing: val }}
+        { $set: { show_pet_updates: val }}
+    );
+
+    return result;
+}
+
+export async function set_show_achievements(id, val) {
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: id },
+        { $set: { show_achievements: val }}
+    );
+
+    return result;
+}
+
+export async function set_show_pings(id, val) {
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: id },
+        { $set: { show_pings: val }}
     );
 
     return result;
@@ -249,11 +271,6 @@ export function get_weather(hourOffset) {
 
 
 // Leaderboard.
-
-export async function get_leaderboard_count() {
-    const count = await client.db('database').collection('leaderboards').countDocuments();
-    return count;
-}
 
 async function create_leaderboard_data(id) {
     const leaderboard = {

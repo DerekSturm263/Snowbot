@@ -8,12 +8,7 @@ export function build_new_pack(obj) {
         .setImage(obj.image)
         .addFields(
 			{
-				name: 'Timeout Time',
-				value: `+${obj.timeout_time} Seconds`,
-				inline: true
-			},
-			{
-				name: `Extra Damage`,
+				name: `Damage`,
 				value: `+${obj.damage} Damage`,
 				inline: true
 			}
