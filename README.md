@@ -12,6 +12,7 @@ Click the above link to invite Snowbot to your server for free! From there, you 
   - [x] Random Weather
   - [x] Forecast Check
 - [ ] Pets
+- [ ] Custom Server Content
 - [x] Social Features 
   - [x] Leaderboard
   - [x] Stats
