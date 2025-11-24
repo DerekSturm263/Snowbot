@@ -11,11 +11,13 @@ Click the above link to invite Snowbot to your server for free! From there, you 
 - [x] Weather Features
   - [x] Random Weather
   - [x] Forecast Check
+- [ ] Pets
 - [x] Social Features 
   - [x] Leaderboard
   - [x] Stats
   - [x] Achievements
 - [x] Opt In/Out
+- [ ] Notifications On/Off
 - [x] Help
 - [x] Reset
 
