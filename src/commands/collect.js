@@ -47,7 +47,7 @@ export const command = {
 			const seconds = Math.ceil(difference / 1000);
 
 			await interaction.editReply({
-				content: `You have to wait ${seconds} more seconds before you can collect more snow!`,
+				content: `You have to wait ${seconds} more second${seconds == 1 ? '' : 's'} before you can collect more snow!`,
 				flags: MessageFlags.Ephemeral
 			});
 			return;

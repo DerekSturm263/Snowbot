@@ -8,7 +8,9 @@ const snowman = {
     ],
     level: 1,
     is_active: false,
-    hatch_time: 0
+    hatch_time: 0,
+    fullness: 0,
+    totalFood: 0
 };
 
 const snow_dog = {
@@ -21,7 +23,9 @@ const snow_dog = {
     ],
     level: 1,
     is_active: false,
-    hatch_time: 0
+    hatch_time: 0,
+    fullness: 0,
+    totalFood: 0
 };
 
 const snow_cat = {
@@ -34,7 +38,9 @@ const snow_cat = {
     ],
     level: 1,
     is_active: false,
-    hatch_time: 0
+    hatch_time: 0,
+    fullness: 0,
+    totalFood: 0
 };
 
 const snow_wolf = {
@@ -47,7 +53,9 @@ const snow_wolf = {
     ],
     level: 1,
     is_active: false,
-    hatch_time: 0
+    hatch_time: 0,
+    fullness: 0,
+    totalFood: 0
 };
 
 const snow_bunny = {
@@ -60,7 +68,9 @@ const snow_bunny = {
     ],
     level: 1,
     is_active: false,
-    hatch_time: 0
+    hatch_time: 0,
+    fullness: 0,
+    totalFood: 0
 };
 
 const snow_fox = {
@@ -73,7 +83,9 @@ const snow_fox = {
     ],
     level: 1,
     is_active: false,
-    hatch_time: 0
+    hatch_time: 0,
+    fullness: 0,
+    totalFood: 0
 };
 
 const snow_owl = {
@@ -86,7 +98,9 @@ const snow_owl = {
     ],
     level: 1,
     is_active: false,
-    hatch_time: 0
+    hatch_time: 0,
+    fullness: 0,
+    totalFood: 0
 };
 
 const snow_dragon = {
@@ -99,7 +113,9 @@ const snow_dragon = {
     ],
     level: 1,
     is_active: false,
-    hatch_time: 0
+    hatch_time: 0,
+    fullness: 0,
+    totalFood: 0
 };
 
 export default [

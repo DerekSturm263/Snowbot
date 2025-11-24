@@ -9,6 +9,10 @@ export function build_new_pet(pet, isEgg) {
 			{
 				name: 'Level',
 				value: `${isEgg ? '0' : pet.level}`
+			},
+			{
+				name: 'Fullness',
+				value: `${isEgg ? 'N/A' : pet.fullness}`
 			}
 		);
 };

@@ -2,7 +2,7 @@
 
 import { ActionRowBuilder, ButtonBuilder, MessageFlags, SlashCommandBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from 'discord.js';
 import { build_new_pet } from '../embeds/new_pet.js';
-import { get_user_data } from '../database.js';
+import { get_user_data, set_snow_amount } from '../database.js';
 
 function build_pet(row1, row2, pet) {
 	const isEgg = new Date().getTime() < pet.hatch_time;
@@ -43,7 +43,7 @@ export const command = {
 					.addOptions(
 						user_data.pets.map((pet, index) => new StringSelectMenuOptionBuilder()
 							.setLabel(`${new Date().getTime() < pet.hatch_time ? 'Unhatched Egg' : pet.name}`)
-							.setValue(`${pet.id}`)
+							.setValue(`${index}`)
 							.setDefault(index == 0)
 						)
 					)
@@ -72,9 +72,46 @@ export const command = {
 
 		const collector = message.createMessageComponentCollector({ time: 2 * 60 * 1000 });
 		collector.on('collect', async i => {
-			if (i.customId == 'prev') {
+			if (i.customId == 'pets') {
 				await i.deferUpdate();
 
+				petIndex = number(interaction.values[0]);
+
+				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
+			} else if (i.customId == 'setActive') {
+				await i.deferUpdate();
+
+				// TODO: Set pet as the active pet.
+
+				await interaction.followUp({
+					content: `${user_data.pets[petIndex].name} is now the active pet.`,
+					flags: MessageFlags.Ephemeral
+				});
+
+				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
+			} else if (i.customId == 'feed') {
+				await i.deferUpdate();
+
+				if (user_data.pets[petIndex].fullness > 3) {
+					await interaction.followUp({
+						content: 'Your pet is full! Try feeding them again later.',
+						flags: MessageFlags.Ephemeral
+					});
+				} else {
+					// TODO: Increase pet fullness by 1.
+
+					// TODO: Check for total_food_amount milestones and increase level as needed.
+
+					await Promise.all([
+						// TODO: Test to make sure this works. Might need --.
+						set_snow_amount(interaction.member.id, user_data.snow_amount - 1)
+					]);
+				}
+				
+				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
+			} else if (i.customId == 'rename') {
+				await i.deferUpdate();
+				
 				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
 			}
 		});
