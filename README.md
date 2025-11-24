@@ -16,8 +16,9 @@ Click the above link to invite Snowbot to your server for free! From there, you 
   - [x] Leaderboard
   - [x] Stats
   - [x] Achievements
-- [x] Opt In/Out
-- [ ] Notifications On/Off
+- [x] Settings
+  - [x] Opt In/Out
+  - [ ] Notifications On/Off
 - [x] Help
 - [x] Reset
 
