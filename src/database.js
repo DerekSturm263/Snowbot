@@ -250,11 +250,60 @@ export async function add_pet(id, val) {
     const now = new Date();
     const later = new Date(now.getTime() + 60 * 60 * 1000);
 
+    val.id = crypto.randomUUID().toString();
     val.hatch_time = later.getTime();
 
     const user = await client.db('database').collection('users').findOne({ userID: id }) ?? await create_user_data(id);
     user.pets.push(val);
 
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: id },
+        { $set: { pets: user.pets }}
+    );
+
+    return result;
+}
+
+export async function set_pet_name(userID, petIndex, val) {
+    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(id);
+    user.pets[petIndex].name = val;
+    
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: id },
+        { $set: { pets: user.pets }}
+    );
+
+    return result;
+}
+
+export async function set_pet_is_active(userID, petIndex, val) {
+    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(id);
+    user.pets[petIndex].is_active = val;
+    
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: id },
+        { $set: { pets: user.pets }}
+    );
+
+    return result;
+}
+
+export async function set_pet_fullness(userID, petIndex, val) {
+    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(id);
+    user.pets[petIndex].fullness = val;
+    
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: id },
+        { $set: { pets: user.pets }}
+    );
+
+    return result;
+}
+
+export async function set_pet_total_food(userID, petIndex, val) {
+    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(id);
+    user.pets[petIndex].total_food = val;
+    
     const result = await client.db('database').collection('users').updateOne(
         { userID: id },
         { $set: { pets: user.pets }}

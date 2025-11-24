@@ -2,7 +2,7 @@
 
 import { ActionRowBuilder, ButtonBuilder, MessageFlags, SlashCommandBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from 'discord.js';
 import { build_new_pet } from '../embeds/new_pet.js';
-import { get_user_data, set_snow_amount } from '../database.js';
+import { get_user_data, set_pet_fullness, set_pet_is_active, set_pet_total_food, set_snow_amount } from '../database.js';
 
 function build_pet(row1, row2, pet) {
 	const isEgg = new Date().getTime() < pet.hatch_time;
@@ -81,7 +81,10 @@ export const command = {
 			} else if (i.customId == 'setActive') {
 				await i.deferUpdate();
 
-				// TODO: Set pet as the active pet.
+				await Promise.all([
+					set_pet_is_active(interaction.member.id, petIndex, true),
+					...user_data.pets.filter((pet, index) => index != petIndex).map((pet, index) => set_pet_is_active(interaction.member.id, index, false))
+				]);
 
 				await interaction.followUp({
 					content: `${user_data.pets[petIndex].name} is now the active pet.`,
@@ -98,13 +101,15 @@ export const command = {
 						flags: MessageFlags.Ephemeral
 					});
 				} else {
-					// TODO: Increase pet fullness by 1.
-
 					// TODO: Check for total_food_amount milestones and increase level as needed.
+					if (user_data) {
+
+					}
 
 					await Promise.all([
-						// TODO: Test to make sure this works. Might need --.
-						set_snow_amount(interaction.member.id, user_data.snow_amount - 1)
+						set_pet_total_food(interaction.member.id, petIndex, user_data.pets[petIndex].total_food + 1), // ++?
+						set_pet_fullness(interaction.member.id, petIndex, user_data.pets[petIndex].fullness + 1), // ++?
+						set_snow_amount(interaction.member.id, user_data.snow_amount - 1) // --?
 					]);
 				}
 				
