@@ -5,7 +5,7 @@ export function build_new_help() {
 		.setColor(0xFFFFFF)
 		.setTitle('Info')
         .setDescription(
-            'Welcome to Snowbot! This bot aims to recreate the Snowsgiving 2021 official Discord Snowball Bot, while also adding new features and functionality.\n\n' +
+            'Welcome to Snowbot! This bot aims to recreate the Snowsgiving 2021 official Discord Snowball Bot, while also adding new features and functionality. If you experience any issues or want to give feature requests, please join the official development server [here](https://discord.gg/tpfVdFsYKg).\n\n' +
 
             '`/collect`: Collects some fresh snow from off the ground. Snow is needed to use `/throw`, `/build`, and `/pack`.\n\n' +
 
