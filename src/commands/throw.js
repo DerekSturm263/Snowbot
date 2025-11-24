@@ -21,7 +21,7 @@ export const command = {
 		),
 
 	async execute(interaction) {
-		console.log(`\n${interaction.member.id} used /throw:`);
+		console.log(`\n${interaction.user.displayName} used /throw:`);
 
 		const target = interaction.options.getMember('target');
 		const [ user_data, target_data, weather ] = [
@@ -126,17 +126,36 @@ export const command = {
 			return;
 		}
 
+		let amount = (crit ? 2 : 1) * (((user_data.packed_object ? user_data.packed_object.damage : 0) + 1));
+
 		// Get the building if the user has one.
 		if (target_data.building != null) {
 			// Decrement the number of hits on the building.
-			target_data.building.hits -= crit ? 2 : 1;
+			target_data.building.hits -= amount;
 			
 			// Check if the building is broken.
-			if (target_data.building.hits == 0) {
+			if (target_data.building.hits <= 0) {
+				if (crit) {
+					++user_data.crits;
+					await set_crits(interaction.member.id, user_data.crits);
+				}
+
+				// Increment the user's score.
+				amount = (crit ? 2 : 1) * target_data.building.original_hits;
+				const newScore = user_data.score + amount;
+
+				++user_data.hits;
+				++target_data.times_hit;
+
+				await Promise.all([
+					set_score(interaction.member.id, newScore),
+					try_add_to_leaderboard(interaction.guild.id, interaction.member.id),
+				]);
+				
 				// Remove the building and tell the user it was broken.
 				await set_building(target.user.id, null);
 				await interaction.editReply({
-					embeds: [ build_snowball_block_break(target, target_data.building.name) ]
+					embeds: [ build_snowball_block_break(target, user_data.packed_object, newScore, target_data.score, interaction.member, crit, amount, target_data.building) ]
 				});
 				
 				return;
@@ -164,15 +183,13 @@ export const command = {
 			.catch(err => console.error("User can't be timed out."));
 
 		// Increment the user's score.
-		const newScore = user_data.score + (crit ? 2 : 1);
-		const newTargetScore = target_data.score - (crit ? 2 : 1);
+		const newScore = user_data.score + amount;
 
 		++user_data.hits;
 		++target_data.times_hit;
 
 		await Promise.all([
 			set_score(interaction.member.id, newScore),
-			set_score(target.user.id, newTargetScore),
 			set_hits(interaction.member.id, user_data.hits),
 			set_times_hit(target.user.id, target_data.times_hit),
 			try_add_to_leaderboard(interaction.guild.id, interaction.member.id),
@@ -181,7 +198,7 @@ export const command = {
 		
 		// Tell the user the snowball hit.
 		const message = await interaction.editReply({
-			embeds: [ build_snowball_hit(target, user_data.packed_object, newScore, newTargetScore, interaction.member, crit) ],
+			embeds: [ build_snowball_hit(target, user_data.packed_object, newScore, target_data.score, interaction.member, crit, amount) ],
 			withResponse: true
 		});
 

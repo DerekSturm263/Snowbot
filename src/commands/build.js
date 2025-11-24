@@ -24,7 +24,7 @@ export const command = {
 	async execute(interaction) {
 		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-		console.log(`\n${interaction.member.id} used /build:`);
+		console.log(`\n${interaction.user.displayName} used /build:`);
 
 		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), get_weather(0) ];
 

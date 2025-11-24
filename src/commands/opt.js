@@ -24,7 +24,7 @@ export const command = {
         const opt_in = interaction.options.getSubcommand() == 'in';
         const in_msg = opt_in ? 'in' : 'out';
 
-		console.log(`\n${interaction.member.id} used /opt ${in_msg}:`);
+		console.log(`\n${interaction.user.displayName} used /opt ${in_msg}:`);
 
         const user_data = await get_user_data(interaction.member.id);
 

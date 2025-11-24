@@ -27,7 +27,7 @@ export const command = {
 	async execute(interaction) {
 		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-		console.log(`\n${interaction.member.id} used /achievements:`);
+		console.log(`\n${interaction.user.displayName} used /achievements:`);
 
 		let page = 0;
 

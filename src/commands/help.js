@@ -11,7 +11,7 @@ export const command = {
 	async execute(interaction) {
 		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-		console.log(`\n${interaction.member.id} used /help:`);
+		console.log(`\n${interaction.user.displayName} used /help:`);
 
         // Tell the user everything about the bot.
 		await interaction.editReply({

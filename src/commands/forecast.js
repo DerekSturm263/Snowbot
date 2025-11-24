@@ -21,7 +21,7 @@ export const command = {
 	async execute(interaction) {
 		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-		console.log(`\n${interaction.member.id} used /forecast:`);
+		console.log(`\n${interaction.user.displayName} used /forecast:`);
 
 		let offset = 0;
 

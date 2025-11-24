@@ -86,15 +86,15 @@ function snowball_block_messages(id, build) {
 
 function snowball_block_break_messages(id, build) {
 	return [
-		`You threw a snowball at <@${id}> and took down their **${build}**! Quick, throw another!`,
-		`You pelted <@${id}> with a snowball and broke their **${build}**! Throw another while you can!`,
-		`You gave it everything you got and annihilated <@${id}>'s **${build}**! Keep it up!`,
-		`You hit <@${id}>'s **${build}** with a snowball and destroyed it! Don't stop now!`,
-		`You nailed <@${id}>'d **${build}** with a snowball and demolished it! Now, throw more!`
+		`You threw a snowball at <@${id}> and took down their **${build.name}**! Quick, throw another!`,
+		`You pelted <@${id}> with a snowball and broke their **${build.name}**! Throw another while you can!`,
+		`You gave it everything you got and annihilated <@${id}>'s **${build.name}**! Keep it up!`,
+		`You hit <@${id}>'s **${build.name}** with a snowball and destroyed it! Don't stop now!`,
+		`You nailed <@${id}>'d **${build.name}** with a snowball and demolished it! Now, throw more!`
 	];
 };
 
-export function build_snowball_hit(member, item, score, score2, member2, crit) {
+export function build_snowball_hit(member, item, score, score2, member2, crit, amount) {
     const randomImageIndex = Math.floor(Math.random() * snowball_hit_images.length);
     const randomMessageIndex = Math.floor(Math.random() * snowball_hit_messages(0, item).length);
 	
@@ -103,8 +103,8 @@ export function build_snowball_hit(member, item, score, score2, member2, crit) {
 		.setTitle(crit ? 'Critical Hit!' : 'Hit!')
 		.setDescription(snowball_hit_messages(member.user.id, item)[randomMessageIndex])
 		.addFields(
-			{ name: `${member2.user.displayName}`,	value: `Score: ${score} (+${crit ? 2 : 1})`,	inline: true },
-			{ name: `${member.user.displayName}`,	value: `Score: ${score2} (-${crit ? 2 : 1})`,	inline: true }
+			{ name: `${member2.user.displayName}`,	value: `Score: ${score} (+${amount})`,	inline: true },
+			{ name: `${member.user.displayName}`,	value: `Score: ${score2}`,	inline: true }
 		)
 		.setImage(snowball_hit_images[randomImageIndex]);
 };
@@ -127,11 +127,15 @@ export function build_snowball_block(member, build) {
 		.setDescription(snowball_block_messages(member.user.id, build)[randomMessageIndex]);
 };
 
-export function build_snowball_block_break(member, build) {
+export function build_snowball_block_break(member, item, score, score2, member2, crit, amount, build) {
 	const randomMessageIndex = Math.floor(Math.random() * snowball_block_break_messages(0, build).length);
 
 	return new EmbedBuilder()
 		.setColor(0xFFFFFF)
-		.setTitle('Defense Broken!')
-		.setDescription(snowball_block_break_messages(member.user.id, build)[randomMessageIndex]);
+		.setTitle(`Defense Broken!${crit ? ' (Critical!)' : ''}`)
+		.setDescription(snowball_block_break_messages(member.user.id, build)[randomMessageIndex])
+		.addFields(
+			{ name: `${member2.user.displayName}`,	value: `Score: ${score} (+${amount})`,	inline: true },
+			{ name: `${member.user.displayName}`,	value: `Score: ${score2}`,	inline: true }
+		);
 };

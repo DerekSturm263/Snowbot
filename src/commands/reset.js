@@ -11,7 +11,7 @@ export const command = {
 	async execute(interaction) {
 		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-		console.log(`\n${interaction.member.id} used /stats:`);
+		console.log(`\n${interaction.user.displayName} used /stats:`);
 
 		reset_user_data(interaction.member.id);
 

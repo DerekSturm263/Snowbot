@@ -4,6 +4,7 @@ export function build_new_building(build) {
 	return new EmbedBuilder()
 		.setColor(0xFFFFFF)
 		.setTitle(`You built a **${build.name}**!`)
+		.setDescription('Your new building will takes hits for you until it breaks.')
         .setImage(build.image)
         .addFields({
 			name: 'Hits Left',
