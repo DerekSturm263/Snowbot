@@ -7,7 +7,7 @@ const snow_worm = {
         "A tiny snow worm that still does absolutely nothing.",
         "A tiny snow worm that somehow still does absolutely nothing."
     ],
-    image: "",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8yHASr5GITzfox_P7ACtyh_vJ_-yXPV-4pw&s",
     hatch_time: 0,
     appetite: 10,
     fullness: 0,
@@ -25,7 +25,7 @@ const snowman = {
         "A friendly snowman that makes itself useful by automatically collecting snow for you at a decent pace.",
         "A friendly snowman that makes itself useful by automatically collecting snow for you at a quick pace."
     ],
-    image: "",
+    image: "https://t3.ftcdn.net/jpg/06/62/11/08/360_F_662110844_RuQiE5nvuTntDQ0NJCGg89VMf5vkMmA5.jpg",
     hatch_time: 0,
     appetite: 20,
     fullness: 0,
@@ -43,7 +43,7 @@ const snow_dog = {
         "A hyper snow dog that helps you out by sometimes attacking your target and dealing 3 extra damage.",
         "A hyper snow dog that helps you out by often attacking your target and dealing 4 extra damage."
     ],
-    image: "",
+    image: "https://media.istockphoto.com/id/97875216/photo/samoyed-puppy-running-in-the-snow.jpg?s=612x612&w=0&k=20&c=6OzpAULdvcJMeYdUBUC76gr2k_l1J2_tMnds4DcAwt8=",
     hatch_time: 0,
     appetite: 20,
     fullness: 0,
@@ -61,7 +61,7 @@ const snow_cat = {
         "A curious snow cat that assists you by sometimes finding random objects for you to pack in your snowball.",
         "A curious snow cat that assists you by regularly finding random objects for you to pack in your snowball."
     ],
-    image: "",
+    image: "https://t3.ftcdn.net/jpg/00/38/71/14/360_F_38711492_nrVsdh9rhkrDwZhRGVd5ipndrr97nikR.jpg",
     hatch_time: 0,
     appetite: 20,
     fullness: 0,
@@ -79,7 +79,7 @@ const snow_wolf = {
         "A cunning snow wolf that makes itself useful by shortening the cooldown on your collection speed by a decent amount.",
         "A cunning snow wolf that makes itself useful by shortening the cooldown on your collection speed by a lot."
     ],
-    image: "",
+    image: "https://c02.purpledshub.com/uploads/sites/62/2024/08/Arctic-wolf-facts-scaled.jpg",
     hatch_time: 0,
     appetite: 25,
     fullness: 0,
@@ -97,7 +97,7 @@ const snow_bunny = {
         "A lucky snow bunny that does its part by increasing your luck a good amount when throwing snowballs.",
         "A lucky snow bunny that does its part by increasing your luck a lot when throwing snowballs."
     ],
-    image: "",
+    image: "https://media.istockphoto.com/id/510955047/photo/white-snowshoe-hare-on-snow.jpg?s=612x612&w=0&k=20&c=7TafMOjjgAF9sLz37Qlh7ChkjaoJ7ch15P7nSt5_Og0=",
     hatch_time: 0,
     appetite: 25,
     fullness: 0,
@@ -115,7 +115,7 @@ const snow_fox = {
         "A sly snow fox that helps out by sometimes jumping in the way of oncoming snowballs.",
         "A sly snow fox that helps out by often jumping in the way of oncoming snowballs."
     ],
-    image: "",
+    image: "https://t3.ftcdn.net/jpg/02/25/52/78/360_F_225527887_1r2EaZbOrvCttqUDCvnA6HB9exVMrLXj.jpg",
     hatch_time: 0,
     appetite: 25,
     fullness: 0,
@@ -133,7 +133,7 @@ const snow_owl = {
         "A helpful snow owl that does its part by repairing damage to your buildings moderately over time.",
         "A helpful snow owl that does its part by repairing damage to your buildings quickly over time."
     ],
-    image: "",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTj1oc2ZIaT4rbdQEiSnN5SVfMH2Zi0LSUifA&s",
     hatch_time: 0,
     appetite: 30,
     fullness: 0,
@@ -151,7 +151,7 @@ const snow_dragon = {
         "A fierce snow dragon whose ability will be determined later.",
         "A fierce snow dragon whose ability will be determined later."
     ],
-    image: "",
+    image: "https://thumbs.dreamstime.com/b/majestic-ice-dragon-soaring-over-snowy-mountains-magnificent-takes-flight-amidst-breathtaking-mountain-range-scene-fantasy-366995737.jpg",
     hatch_time: 0,
     appetite: 30,
     fullness: 0,
