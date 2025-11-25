@@ -81,7 +81,7 @@ export const command = {
 					row1.components[0].options[i].setDefault(i == petIndex);
 				}
 
-				row2.components[0].setDisabled(user_data.pets[petIndex].id == user_data.active_pet);
+				row2.components[0].setDisabled(user_data.pets[petIndex].id == user_data.active_pet || new Date().getTime() < user_data.pets[petIndex].hatch_time);
 
 				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
 			} else if (i.customId == 'setActive') {
