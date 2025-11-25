@@ -62,9 +62,9 @@ export const command = {
 					.setStyle('Secondary')
 					.setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time)/*,
 				new ButtonBuilder()
-					.setCustomId('rename')
-					.setLabel('Rename')
-					.setStyle('Secondary')
+					.setCustomId('release')
+					.setLabel('Release')
+					.setStyle('Danger')
 					.setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time)*/
 			);
 
@@ -83,7 +83,7 @@ export const command = {
 
 				row2.components[0].setDisabled(user_data.pets[petIndex].id == user_data.active_pet || new Date().getTime() < user_data.pets[petIndex].hatch_time);
 				row2.components[1].setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time);
-				row2.components[2].setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time);
+				//row2.components[2].setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time);
 
 				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
 			} else if (i.customId == 'setActive') {
@@ -142,7 +142,7 @@ export const command = {
 				}
 				
 				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
-			} else if (i.customId == 'rename') {
+			} else if (i.customId == 'release') {
 				await i.deferUpdate();
 	
 				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
