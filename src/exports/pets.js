@@ -11,7 +11,8 @@ const snow_worm = {
     is_active: false,
     hatch_time: 0,
     fullness: 0,
-    total_food: 0
+    total_food: 0,
+    delay: 0.5
 }
 
 const snowman = {
@@ -27,7 +28,8 @@ const snowman = {
     is_active: false,
     hatch_time: 0,
     fullness: 0,
-    total_food: 0
+    total_food: 0,
+    delay: 1
 };
 
 const snow_dog = {
@@ -43,7 +45,8 @@ const snow_dog = {
     is_active: false,
     hatch_time: 0,
     fullness: 0,
-    total_food: 0
+    total_food: 0,
+    delay: 1
 };
 
 const snow_cat = {
@@ -59,7 +62,8 @@ const snow_cat = {
     is_active: false,
     hatch_time: 0,
     fullness: 0,
-    total_food: 0
+    total_food: 0,
+    delay: 1
 };
 
 const snow_wolf = {
@@ -69,13 +73,14 @@ const snow_wolf = {
     descriptions: [
         "A cunning snow wolf that makes itself useful by shortening the cooldown on your collection speed by a bit.",
         "A cunning snow wolf that makes itself useful by shortening the cooldown on your collection speed by a decent amount.",
-        " cunning snow wolf that makes itself useful by shortening the cooldown on your collection speed by a lot."
+        "A cunning snow wolf that makes itself useful by shortening the cooldown on your collection speed by a lot."
     ],
     image: "",
     is_active: false,
     hatch_time: 0,
     fullness: 0,
-    total_food: 0
+    total_food: 0,
+    delay: 1.5
 };
 
 const snow_bunny = {
@@ -91,7 +96,8 @@ const snow_bunny = {
     is_active: false,
     hatch_time: 0,
     fullness: 0,
-    total_food: 0
+    total_food: 0,
+    delay: 1.5
 };
 
 const snow_fox = {
@@ -107,7 +113,8 @@ const snow_fox = {
     is_active: false,
     hatch_time: 0,
     fullness: 0,
-    total_food: 0
+    total_food: 0,
+    delay: 1.5
 };
 
 const snow_owl = {
@@ -123,7 +130,8 @@ const snow_owl = {
     is_active: false,
     hatch_time: 0,
     fullness: 0,
-    total_food: 0
+    total_food: 0,
+    delay: 2
 };
 
 const snow_dragon = {
@@ -139,7 +147,8 @@ const snow_dragon = {
     is_active: false,
     hatch_time: 0,
     fullness: 0,
-    total_food: 0
+    total_food: 0,
+    delay: 2
 };
 
 export default [
