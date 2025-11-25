@@ -55,7 +55,7 @@ export const command = {
 					.setCustomId('setActive')
 					.setLabel('Set As Active Pet')
 					.setStyle('Primary')
-					.setDisabled(petIndex.id == user_data.active_pet || new Date().getTime() < user_data.pets[petIndex].hatch_time),
+					.setDisabled(user_data.pets[petIndex].id == user_data.active_pet || new Date().getTime() < user_data.pets[petIndex].hatch_time),
 				new ButtonBuilder()
 					.setCustomId('feed')
 					.setLabel('Feed')
