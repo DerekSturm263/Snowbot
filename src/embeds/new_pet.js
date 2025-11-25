@@ -27,7 +27,7 @@ export function build_new_pet(pet, isEgg) {
 			},
 			{
 				name: 'Level Up Progress',
-				value: `${pet.total_food}/${pet.appetite}`,
+				value: `${pet.level < 5 ? `${pet.total_food}/${pet.appetite}` : 'Max'}`,
 				inline: true
 			}
 		);

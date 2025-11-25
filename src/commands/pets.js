@@ -118,7 +118,7 @@ export const command = {
 					++user_data.pets[petIndex].fullness;
 					--user_data.snow_amount;
 
-					if (user_data.pets[petIndex].total_food >= user_data.pets[petIndex].appetite) {
+					if (user_data.pets[petIndex].level < 5 && user_data.pets[petIndex].total_food >= user_data.pets[petIndex].appetite) {
 						user_data.pets[petIndex].appetite += 10;
 						++user_data.pets[petIndex].level;
 						user_data.pets[petIndex].total_food = 0;
