@@ -75,7 +75,7 @@ export const command = {
 			if (i.customId == 'pets') {
 				await i.deferUpdate();
 
-				petIndex = number(interaction.values[0]);
+				petIndex = Number(interaction.values[0]);
 
 				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
 			} else if (i.customId == 'setActive') {
