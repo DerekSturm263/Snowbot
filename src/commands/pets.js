@@ -89,6 +89,7 @@ export const command = {
 			} else if (i.customId == 'setActive') {
 				await i.deferUpdate();
 
+				user_data.active_pet = user_data.pets[petIndex].id;
 				await set_active_pet(interaction.member.id, user_data.pets[petIndex]);
 
 				for (let i = 0; i < user_data.pets.length; ++i) {
