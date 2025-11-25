@@ -1,6 +1,6 @@
 import { readdirSync                }   from "node:fs";
 import { Collection, REST, Routes   }   from "discord.js";
-import log, { logError } from "./debug";
+import log, { logError } from "./debug.js";
 
 const commands = [];
 const commandDatas = [];

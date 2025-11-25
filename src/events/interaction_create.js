@@ -1,5 +1,5 @@
 import { MessageFlags } from "discord.js";
-import { logError } from "../debug";
+import { logError } from "../debug.js";
 
 export const event = {
     name: 'interactionCreate',

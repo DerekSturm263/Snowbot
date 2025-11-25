@@ -1,4 +1,4 @@
-import log from "../debug";
+import log from "../debug.js";
 
 export const event = {
     name: 'clientReady',
