@@ -8,7 +8,7 @@ export default function log(message) {
 }
 
 export function logError(message) {
-    console.logError(message);
+    console.error(message);
     appendFileSync(filePath, message);
 }
 
