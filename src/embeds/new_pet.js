@@ -4,17 +4,25 @@ export function build_new_pet(pet, isEgg) {
 	return new EmbedBuilder()
 		.setColor(0xFFFFFF)
 		.setTitle(`${isEgg ? 'Unhatched Egg' : pet.name}`)
-        .setDescription(`${isEgg ? `This egg will hatch **<t:${Math.floor(pet.hatch_time / 1000)}:R>**.` : pet.descriptions[Math.floor(pet.total_food / 20)]}`)
+        .setDescription(`${isEgg ? `This egg will hatch **<t:${Math.floor(pet.hatch_time / 1000)}:R>**.` : pet.descriptions[pet.level - 1]}`)
 		.setImage(isEgg ? "https://images.everydayhealth.com/images/news/an-egg-day-lower-dementia-risk-1440x810.jpg?sfvrsn=d81b2e39_3" : pet.image)
 		.addFields(
 			{
 				name: 'Level',
-				value: `${Math.floor(pet.total_food / 20) + (isEgg ? 0 : 1)}`,
+				value: `${isEgg ? '0' : pet.level}`,
 				inline: true
 			},
 			{
 				name: 'Fullness',
-				value: `${isEgg ? 'N/A' : pet.fullness}`,
+				value: `${isEgg ? 'N/A'
+					: pet.fullness == -3 ? 'On the brink of collapse!'
+					: pet.fullness == -2 ? 'Starving!'
+					: pet.fullness == -1 ? 'Hungry!'
+					: pet.fullness == 0 ? 'Could Eat'
+					: pet.fullness == 1 ? 'Satiated'
+					: pet.fullness == 2 ? 'Getting Full'
+					: pet.fullness == 3 ? 'Stuffed!'
+					: '' }`,
 				inline: true
 			}
 		);

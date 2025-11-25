@@ -9,8 +9,10 @@ const snow_worm = {
     ],
     image: "",
     hatch_time: 0,
+    appetite: 10,
     fullness: 0,
     total_food: 0,
+    level: 1,
     delay: 0.5
 }
 
@@ -25,8 +27,10 @@ const snowman = {
     ],
     image: "",
     hatch_time: 0,
+    appetite: 20,
     fullness: 0,
     total_food: 0,
+    level: 1,
     delay: 1
 };
 
@@ -41,8 +45,10 @@ const snow_dog = {
     ],
     image: "",
     hatch_time: 0,
+    appetite: 20,
     fullness: 0,
     total_food: 0,
+    level: 1,
     delay: 1
 };
 
@@ -57,8 +63,10 @@ const snow_cat = {
     ],
     image: "",
     hatch_time: 0,
+    appetite: 20,
     fullness: 0,
     total_food: 0,
+    level: 1,
     delay: 1
 };
 
@@ -73,8 +81,10 @@ const snow_wolf = {
     ],
     image: "",
     hatch_time: 0,
+    appetite: 25,
     fullness: 0,
     total_food: 0,
+    level: 1,
     delay: 1.5
 };
 
@@ -89,8 +99,10 @@ const snow_bunny = {
     ],
     image: "",
     hatch_time: 0,
+    appetite: 25,
     fullness: 0,
     total_food: 0,
+    level: 1,
     delay: 1.5
 };
 
@@ -105,8 +117,10 @@ const snow_fox = {
     ],
     image: "",
     hatch_time: 0,
+    appetite: 25,
     fullness: 0,
     total_food: 0,
+    level: 1,
     delay: 1.5
 };
 
@@ -121,8 +135,10 @@ const snow_owl = {
     ],
     image: "",
     hatch_time: 0,
+    appetite: 30,
     fullness: 0,
     total_food: 0,
+    level: 1,
     delay: 2
 };
 
@@ -137,8 +153,10 @@ const snow_dragon = {
     ],
     image: "",
     hatch_time: 0,
+    appetite: 30,
     fullness: 0,
     total_food: 0,
+    level: 1,
     delay: 2
 };
 

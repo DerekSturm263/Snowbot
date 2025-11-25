@@ -2,7 +2,7 @@
 
 import { ActionRowBuilder, ButtonBuilder, MessageFlags, SlashCommandBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from 'discord.js';
 import { build_new_pet } from '../embeds/new_pet.js';
-import { get_user_data, set_pet_fullness, set_active_pet, set_pet_total_food, set_snow_amount } from '../database.js';
+import { get_user_data, set_pet_fullness, set_active_pet, set_pet_total_food, set_snow_amount, set_pet_appetite, set_pet_level } from '../database.js';
 
 function build_pet(row1, row2, pet) {
 	const isEgg = new Date().getTime() < pet.hatch_time;
@@ -55,28 +55,19 @@ export const command = {
 					.setCustomId('setActive')
 					.setLabel('Set As Active Pet')
 					.setStyle('Primary')
-					.setDisabled(petIndex.id == user_data.active_pet || new Date().getTime() < user_data.pets[petIndex].hatch_time)
-			);
-/*
-		const row2 = new ActionRowBuilder()
-			.addComponents(
-				new ButtonBuilder()
-					.setCustomId('setActive')
-					.setLabel('Set As Active Pet')
-					.setStyle('Primary')
-					.setDisabled(petIndex.id == user_data.active_pet || new Date().getTime() < user_data.pets[petIndex].hatch_time)
+					.setDisabled(petIndex.id == user_data.active_pet || new Date().getTime() < user_data.pets[petIndex].hatch_time),
 				new ButtonBuilder()
 					.setCustomId('feed')
 					.setLabel('Feed')
-					.setStyle('Primary')
+					.setStyle('Secondary')
 					.setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time),
 				new ButtonBuilder()
 					.setCustomId('rename')
 					.setLabel('Rename')
-					.setStyle('Primary')
+					.setStyle('Secondary')
 					.setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time)
 			);
-*/
+
 		const message = await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
 
 		const collector = message.createMessageComponentCollector({ time: 2 * 60 * 1000 });
@@ -113,21 +104,41 @@ export const command = {
 			} else if (i.customId == 'feed') {
 				await i.deferUpdate();
 
-				if (user_data.pets[petIndex].fullness > 3) {
+				if (user_data.pets[petIndex].fullness >= 3) {
 					await interaction.followUp({
 						content: `${user_data.pets[petIndex].name} is full! Try feeding them again later.`,
 						flags: MessageFlags.Ephemeral
 					});
+				} else if (user_data.snow_amount == 0) {
+					await interaction.followUp({
+						content: `You don't have any snow! Use \`/collect\` to get some.`,
+						flags: MessageFlags.Ephemeral
+					});
 				} else {
-					// TODO: Check for total_food_amount milestones and increase level as needed.
-					if (user_data) {
+					++user_data.pets[petIndex].total_food;
+					++user_data.pets[petIndex].fullness;
+					--user_data.snow_amount;
 
+					if (user_data.pets[petIndex].total_food >= user_data.pets[petIndex].appetite) {
+						user_data.pets[petIndex].appetite += 10;
+						++user_data.pets[petIndex].level;
+						user_data.pets[petIndex].total_food = 0;
+
+						await Promise.all([
+							set_pet_appetite(interaction.member.id, petIndex, user_data.pets[petIndex].appetite),
+							set_pet_level(user_data.pets[petIndex].level)
+						]);
+
+						await interaction.followUp({
+							content: `${user_data.pets[petIndex].name} leveled up! Their ability has gotten stronger.`,
+							flags: MessageFlags.Ephemeral
+						});
 					}
 
 					await Promise.all([
-						set_pet_total_food(interaction.member.id, petIndex, user_data.pets[petIndex].total_food + 1), // ++?
-						set_pet_fullness(interaction.member.id, petIndex, user_data.pets[petIndex].fullness + 1), // ++?
-						set_snow_amount(interaction.member.id, user_data.snow_amount - 1) // --?
+						set_pet_total_food(interaction.member.id, petIndex, user_data.pets[petIndex].total_food),
+						set_pet_fullness(interaction.member.id, petIndex, user_data.pets[petIndex].fullness),
+						set_snow_amount(interaction.member.id, user_data.snow_amount)
 					]);
 				}
 				

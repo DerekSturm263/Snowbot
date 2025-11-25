@@ -312,6 +312,29 @@ export async function set_pet_total_food(userID, petIndex, val) {
     return result;
 }
 
+export async function set_pet_appetite(userID, petIndex, val) {
+    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(id);
+    user.pets[petIndex].appetite = val;
+    
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: userID },
+        { $set: { pets: user.pets }}
+    );
+
+    return result;
+}
+
+export async function set_pet_level(userID, petIndex, val) {
+    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(id);
+    user.pets[petIndex].level = val;
+    
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: userID },
+        { $set: { pets: user.pets }}
+    );
+
+    return result;
+}
 
 
 // Weather.
