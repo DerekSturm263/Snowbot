@@ -16,17 +16,17 @@ export function build_new_weather(weather, offset) {
 		.addFields(
 			{
 				name: 'Date',
-				value: `${getHourRoundedDown(offset).toDateString()}`,
+				value: `<t:${Math.floor(getHourRoundedDown(offset) / 1000)}:D>`,
 				inline: true
 			},
 			{
 				name: 'Start Time',
-				value: `${getHourRoundedDown(offset).toTimeString()}`,
+				value: `<t:${Math.floor(getHourRoundedDown(offset) / 1000)}:t>`,
 				inline: true
 			},
 			{
 				name: 'End Time',
-				value: `${new Date(getHourRoundedDown(offset).getTime() + 60 * 60 * 1000).toTimeString()}`,
+				value: `<t:${Math.floor(new Date(getHourRoundedDown(offset).getTime() + 60 * 60 * 1000) / 1000)}:t>`,
 				inline: true
 			},
 			{
