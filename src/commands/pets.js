@@ -1,6 +1,6 @@
 // Lets users manage their pets.
 
-import { ActionRowBuilder, ButtonBuilder, MessageFlags, ModalBuilder, SlashCommandBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, TextInputBuilder, TextInputStyle } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, MessageFlags, SlashCommandBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from 'discord.js';
 import { build_new_pet } from '../embeds/new_pet.js';
 import { get_user_data, set_pet_fullness, set_active_pet, set_pet_total_food, set_snow_amount, set_pet_appetite, set_pet_level } from '../database.js';
 
@@ -60,12 +60,12 @@ export const command = {
 					.setCustomId('feed')
 					.setLabel('Feed')
 					.setStyle('Secondary')
-					.setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time),
+					.setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time)/*,
 				new ButtonBuilder()
 					.setCustomId('rename')
 					.setLabel('Rename')
 					.setStyle('Secondary')
-					.setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time)
+					.setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time)*/
 			);
 
 		const message = await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
@@ -144,21 +144,7 @@ export const command = {
 				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
 			} else if (i.customId == 'rename') {
 				await i.deferUpdate();
-
-				const modal = new ModalBuilder()
-					.setCustomId('rename')
-					.setTitle(`Rename ${user_data.pets[petIndex]}`);
-
-				const actionRow = new ActionRowBuilder()
-					.addComponents(
-						new TextInputBuilder()
-							.setCustomId('name')
-							.setStyle(TextInputStyle.Short)
-					);
-
-				modal.addLabelComponents(actionRow);
-				await interaction.showModal(modal);
-				
+	
 				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
 			}
 		});
