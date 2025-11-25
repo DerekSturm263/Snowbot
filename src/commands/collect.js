@@ -43,8 +43,11 @@ export const command = {
 
 		// Check if the user isn't ready to collect more snow.
 		if (user_data.ready_time > new Date().getTime()) {
+			const difference = user_data.ready_time - new Date().getTime();
+			const seconds = Math.ceil(difference / 1000);
+
 			await interaction.editReply({
-				content: `Slow down! You can collect more snow <t:${user_data.ready_time}:R>.`,
+				content: `You have to wait \`${seconds} more second${seconds == 1 ? '' : 's'}\` before you can collect more snow!`,
 				flags: MessageFlags.Ephemeral
 			});
 			return;
