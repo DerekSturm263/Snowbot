@@ -15,7 +15,7 @@ Click the above link to invite Snowbot to your server for free! From there, you 
   - [x] Find Eggs
   - [x] Set Active Pet
   - [ ] Feed Pet
-  - [ ] Level Up Pet
+  - [x] Level Up Pet
   - [ ] Rename Pet
   - [ ] Pet Abilities
   - [ ] Pet Notifications
