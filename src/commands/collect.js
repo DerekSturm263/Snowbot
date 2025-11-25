@@ -77,7 +77,7 @@ export const command = {
 			flags: MessageFlags.Ephemeral
 		});
 
-		const petChance = Math.random() < 0.05;
+		const petChance = Math.random() < 1;
 		if (petChance) {
 			const randomIndex = Math.floor(Math.random() * pets.length);
 			const pet = pets[randomIndex];
