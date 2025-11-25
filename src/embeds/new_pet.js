@@ -4,7 +4,7 @@ export function build_new_pet(pet, isEgg) {
 	return new EmbedBuilder()
 		.setColor(0xFFFFFF)
 		.setTitle(`${isEgg ? 'Unhatched Egg' : pet.name}`)
-        .setDescription(`${isEgg ? `This egg will hatch **<t:${pet.hatch_time / 1000a}:R>**.` : pet.descriptions[Math.floor(pet.total_food / 20)]}`)
+        .setDescription(`${isEgg ? `This egg will hatch **<t:${pet.hatch_time / 1000}:R>**.` : pet.descriptions[Math.floor(pet.total_food / 20)]}`)
 		.addFields(
 			{
 				name: 'Level',
