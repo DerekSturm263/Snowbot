@@ -24,12 +24,6 @@ export const command = {
 
 		console.log(`\n${interaction.user.displayName} used /pets:`);
 
-		await interaction.editReply({
-				content: 'This feature is under construction. Check back soon!',
-				flags: MessageFlags.Ephemeral
-			});
-			return;
-
         const user_data = await get_user_data(interaction.member.id);
 
 		if (user_data.pets.length == 0) {
@@ -81,7 +75,7 @@ export const command = {
 			if (i.customId == 'pets') {
 				await i.deferUpdate();
 
-				petIndex = Number(interaction.values[0]);
+				petIndex = Number(i.values[0]);
 
 				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
 			} else if (i.customId == 'setActive') {
