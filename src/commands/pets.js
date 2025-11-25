@@ -49,8 +49,14 @@ export const command = {
 					)
 				);
 
-		const row2 = new ActionRowBuilder();
-
+		const row2 = new ActionRowBuilder()
+			.addComponents(
+				new ButtonBuilder()
+					.setCustomId('setActive')
+					.setLabel('Set As Active Pet')
+					.setStyle('Primary')
+					.setDisabled(user_data.pets[petIndex].is_active || new Date().getTime() < user_data.pets[petIndex].hatch_time)
+			);
 /*
 		const row2 = new ActionRowBuilder()
 			.addComponents(
