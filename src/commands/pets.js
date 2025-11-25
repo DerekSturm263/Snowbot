@@ -49,6 +49,9 @@ export const command = {
 					)
 				);
 
+		const row2 = new ActionRowBuilder();
+
+/*
 		const row2 = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
@@ -67,7 +70,7 @@ export const command = {
 					.setStyle('Primary')
 					.setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time)
 			);
-
+*/
 		const message = await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
 
 		const collector = message.createMessageComponentCollector({ time: 2 * 60 * 1000 });
