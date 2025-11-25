@@ -90,6 +90,8 @@ export const command = {
 					row1.components[0].options[i].setDefault(i == petIndex);
 				}
 
+				row2.components[0].setDisabled(user_data.pets[petIndex].is_active);
+
 				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
 			} else if (i.customId == 'setActive') {
 				await i.deferUpdate();
@@ -98,6 +100,8 @@ export const command = {
 					set_pet_is_active(interaction.member.id, petIndex, true),
 					...user_data.pets.filter((pet, index) => index != petIndex).map((pet, index) => set_pet_is_active(interaction.member.id, index, false))
 				]);
+
+				row2.components[0].setDisabled(true);
 
 				await interaction.followUp({
 					content: `${user_data.pets[petIndex].name} is now the active pet.`,
