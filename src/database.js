@@ -2,6 +2,7 @@ import { MongoClient, ObjectId } from "mongodb";
 import achievements from "./exports/achievements.js";
 import weather from "./exports/weathers.js";
 import seedrandom from "seedrandom";
+import { v4 as uuid } from "uuid";
 
 const client = new MongoClient(process.env.MONGODB_URI ?? '', {
     serverSelectionTimeoutMS: 120000,
@@ -250,7 +251,7 @@ export async function add_pet(id, val) {
     const now = new Date();
     const later = new Date(now.getTime() + 60 * 60 * 1000);
 
-    val.id = crypto.randomUUID().toString();
+    val.id = uuid().toString();
     val.hatch_time = later.getTime();
 
     const user = await client.db('database').collection('users').findOne({ userID: id }) ?? await create_user_data(id);

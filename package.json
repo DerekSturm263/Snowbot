@@ -3,7 +3,8 @@
     "discord.js": "^14.24.2",
     "dotenv": "^17.2.3",
     "mongodb": "^7.0.0",
-    "seedrandom": "^3.0.5"
+    "seedrandom": "^3.0.5",
+    "uuid": "^13.0.0"
   },
   "type": "module"
 }
