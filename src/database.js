@@ -33,6 +33,7 @@ async function create_user_data(id) {
         crits: 0,
         misses: 0,
         times_hit: 0,
+        active_pet: "",
         pets: [],
         achievements: []
     };
@@ -70,6 +71,7 @@ export async function reset_user_data(id) {
             crits: 0,
             misses: 0,
             times_hit: 0,
+            active_pet: "",
             pets: [],
             achievements: []
         }}
@@ -277,13 +279,10 @@ export async function set_pet_name(userID, petIndex, val) {
     return result;
 }
 
-export async function set_pet_is_active(userID, petIndex, val) {
-    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(id);
-    user.pets[petIndex].is_active = val;
-    
+export async function set_active_pet(userID, val) {
     const result = await client.db('database').collection('users').updateOne(
-        { userID: userID },
-        { $set: { pets: user.pets }}
+        { userID: id },
+        { $set: { active_pet: val.id }}
     );
 
     return result;

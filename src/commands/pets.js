@@ -2,7 +2,7 @@
 
 import { ActionRowBuilder, ButtonBuilder, MessageFlags, SlashCommandBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from 'discord.js';
 import { build_new_pet } from '../embeds/new_pet.js';
-import { get_user_data, set_pet_fullness, set_pet_is_active, set_pet_total_food, set_snow_amount } from '../database.js';
+import { get_user_data, set_pet_fullness, set_active_pet, set_pet_total_food, set_snow_amount } from '../database.js';
 
 function build_pet(row1, row2, pet) {
 	const isEgg = new Date().getTime() < pet.hatch_time;
@@ -42,7 +42,7 @@ export const command = {
 					.setCustomId('pets')
 					.addOptions(
 						user_data.pets.map((pet, index) => new StringSelectMenuOptionBuilder()
-							.setLabel(`${new Date().getTime() < pet.hatch_time ? 'Unhatched Egg' : pet.name + (pet.is_active ? ' (Active)' : '')}`)
+							.setLabel(`${new Date().getTime() < pet.hatch_time ? 'Unhatched Egg' : pet.name + (pet.id == user_data.active_pet ? ' (Active)' : '')}`)
 							.setValue(`${index}`)
 							.setDefault(index == petIndex)
 						)
@@ -55,7 +55,7 @@ export const command = {
 					.setCustomId('setActive')
 					.setLabel('Set As Active Pet')
 					.setStyle('Primary')
-					.setDisabled(user_data.pets[petIndex].is_active || new Date().getTime() < user_data.pets[petIndex].hatch_time)
+					.setDisabled(petIndex.id == user_data.active_pet || new Date().getTime() < user_data.pets[petIndex].hatch_time)
 			);
 /*
 		const row2 = new ActionRowBuilder()
@@ -64,7 +64,7 @@ export const command = {
 					.setCustomId('setActive')
 					.setLabel('Set As Active Pet')
 					.setStyle('Primary')
-					.setDisabled(user_data.pets[petIndex].is_active || new Date().getTime() < user_data.pets[petIndex].hatch_time),
+					.setDisabled(petIndex.id == user_data.active_pet || new Date().getTime() < user_data.pets[petIndex].hatch_time)
 				new ButtonBuilder()
 					.setCustomId('feed')
 					.setLabel('Feed')
@@ -90,19 +90,16 @@ export const command = {
 					row1.components[0].options[i].setDefault(i == petIndex);
 				}
 
-				row2.components[0].setDisabled(user_data.pets[petIndex].is_active);
+				row2.components[0].setDisabled(user_data.pets[petIndex].id == user_data.active_pet);
 
 				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
 			} else if (i.customId == 'setActive') {
 				await i.deferUpdate();
 
-				await Promise.all([
-					set_pet_is_active(interaction.member.id, petIndex, true),
-					...user_data.pets.filter((pet, index) => index != petIndex).map((pet, index) => set_pet_is_active(interaction.member.id, index, false))
-				]);
+				await set_active_pet(interaction.member.id, user_data.pets[petIndex]);
 
 				for (let i = 0; i < user_data.pets.length; ++i) {
-					row1.components[0].options[i].setLabel(`${new Date().getTime() < user_data.pets[i].hatch_time ? 'Unhatched Egg' : user_data.pets[i].name + (user_data.pets[i].is_active ? ' (Active)' : '')}`);
+					row1.components[0].options[i].setLabel(`${new Date().getTime() < user_data.pets[i].hatch_time ? 'Unhatched Egg' : user_data.pets[i].name + (user_data.pets[petIndex].id == user_data.active_pet ? ' (Active)' : '')}`);
 				}
 
 				row2.components[0].setDisabled(true);
