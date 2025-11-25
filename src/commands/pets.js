@@ -93,15 +93,11 @@ export const command = {
 				await set_active_pet(interaction.member.id, user_data.pets[petIndex]);
 
 				for (let i = 0; i < user_data.pets.length; ++i) {
-					row1.components[0].options[i].setLabel(`${new Date().getTime() < user_data.pets[i].hatch_time ? 'Unhatched Egg' : user_data.pets[i].name + (user_data.pets[petIndex].id == user_data.active_pet ? ' (Active)' : '')}`);
+					const suffix = user_data.pets[i].id == user_data.active_pet ? ' (Active)' : '';
+					row1.components[0].options[i].setLabel(`${new Date().getTime() < user_data.pets[i].hatch_time ? 'Unhatched Egg' : user_data.pets[i].name + suffix}`);
 				}
 
 				row2.components[0].setDisabled(true);
-
-				await interaction.followUp({
-					content: `${user_data.pets[petIndex].name} is now the active pet.`,
-					flags: MessageFlags.Ephemeral
-				});
 
 				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
 			} else if (i.customId == 'feed') {
