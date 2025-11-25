@@ -222,6 +222,15 @@ export async function set_ready_time(id, val) {
     return result;
 }
 
+export async function set_active_pet(id, val) {
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: id },
+        { $set: { active_pet: val.id }}
+    );
+
+    return result;
+}
+
 export async function parseAchievements(userData) {
     let achievementsOut = [];
 
@@ -274,15 +283,6 @@ export async function set_pet_name(userID, petIndex, val) {
     const result = await client.db('database').collection('users').updateOne(
         { userID: id },
         { $set: { pets: user.pets }}
-    );
-
-    return result;
-}
-
-export async function set_active_pet(userID, val) {
-    const result = await client.db('database').collection('users').updateOne(
-        { userID: id },
-        { $set: { active_pet: val.id }}
     );
 
     return result;
