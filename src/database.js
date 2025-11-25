@@ -265,7 +265,7 @@ export async function add_pet(id, val) {
     val.id = uuidv4().toString();
     val.hatch_time = later.getTime();
 
-    const user = await client.db('database').collection('users').findOne({ userID: id }) ?? await create_user_data(id);
+    const user = await client.db('database').collection('users').findOne({ userID: id }) ?? await create_user_data(userID);
     user.pets.push(val);
 
     const result = await client.db('database').collection('users').updateOne(
@@ -277,7 +277,7 @@ export async function add_pet(id, val) {
 }
 
 export async function set_pet_name(userID, petIndex, val) {
-    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(id);
+    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(userID);
     user.pets[petIndex].name = val;
     
     const result = await client.db('database').collection('users').updateOne(
@@ -289,7 +289,7 @@ export async function set_pet_name(userID, petIndex, val) {
 }
 
 export async function set_pet_fullness(userID, petIndex, val) {
-    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(id);
+    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(userID);
     user.pets[petIndex].fullness = val;
     
     const result = await client.db('database').collection('users').updateOne(
@@ -301,7 +301,7 @@ export async function set_pet_fullness(userID, petIndex, val) {
 }
 
 export async function set_pet_total_food(userID, petIndex, val) {
-    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(id);
+    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(userID);
     user.pets[petIndex].total_food = val;
     
     const result = await client.db('database').collection('users').updateOne(
@@ -313,7 +313,7 @@ export async function set_pet_total_food(userID, petIndex, val) {
 }
 
 export async function set_pet_appetite(userID, petIndex, val) {
-    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(id);
+    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(userID);
     user.pets[petIndex].appetite = val;
     
     const result = await client.db('database').collection('users').updateOne(
@@ -325,7 +325,7 @@ export async function set_pet_appetite(userID, petIndex, val) {
 }
 
 export async function set_pet_level(userID, petIndex, val) {
-    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(id);
+    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(userID);
     user.pets[petIndex].level = val;
     
     const result = await client.db('database').collection('users').updateOne(
