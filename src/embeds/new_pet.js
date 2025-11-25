@@ -9,7 +9,7 @@ export function build_new_pet(pet, isEgg) {
 		.addFields(
 			{
 				name: 'Level',
-				value: `${Math.floor(pet.total_food / 20)}`,
+				value: `${Math.floor(pet.total_food / 20) + (isEgg ? 0 : 1)}`,
 				inline: true
 			},
 			{
