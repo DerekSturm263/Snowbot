@@ -13,7 +13,7 @@ Click the above link to invite Snowbot to your server for free! From there, you 
   - [x] Forecast Check
 - [ ] Pets
   - [x] Find Eggs
-  - [ ] Set Active Pet
+  - [x] Set Active Pet
   - [ ] Feed Pet
   - [ ] Level Up Pet
   - [ ] Rename Pet

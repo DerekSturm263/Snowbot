@@ -24,6 +24,11 @@ export function build_new_pet(pet, isEgg) {
 					: pet.fullness == 3 ? 'Stuffed!'
 					: '' }`,
 				inline: true
+			},
+			{
+				name: 'Level Up Progress',
+				value: `${pet.total_food}/${pet.appetite}`,
+				inline: true
 			}
 		);
 };
