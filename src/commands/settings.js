@@ -3,6 +3,7 @@
 import { ActionRowBuilder, ButtonBuilder, MessageFlags, SlashCommandBuilder 	} from 'discord.js';
 import { build_new_settings } from '../embeds/new_settings.js';
 import { get_user_data, set_show_achievements, set_show_pet_updates, set_show_pings } from '../database.js';
+import log from '../debug.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -12,7 +13,7 @@ export const command = {
     async execute(interaction) {
     	await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-		console.log(`\n${interaction.user.displayName} used /settings:`);
+		log(`\n${interaction.user.displayName} used /settings:`);
 
         const user_data = await get_user_data(interaction.member.id);
 

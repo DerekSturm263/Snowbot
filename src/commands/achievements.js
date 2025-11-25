@@ -4,6 +4,7 @@ import { ActionRowBuilder, ButtonBuilder, MessageFlags, SlashCommandBuilder    }
 import { get_user_data }   from '../database.js';
 import { build_new_list_achievement } from '../embeds/new_achievement.js';
 import achievements from '../exports/achievements.js';
+import log from '../debug.js';
 
 function build_achievements(row, user_data, page, itemCount) {
 	return {
@@ -27,7 +28,7 @@ export const command = {
 	async execute(interaction) {
 		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-		console.log(`\n${interaction.user.displayName} used /achievements:`);
+		log(`\n${interaction.user.displayName} used /achievements:`);
 
 		let page = 0;
 

@@ -3,6 +3,7 @@ import achievements from "./exports/achievements.js";
 import weather from "./exports/weathers.js";
 import seedrandom from "seedrandom";
 import { v4 as uuidv4 } from 'uuid';
+import log from "./debug.js";
 
 const client = new MongoClient(process.env.MONGODB_URI ?? '', {
     serverSelectionTimeoutMS: 120000,
@@ -14,8 +15,6 @@ const client = new MongoClient(process.env.MONGODB_URI ?? '', {
 // User Data.
 
 async function create_user_data(id) {
-    console.log("create");
-
     const user = {
         userID: id,
         snow_amount: 0,
@@ -44,10 +43,9 @@ async function create_user_data(id) {
 }
 
 export async function get_user_data(id) {
-    console.log("get");
     const user = await client.db('database').collection('users').findOne({ userID: id }) ?? await create_user_data(id);
 
-    console.log(JSON.stringify(user));
+    log(JSON.stringify(user));
 
     return user;
 }
@@ -372,10 +370,9 @@ async function create_leaderboard_data(id) {
 }
 
 export async function get_leaderboard_data(id) {
-    console.log("get");
     const leaderboard = await client.db('database').collection('leaderboards').findOne({ guildID: id }) ?? await create_leaderboard_data(id);
 
-    console.log(JSON.stringify(leaderboard));
+    log(JSON.stringify(leaderboard));
 
     return leaderboard;
 }

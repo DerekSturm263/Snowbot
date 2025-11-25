@@ -7,6 +7,7 @@ import { parseAchievements, get_user_data, set_snow_amount, set_ready_time, get_
 import { build_new_get_achievement } from '../embeds/new_achievement.js';
 import { build_new_pet_unlocked } from '../embeds/new_pet.js';
 import pets from '../exports/pets.js';
+import log from '../debug.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -16,7 +17,7 @@ export const command = {
 	async execute(interaction) {
 		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-		console.log(`\n${interaction.user.displayName} used /collect:`);
+		log(`\n${interaction.user.displayName} used /collect:`);
 
 		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), get_weather(0) ];
 

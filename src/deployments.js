@@ -1,5 +1,6 @@
 import { readdirSync                }   from "node:fs";
 import { Collection, REST, Routes   }   from "discord.js";
+import log, { logError } from "./debug";
 
 const commands = [];
 const commandDatas = [];
@@ -13,14 +14,14 @@ export async function init_commands(client, token, clientId) {
                 commands.push(command);
                 commandDatas.push(command.data.toJSON());
             })
-            .catch(err => console.error(err));
+            .catch(err => logError(err));
     }
 
     const rest = new REST({ version: '10' }).setToken(token);
 
     (async () => {
         try {
-            console.log(`Started refreshing ${commandDatas.length} application (/) commands.\n`);
+            log(`Started refreshing ${commandDatas.length} application (/) commands.\n`);
 
             // Refresh all commands in the guild with the current set.
             const data = await rest.put(
@@ -28,9 +29,9 @@ export async function init_commands(client, token, clientId) {
                 { body: commandDatas },
             );
 
-            console.log(`Successfully reloaded ${data.length} application (/) commands.\n`);
+            log(`Successfully reloaded ${data.length} application (/) commands.\n`);
         } catch (error) {
-            console.error(error);
+            logError(error);
         }
     })();
 
@@ -38,8 +39,8 @@ export async function init_commands(client, token, clientId) {
     for (const command of commands) {
         client.commands.set(command.data.name, command);
 
-        console.log(`Command: ${command.data.name} was loaded successfully.`);
-        console.log(` - Contents: ${JSON.stringify(command)}\n`);
+        log(`Command: ${command.data.name} was loaded successfully.`);
+        log(` - Contents: ${JSON.stringify(command)}\n`);
     }
 };
 
@@ -52,9 +53,9 @@ export async function init_events(client) {
 				event.once ? client.once(event.name, (...args) => event.execute(...args))
 						   : client.on  (event.name, (...args) => event.execute(...args));
 
-				console.log(`Event: ${event.name} was loaded successfully.`);
-                console.log(` - Contents: ${JSON.stringify(obj)}\n`);
+				log(`Event: ${event.name} was loaded successfully.`);
+                log(` - Contents: ${JSON.stringify(obj)}\n`);
 			})
-			.catch(err => console.error(err));
+			.catch(err => logError(err));
     }
 };
