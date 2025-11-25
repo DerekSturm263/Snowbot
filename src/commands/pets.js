@@ -85,6 +85,7 @@ export const command = {
 				await i.deferUpdate();
 
 				petIndex = Number(i.values[0]);
+				row1.components[0].setDefaultValues([ petIndex ]);
 
 				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
 			} else if (i.customId == 'setActive') {
