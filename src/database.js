@@ -281,7 +281,7 @@ export async function set_pet_is_active(userID, petIndex, val) {
     user.pets[petIndex].is_active = val;
     
     const result = await client.db('database').collection('users').updateOne(
-        { userID: id },
+        { userID: userID },
         { $set: { pets: user.pets }}
     );
 
@@ -293,7 +293,7 @@ export async function set_pet_fullness(userID, petIndex, val) {
     user.pets[petIndex].fullness = val;
     
     const result = await client.db('database').collection('users').updateOne(
-        { userID: id },
+        { userID: userID },
         { $set: { pets: user.pets }}
     );
 
@@ -305,7 +305,7 @@ export async function set_pet_total_food(userID, petIndex, val) {
     user.pets[petIndex].total_food = val;
     
     const result = await client.db('database').collection('users').updateOne(
-        { userID: id },
+        { userID: userID },
         { $set: { pets: user.pets }}
     );
 
