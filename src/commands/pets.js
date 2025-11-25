@@ -101,6 +101,10 @@ export const command = {
 					...user_data.pets.filter((pet, index) => index != petIndex).map((pet, index) => set_pet_is_active(interaction.member.id, index, false))
 				]);
 
+				for (let i = 0; i < user_data.pets.length; ++i) {
+					row1.components[0].options[i].setLabel(`${new Date().getTime() < pet.hatch_time ? 'Unhatched Egg' : pet.name + (pet.is_active ? ' (Active)' : '')}`);
+				}
+
 				row2.components[0].setDisabled(true);
 
 				await interaction.followUp({
@@ -114,7 +118,7 @@ export const command = {
 
 				if (user_data.pets[petIndex].fullness > 3) {
 					await interaction.followUp({
-						content: 'Your pet is full! Try feeding them again later.',
+						content: `${user_data.pets[petIndex].name} is full! Try feeding them again later.`,
 						flags: MessageFlags.Ephemeral
 					});
 				} else {
