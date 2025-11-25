@@ -42,7 +42,7 @@ export const command = {
 					.setCustomId('pets')
 					.addOptions(
 						user_data.pets.map((pet, index) => new StringSelectMenuOptionBuilder()
-							.setLabel(`${new Date().getTime() < pet.hatch_time ? 'Unhatched Egg' : pet.name}`)
+							.setLabel(`${new Date().getTime() < pet.hatch_time ? 'Unhatched Egg' : pet.name + (pet.is_active ? ' (Active)' : '')}`)
 							.setValue(`${index}`)
 							.setDefault(index == petIndex)
 						)
