@@ -44,7 +44,7 @@ export const command = {
 						user_data.pets.map((pet, index) => new StringSelectMenuOptionBuilder()
 							.setLabel(`${new Date().getTime() < pet.hatch_time ? 'Unhatched Egg' : pet.name}`)
 							.setValue(`${index}`)
-							.setDefault(index == 0)
+							.setDefault(index == petIndex)
 						)
 					)
 				);
