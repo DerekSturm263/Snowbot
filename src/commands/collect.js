@@ -85,7 +85,7 @@ export const command = {
 			await add_pet(interaction.member.id, pet);
 
 			await interaction.followUp({
-				embeds: [ build_new_pet_unlocked() ],
+				embeds: [ build_new_pet_unlocked(pet) ],
 				flags: MessageFlags.Ephemeral
 			});
 		}
