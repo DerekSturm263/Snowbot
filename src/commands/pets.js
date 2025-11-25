@@ -102,7 +102,7 @@ export const command = {
 				]);
 
 				for (let i = 0; i < user_data.pets.length; ++i) {
-					row1.components[0].options[i].setLabel(`${new Date().getTime() < pet.hatch_time ? 'Unhatched Egg' : pet.name + (pet.is_active ? ' (Active)' : '')}`);
+					row1.components[0].options[i].setLabel(`${new Date().getTime() < user_data.pets[petIndex].hatch_time ? 'Unhatched Egg' : user_data.pets[petIndex].name + (user_data.pets[petIndex].is_active ? ' (Active)' : '')}`);
 				}
 
 				row2.components[0].setDisabled(true);
