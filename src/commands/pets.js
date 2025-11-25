@@ -125,7 +125,7 @@ export const command = {
 
 						await Promise.all([
 							set_pet_appetite(interaction.member.id, petIndex, user_data.pets[petIndex].appetite),
-							set_pet_level(user_data.pets[petIndex].level)
+							set_pet_level(interaction.member.id, petIndex, user_data.pets[petIndex].level)
 						]);
 
 						await interaction.followUp({
