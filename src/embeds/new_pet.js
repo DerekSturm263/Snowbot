@@ -24,6 +24,6 @@ export function build_new_pet_unlocked(pet) {
 	return new EmbedBuilder()
 		.setColor(0xFFFFFF)
 		.setTitle(`What's this? You found an egg!`)
-        .setDescription(`**<t:${Math.floor(pet.hatch_time / 1000)}:R>**, the egg will hatch into a new pet! Come back later and use `/pets` to see what it is!`)
+        .setDescription(`**<t:${Math.floor(pet.hatch_time / 1000)}:R>**, the egg will hatch into a new pet! Come back later and use \`/pets\` to see what it is!`)
 		.setImage("https://images.everydayhealth.com/images/news/an-egg-day-lower-dementia-risk-1440x810.jpg?sfvrsn=d81b2e39_3");
 };
