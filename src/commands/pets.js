@@ -17,7 +17,7 @@ function build_pet(row1, row2, pet) {
 export const command = {
 	data: new SlashCommandBuilder()
 		.setName('pets')
-		.setDescription('Manage your pets by feeding them and selecting which one is active.'),
+		.setDescription('Manage your pets by feeding them and selecting which one is active (WIP).'),
 			
 	async execute(interaction) {
 		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
