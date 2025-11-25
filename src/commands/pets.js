@@ -24,6 +24,12 @@ export const command = {
 
 		console.log(`\n${interaction.user.displayName} used /pets:`);
 
+		await interaction.editReply({
+				content: 'This feature is under construction. Check back soon!',
+				flags: MessageFlags.Ephemeral
+			});
+			return;
+
         const user_data = await get_user_data(interaction.member.id);
 
 		if (user_data.pets.length == 0) {
