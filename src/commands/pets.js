@@ -146,11 +146,11 @@ export const command = {
 			} else if (i.customId == 'release') {
 				await i.deferUpdate();
 
-				user_data.pets.splice(petIndex, 1);
+				const oldPet = user_data.pets.splice(petIndex, 1);
 				await remove_pet(interaction.member.id, petIndex);
 
 				await interaction.followUp({
-					content: `You released ${user_data.pets[petIndex].name}!`,
+					content: `You released ${oldPet[0].name}!`,
 					flags: MessageFlags.Ephemeral
 				});
 	
