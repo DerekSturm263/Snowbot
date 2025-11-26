@@ -274,6 +274,18 @@ export async function add_pet(id, val) {
     return result;
 }
 
+export async function remove_pet(userID, petID) {
+    const user = await client.db('database').collection('users').findOne({ userID: id }) ?? await create_user_data(userID);
+    user.pets.splice(array.findIndex(pet => pet.id == petID), 1);
+
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: id },
+        { $set: { pets: user.pets }}
+    );
+
+    return result;
+}
+
 export async function set_pet_name(userID, petIndex, val) {
     const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(userID);
     user.pets[petIndex].name = val;

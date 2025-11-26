@@ -2,7 +2,7 @@
 
 import { ActionRowBuilder, ButtonBuilder, MessageFlags, SlashCommandBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from 'discord.js';
 import { build_new_pet } from '../embeds/new_pet.js';
-import { get_user_data, set_pet_fullness, set_active_pet, set_pet_total_food, set_snow_amount, set_pet_appetite, set_pet_level } from '../miscellaneous/database.js';
+import { get_user_data, set_pet_fullness, set_active_pet, set_pet_total_food, set_snow_amount, set_pet_appetite, set_pet_level, remove_pet } from '../miscellaneous/database.js';
 import log from '../miscellaneous/debug.js';
 
 function build_pet(row1, row2, pet) {
@@ -18,7 +18,7 @@ function build_pet(row1, row2, pet) {
 export const command = {
 	data: new SlashCommandBuilder()
 		.setName('pets')
-		.setDescription('Manage your pets by feeding them and selecting which one is active (WIP).'),
+		.setDescription('Manage your pets by feeding them and selecting which one is active.'),
 			
 	async execute(interaction) {
 		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
@@ -61,12 +61,12 @@ export const command = {
 					.setCustomId('feed')
 					.setLabel('Feed')
 					.setStyle('Secondary')
-					.setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time)/*,
+					.setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time),
 				new ButtonBuilder()
 					.setCustomId('release')
 					.setLabel('Release')
 					.setStyle('Danger')
-					.setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time)*/
+					.setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time)
 			);
 
 		const message = await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
@@ -145,6 +145,8 @@ export const command = {
 				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
 			} else if (i.customId == 'release') {
 				await i.deferUpdate();
+
+				await remove_pet(interaction.member.id, user_data.pets[petIndex].id);
 	
 				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
 			}
