@@ -2,11 +2,11 @@
 // What you put in the snowball impacts how long another user hit with the snowball is timed out for.
 
 import { MessageFlags, SlashCommandBuilder				} from 'discord.js';
-import { parseAchievements, get_user_data, set_packed_object, get_weather, set_total_packed_objects, set_snow_amount, set_building	} from '../database.js';
+import { parseAchievements, get_user_data, set_packed_object, get_weather, set_total_packed_objects, set_snow_amount, set_building	} from '../miscellaneous/database.js';
 import { build_new_pack 					} from '../embeds/new_packs.js';
 import { build_new_get_achievement } from '../embeds/new_achievement.js';
 import objects from '../exports/objects.js';
-import log from '../debug.js';
+import log from '../miscellaneous/debug.js';
 
 export const command = {
 	data: new SlashCommandBuilder()

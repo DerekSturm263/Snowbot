@@ -1,0 +1,349 @@
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/achievements.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/events/interaction_create.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/build.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/events/ready.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/collect.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/forecast.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/help.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/leaderboard.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/pack.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/pets.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/reset.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/settings.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/stats.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/throw.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Started refreshing 0 application (/) commands.
+
+Error: Expected token to be set for this request, but none was present
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/achievements.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/events/interaction_create.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/build.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/events/ready.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/collect.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/forecast.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/help.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/leaderboard.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/pack.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/pets.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/reset.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/settings.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/stats.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/throw.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Started refreshing 0 application (/) commands.
+
+Successfully reloaded 0 application (/) commands.
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/achievements.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/events/interaction_create.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/build.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/events/ready.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/collect.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/forecast.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/help.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/leaderboard.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/pack.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/pets.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/reset.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/settings.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/stats.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/throw.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Started refreshing 0 application (/) commands.
+
+Successfully reloaded 0 application (/) commands.
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/achievements.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/events/interaction_create.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/build.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/events/ready.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/collect.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/forecast.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/help.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/leaderboard.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/pack.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/pets.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/reset.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/settings.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/stats.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/commands/throw.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Started refreshing 0 application (/) commands.
+
+Successfully reloaded 0 application (/) commands.
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/src/commands/achievements.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Did you mean to import "../commands/achievements.js"?
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/src/events/interaction_create.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Did you mean to import "../events/interaction_create.js"?
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/src/commands/build.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Did you mean to import "../commands/build.js"?
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/src/events/ready.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Did you mean to import "../events/ready.js"?
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/src/commands/collect.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Did you mean to import "../commands/collect.js"?
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/src/commands/forecast.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Did you mean to import "../commands/forecast.js"?
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/src/commands/help.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Did you mean to import "../commands/help.js"?
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/src/commands/leaderboard.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Did you mean to import "../commands/leaderboard.js"?
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/src/commands/pack.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Did you mean to import "../commands/pack.js"?
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/src/commands/pets.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Did you mean to import "../commands/pets.js"?
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/src/commands/reset.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Did you mean to import "../commands/reset.js"?
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/src/commands/settings.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Did you mean to import "../commands/settings.js"?
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/src/commands/stats.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Did you mean to import "../commands/stats.js"?
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellanous/src/commands/throw.js' imported from /home/dereksturm263/Snowbot/src/miscellanous/deployments.js
+Did you mean to import "../commands/throw.js"?
+Started refreshing 0 application (/) commands.
+
+Successfully reloaded 0 application (/) commands.
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/achievements.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/debug.js' imported from /home/dereksturm263/Snowbot/src/events/interaction_create.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/build.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/debug.js' imported from /home/dereksturm263/Snowbot/src/events/ready.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/collect.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/forecast.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/debug.js' imported from /home/dereksturm263/Snowbot/src/commands/help.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/leaderboard.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/pets.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/reset.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/settings.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/stats.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/throw.js
+Started refreshing 1 application (/) commands.
+
+Command: pack was loaded successfully.
+ - Contents: {"data":{"options":[],"name":"pack","description":"Pack a snowball with something random! Requires that you're holding at least 2 snow.","type":1}}
+
+Successfully reloaded 1 application (/) commands.
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/commands/miscellanous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/achievements.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/debug.js' imported from /home/dereksturm263/Snowbot/src/events/interaction_create.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/build.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/debug.js' imported from /home/dereksturm263/Snowbot/src/events/ready.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/collect.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/forecast.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/debug.js' imported from /home/dereksturm263/Snowbot/src/commands/help.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/leaderboard.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/pets.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/reset.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/settings.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/stats.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/throw.js
+Started refreshing 1 application (/) commands.
+
+Command: pack was loaded successfully.
+ - Contents: {"data":{"options":[],"name":"pack","description":"Pack a snowball with something random! Requires that you're holding at least 2 snow.","type":1}}
+
+Successfully reloaded 1 application (/) commands.
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/commands/miscellanous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/achievements.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/debug.js' imported from /home/dereksturm263/Snowbot/src/events/interaction_create.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/build.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/debug.js' imported from /home/dereksturm263/Snowbot/src/events/ready.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/collect.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/forecast.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/debug.js' imported from /home/dereksturm263/Snowbot/src/commands/help.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/leaderboard.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/pets.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/reset.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/settings.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/stats.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/throw.js
+Started refreshing 1 application (/) commands.
+
+Command: pack was loaded successfully.
+ - Contents: {"data":{"options":[],"name":"pack","description":"Pack a snowball with something random! Requires that you're holding at least 2 snow.","type":1}}
+
+Successfully reloaded 1 application (/) commands.
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/debug.js' imported from /home/dereksturm263/Snowbot/src/events/interaction_create.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/debug.js' imported from /home/dereksturm263/Snowbot/src/events/ready.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/build.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/collect.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/forecast.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/debug.js' imported from /home/dereksturm263/Snowbot/src/commands/help.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/leaderboard.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/pets.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/reset.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/settings.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/stats.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/throw.js
+Started refreshing 2 application (/) commands.
+
+Command: achievements was loaded successfully.
+ - Contents: {"data":{"options":[{"name":"user","description":"The user you'd like to see the achievements of. Without one, you will see your own stats.","required":false,"type":6}],"name":"achievements","description":"Check a user's achievements.","type":1}}
+
+Command: pack was loaded successfully.
+ - Contents: {"data":{"options":[],"name":"pack","description":"Pack a snowball with something random! Requires that you're holding at least 2 snow.","type":1}}
+
+Successfully reloaded 2 application (/) commands.
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/debug.js' imported from /home/dereksturm263/Snowbot/src/events/interaction_create.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/debug.js' imported from /home/dereksturm263/Snowbot/src/events/ready.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/build.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/collect.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/forecast.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/debug.js' imported from /home/dereksturm263/Snowbot/src/commands/help.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/leaderboard.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/pets.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/reset.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/settings.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/stats.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/throw.js
+Started refreshing 2 application (/) commands.
+
+Command: achievements was loaded successfully.
+ - Contents: {"data":{"options":[{"name":"user","description":"The user you'd like to see the achievements of. Without one, you will see your own stats.","required":false,"type":6}],"name":"achievements","description":"Check a user's achievements.","type":1}}
+
+Command: pack was loaded successfully.
+ - Contents: {"data":{"options":[],"name":"pack","description":"Pack a snowball with something random! Requires that you're holding at least 2 snow.","type":1}}
+
+Successfully reloaded 2 application (/) commands.
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/debug.js' imported from /home/dereksturm263/Snowbot/src/events/interaction_create.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/debug.js' imported from /home/dereksturm263/Snowbot/src/events/ready.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/build.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/collect.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/forecast.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/debug.js' imported from /home/dereksturm263/Snowbot/src/commands/help.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/leaderboard.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/pets.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/reset.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/settings.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/stats.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/throw.js
+Started refreshing 2 application (/) commands.
+
+Command: achievements was loaded successfully.
+ - Contents: {"data":{"options":[{"name":"user","description":"The user you'd like to see the achievements of. Without one, you will see your own stats.","required":false,"type":6}],"name":"achievements","description":"Check a user's achievements.","type":1}}
+
+Command: pack was loaded successfully.
+ - Contents: {"data":{"options":[],"name":"pack","description":"Pack a snowball with something random! Requires that you're holding at least 2 snow.","type":1}}
+
+Successfully reloaded 2 application (/) commands.
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/debug.js' imported from /home/dereksturm263/Snowbot/src/events/interaction_create.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/debug.js' imported from /home/dereksturm263/Snowbot/src/events/ready.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/build.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/collect.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/forecast.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/debug.js' imported from /home/dereksturm263/Snowbot/src/commands/help.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/leaderboard.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/pets.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/reset.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/settings.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/stats.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/database.js' imported from /home/dereksturm263/Snowbot/src/commands/throw.js
+Started refreshing 2 application (/) commands.
+
+Command: achievements was loaded successfully.
+ - Contents: {"data":{"options":[{"name":"user","description":"The user you'd like to see the achievements of. Without one, you will see your own stats.","required":false,"type":6}],"name":"achievements","description":"Check a user's achievements.","type":1}}
+
+Command: pack was loaded successfully.
+ - Contents: {"data":{"options":[],"name":"pack","description":"Pack a snowball with something random! Requires that you're holding at least 2 snow.","type":1}}
+
+Successfully reloaded 2 application (/) commands.
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/debug.js' imported from /home/dereksturm263/Snowbot/src/events/interaction_create.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/debug.js' imported from /home/dereksturm263/Snowbot/src/events/ready.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/build.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/collect.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/forecast.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/debug.js' imported from /home/dereksturm263/Snowbot/src/commands/help.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/leaderboard.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/pets.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/reset.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/settings.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/stats.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/throw.js
+Started refreshing 2 application (/) commands.
+
+Command: achievements was loaded successfully.
+ - Contents: {"data":{"options":[{"name":"user","description":"The user you'd like to see the achievements of. Without one, you will see your own stats.","required":false,"type":6}],"name":"achievements","description":"Check a user's achievements.","type":1}}
+
+Command: pack was loaded successfully.
+ - Contents: {"data":{"options":[],"name":"pack","description":"Pack a snowball with something random! Requires that you're holding at least 2 snow.","type":1}}
+
+Successfully reloaded 2 application (/) commands.
+
+Event: interactionCreate was loaded successfully.
+ - Contents: {"event":{"name":"interactionCreate"}}
+
+Event: clientReady was loaded successfully.
+ - Contents: {"event":{"name":"clientReady"}}
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/build.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/collect.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/forecast.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/debug.js' imported from /home/dereksturm263/Snowbot/src/commands/help.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/leaderboard.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/pets.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/reset.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/settings.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/stats.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/dereksturm263/Snowbot/src/miscellaneous/database.js' imported from /home/dereksturm263/Snowbot/src/commands/throw.js
+Started refreshing 2 application (/) commands.
+
+Command: achievements was loaded successfully.
+ - Contents: {"data":{"options":[{"name":"user","description":"The user you'd like to see the achievements of. Without one, you will see your own stats.","required":false,"type":6}],"name":"achievements","description":"Check a user's achievements.","type":1}}
+
+Command: pack was loaded successfully.
+ - Contents: {"data":{"options":[],"name":"pack","description":"Pack a snowball with something random! Requires that you're holding at least 2 snow.","type":1}}
+
+Successfully reloaded 2 application (/) commands.
+
+Snowbot Prev#8146 is online.
+========================================================================
+Event: interactionCreate was loaded successfully.
+ - Contents: {"event":{"name":"interactionCreate"}}
+
+Event: clientReady was loaded successfully.
+ - Contents: {"event":{"name":"clientReady"}}
+
+Started refreshing 12 application (/) commands.
+
+Command: achievements was loaded successfully.
+ - Contents: {"data":{"options":[{"name":"user","description":"The user you'd like to see the achievements of. Without one, you will see your own stats.","required":false,"type":6}],"name":"achievements","description":"Check a user's achievements.","type":1}}
+
+Command: build was loaded successfully.
+ - Contents: {"data":{"options":[{"type":3,"choices":[{"name":"Snowman (cost: 2 snow, blocks: 1 hit)","value":"snowman"},{"name":"Snow Wall (cost: 4 snow, blocks: 2 hits)","value":"snow_wall"},{"name":"Igloo (cost: 7 snow, blocks: 4 hits)","value":"igloo"},{"name":"Snow Fort (cost: 9 snow, blocks: 6 hits)","value":"snow_fort"},{"name":"Snow Tower (cost: 12 snow, blocks: 9 hits)","value":"snow_tower"},{"name":"Snow Castle (cost: 16 snow, blocks: 12 hits)","value":"snow_castle"},{"name":"Snow Fortress (cost: 20 snow, blocks: 16 hits)","value":"snow_fortress"}],"name":"build","description":"What to build.","required":true}],"name":"build","description":"Build something out of snow! Requires that you're holding snow. Items are cheaper in heavier snow.","type":1}}
+
+Command: collect was loaded successfully.
+ - Contents: {"data":{"options":[],"name":"collect","description":"Collect some fresh snow from off the ground.","type":1}}
+
+Command: forecast was loaded successfully.
+ - Contents: {"data":{"options":[],"name":"forecast","description":"Checks the current and upcoming weather.","type":1}}
+
+Command: help was loaded successfully.
+ - Contents: {"data":{"options":[],"name":"help","description":"Learn more about each of the commands and the bot itself.","type":1}}
+
+Command: leaderboard was loaded successfully.
+ - Contents: {"data":{"options":[],"name":"leaderboard","description":"Check the leaderboard for this server.","type":1}}
+
+Command: pack was loaded successfully.
+ - Contents: {"data":{"options":[],"name":"pack","description":"Pack a snowball with something random! Requires that you're holding at least 2 snow.","type":1}}
+
+Command: pets was loaded successfully.
+ - Contents: {"data":{"options":[],"name":"pets","description":"Manage your pets by feeding them and selecting which one is active (WIP).","type":1}}
+
+Command: reset was loaded successfully.
+ - Contents: {"data":{"options":[],"name":"reset","description":"Reset all stats and achievements.","type":1}}
+
+Command: settings was loaded successfully.
+ - Contents: {"data":{"options":[],"name":"settings","description":"Manage your settings with the bot.","type":1}}
+
+Command: stats was loaded successfully.
+ - Contents: {"data":{"options":[{"name":"user","description":"The user you'd like to see the stats of. Without one, you will see your own stats.","required":false,"type":6}],"name":"stats","description":"Check a user's stats.","type":1}}
+
+Command: throw was loaded successfully.
+ - Contents: {"data":{"options":[{"name":"target","description":"The unfortunate victim.","required":true,"type":6},{"name":"ping","description":"Ping the target on hit?","required":false,"type":5}],"name":"throw","description":"Throw a snowball at someone! Requires that you're holding snow.","type":1}}
+
+Successfully reloaded 12 application (/) commands.
+
+Snowbot Prev#8146 is online.
+========================================================================

@@ -2,8 +2,8 @@
 
 import { ActionRowBuilder, ButtonBuilder, MessageFlags, SlashCommandBuilder 	} from 'discord.js';
 import { build_new_settings } from '../embeds/new_settings.js';
-import { get_user_data, set_show_achievements, set_show_pet_updates, set_show_pings } from '../database.js';
-import log from '../debug.js';
+import { get_user_data, set_show_achievements, set_show_pet_updates, set_show_pings } from '../miscellaneous/database.js';
+import log from '../miscellaneous/debug.js';
 
 export const command = {
 	data: new SlashCommandBuilder()

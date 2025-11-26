@@ -1,8 +1,8 @@
 // Resets the user's stats and achievements.
 
 import { MessageFlags, SlashCommandBuilder 											} from 'discord.js';
-import { reset_user_data } from '../database.js';
-import log from '../debug.js';
+import { reset_user_data } from '../miscellaneous/database.js';
+import log from '../miscellaneous/debug.js';
 
 export const command = {
 	data: new SlashCommandBuilder()

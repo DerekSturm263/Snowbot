@@ -1,7 +1,7 @@
 // Imports.
 import { config                     			} 	from 'dotenv';
 import { Client, GatewayIntentBits  			}	from 'discord.js';
-import { init_commands, init_events             } 	from './deployments.js';
+import { init_commands, init_events             } 	from './src/miscellaneous/deployments.js';
 
 // Initialize client.
 const client = new Client({ intents: [

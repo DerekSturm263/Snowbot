@@ -8,7 +8,7 @@ const commandDatas = [];
 // Load and register commands.
 export async function init_commands(client, token, clientId) {
     for (const file of readdirSync('./src/commands').filter(file => file.endsWith('.js'))) {
-        await import(`./commands/${file}`)
+        await import(`../commands/${file}`)
             .then(obj => {
                 const command = Object.values(obj)[0];
                 commands.push(command);
@@ -47,7 +47,7 @@ export async function init_commands(client, token, clientId) {
 // Load and register events.
 export async function init_events(client) {
     for (const file of readdirSync('./src/events').filter(file => file.endsWith('.js'))) {
-	    await import(`./events/${file}`)
+	    await import(`../events/${file}`)
 			.then(obj => {
 				const event = Object.values(obj)[0];		
 				event.once ? client.once(event.name, (...args) => event.execute(...args))

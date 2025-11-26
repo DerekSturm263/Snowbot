@@ -1,8 +1,8 @@
-import { MongoClient, ObjectId } from "mongodb";
-import achievements from "./exports/achievements.js";
-import weather from "./exports/weathers.js";
-import seedrandom from "seedrandom";
+import { MongoClient } from "mongodb";
 import { v4 as uuidv4 } from 'uuid';
+import achievements from "../exports/achievements.js"
+import weather from "../exports/weathers.js";
+import seedrandom from "seedrandom";
 import log from "./debug.js";
 
 const client = new MongoClient(process.env.MONGODB_URI ?? '', {

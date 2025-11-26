@@ -2,8 +2,8 @@
 
 import { ActionRowBuilder, ButtonBuilder, MessageFlags, SlashCommandBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from 'discord.js';
 import { build_new_pet } from '../embeds/new_pet.js';
-import { get_user_data, set_pet_fullness, set_active_pet, set_pet_total_food, set_snow_amount, set_pet_appetite, set_pet_level } from '../database.js';
-import log from '../debug.js';
+import { get_user_data, set_pet_fullness, set_active_pet, set_pet_total_food, set_snow_amount, set_pet_appetite, set_pet_level } from '../miscellaneous/database.js';
+import log from '../miscellaneous/debug.js';
 
 function build_pet(row1, row2, pet) {
 	const isEgg = new Date().getTime() < pet.hatch_time;

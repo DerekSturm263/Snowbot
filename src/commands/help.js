@@ -2,7 +2,7 @@
 
 import { MessageFlags, SlashCommandBuilder 											} from 'discord.js';
 import { build_new_help } from '../embeds/new_help.js';
-import log from '../debug.js';
+import log from '../miscellaneous/debug.js';
 
 export const command = {
 	data: new SlashCommandBuilder()

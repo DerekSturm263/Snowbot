@@ -3,11 +3,11 @@
 
 import { MessageFlags, SlashCommandBuilder 													} from 'discord.js';
 import { build_new_collect } from '../embeds/new_collect.js';
-import { parseAchievements, get_user_data, set_snow_amount, set_ready_time, get_weather, set_packed_object, set_building, set_total_snow_amount, add_pet	} from '../database.js';
+import { parseAchievements, get_user_data, set_snow_amount, set_ready_time, get_weather, set_packed_object, set_building, set_total_snow_amount, add_pet	} from '../miscellaneous/database.js';
 import { build_new_get_achievement } from '../embeds/new_achievement.js';
 import { build_new_pet_unlocked } from '../embeds/new_pet.js';
 import pets from '../exports/pets.js';
-import log from '../debug.js';
+import log from '../miscellaneous/debug.js';
 
 export const command = {
 	data: new SlashCommandBuilder()

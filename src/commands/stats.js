@@ -2,8 +2,8 @@
 
 import { MessageFlags, SlashCommandBuilder    }   from 'discord.js';
 import { build_new_stats 		}	from '../embeds/new_stats.js';
-import { get_user_data, get_weather, set_snow_amount, set_building, set_packed_object }   from '../database.js';
-import log from '../debug.js';
+import { get_user_data, get_weather, set_snow_amount, set_building, set_packed_object }   from '../miscellaneous/database.js';
+import log from '../miscellaneous/debug.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
