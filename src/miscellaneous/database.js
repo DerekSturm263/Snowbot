@@ -275,7 +275,7 @@ export async function add_pet(id, val) {
 }
 
 export async function remove_pet(userID, petIndex) {
-    const user = await client.db('database').collection('users').findOne({ userID: id }) ?? await create_user_data(userID);
+    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(userID);
     user.pets.splice(petIndex, 1);
 
     const result = await client.db('database').collection('users').updateOne(
