@@ -146,7 +146,13 @@ export const command = {
 			} else if (i.customId == 'release') {
 				await i.deferUpdate();
 
-				await remove_pet(interaction.member.id, user_data.pets[petIndex].id);
+				user_data.pets.splice(petIndex, 1);
+				await remove_pet(interaction.member.id, petIndex);
+
+				await interaction.followUp({
+					content: `You released ${user_data.pets[petIndex].name}!`,
+					flags: MessageFlags.Ephemeral
+				});
 	
 				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
 			}

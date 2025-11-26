@@ -274,12 +274,12 @@ export async function add_pet(id, val) {
     return result;
 }
 
-export async function remove_pet(userID, petID) {
+export async function remove_pet(userID, petIndex) {
     const user = await client.db('database').collection('users').findOne({ userID: id }) ?? await create_user_data(userID);
-    user.pets.splice(array.findIndex(pet => pet.id == petID), 1);
+    user.pets.splice(petIndex, 1);
 
     const result = await client.db('database').collection('users').updateOne(
-        { userID: id },
+        { userID: userID },
         { $set: { pets: user.pets }}
     );
 
