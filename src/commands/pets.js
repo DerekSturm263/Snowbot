@@ -2,7 +2,8 @@
 
 import { ActionRowBuilder, ButtonBuilder, MessageFlags, SlashCommandBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from 'discord.js';
 import { build_new_pet } from '../embeds/new_pet.js';
-import { get_user_data, set_pet_fullness, set_pet_is_active, set_pet_total_food, set_snow_amount } from '../database.js';
+import { get_user_data, set_pet_fullness, set_active_pet, set_pet_total_food, set_snow_amount, set_pet_appetite, set_pet_level } from '../miscellaneous/database.js';
+import log from '../miscellaneous/debug.js';
 
 function build_pet(row1, row2, pet) {
 	const isEgg = new Date().getTime() < pet.hatch_time;
@@ -22,13 +23,7 @@ export const command = {
 	async execute(interaction) {
 		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-		console.log(`\n${interaction.user.displayName} used /pets:`);
-
-		await interaction.editReply({
-				content: 'This feature is under construction. Check back soon!',
-				flags: MessageFlags.Ephemeral
-			});
-			return;
+		log(`\n${interaction.user.displayName} used /pets:`);
 
         const user_data = await get_user_data(interaction.member.id);
 
@@ -48,9 +43,9 @@ export const command = {
 					.setCustomId('pets')
 					.addOptions(
 						user_data.pets.map((pet, index) => new StringSelectMenuOptionBuilder()
-							.setLabel(`${new Date().getTime() < pet.hatch_time ? 'Unhatched Egg' : pet.name}`)
+							.setLabel(`${new Date().getTime() < pet.hatch_time ? 'Unhatched Egg' : pet.name + (pet.id == user_data.active_pet ? ' (Active)' : '')}`)
 							.setValue(`${index}`)
-							.setDefault(index == 0)
+							.setDefault(index == petIndex)
 						)
 					)
 				);
@@ -61,17 +56,17 @@ export const command = {
 					.setCustomId('setActive')
 					.setLabel('Set As Active Pet')
 					.setStyle('Primary')
-					.setDisabled(user_data.pets[petIndex].is_active || new Date().getTime() < user_data.pets[petIndex].hatch_time),
+					.setDisabled(user_data.pets[petIndex].id == user_data.active_pet || new Date().getTime() < user_data.pets[petIndex].hatch_time),
 				new ButtonBuilder()
 					.setCustomId('feed')
 					.setLabel('Feed')
-					.setStyle('Primary')
-					.setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time),
+					.setStyle('Secondary')
+					.setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time)/*,
 				new ButtonBuilder()
-					.setCustomId('rename')
-					.setLabel('Rename')
-					.setStyle('Primary')
-					.setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time)
+					.setCustomId('release')
+					.setLabel('Release')
+					.setStyle('Danger')
+					.setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time)*/
 			);
 
 		const message = await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
@@ -81,48 +76,76 @@ export const command = {
 			if (i.customId == 'pets') {
 				await i.deferUpdate();
 
-				petIndex = Number(interaction.values[0]);
+				petIndex = Number(i.values[0]);
+
+				for (let i = 0; i < user_data.pets.length; ++i) {
+					row1.components[0].options[i].setDefault(i == petIndex);
+				}
+
+				row2.components[0].setDisabled(user_data.pets[petIndex].id == user_data.active_pet || new Date().getTime() < user_data.pets[petIndex].hatch_time);
+				row2.components[1].setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time);
+				//row2.components[2].setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time);
 
 				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
 			} else if (i.customId == 'setActive') {
 				await i.deferUpdate();
 
-				await Promise.all([
-					set_pet_is_active(interaction.member.id, petIndex, true),
-					...user_data.pets.filter((pet, index) => index != petIndex).map((pet, index) => set_pet_is_active(interaction.member.id, index, false))
-				]);
+				user_data.active_pet = user_data.pets[petIndex].id;
+				await set_active_pet(interaction.member.id, user_data.pets[petIndex]);
 
-				await interaction.followUp({
-					content: `${user_data.pets[petIndex].name} is now the active pet.`,
-					flags: MessageFlags.Ephemeral
-				});
+				for (let i = 0; i < user_data.pets.length; ++i) {
+					const suffix = user_data.pets[i].id == user_data.active_pet ? ' (Active)' : '';
+					row1.components[0].options[i].setLabel(`${new Date().getTime() < user_data.pets[i].hatch_time ? 'Unhatched Egg' : user_data.pets[i].name + suffix}`);
+				}
+
+				row2.components[0].setDisabled(true);
 
 				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
 			} else if (i.customId == 'feed') {
 				await i.deferUpdate();
 
-				if (user_data.pets[petIndex].fullness > 3) {
+				if (user_data.pets[petIndex].fullness >= 3) {
 					await interaction.followUp({
-						content: 'Your pet is full! Try feeding them again later.',
+						content: `${user_data.pets[petIndex].name} is full! Try feeding them again later.`,
+						flags: MessageFlags.Ephemeral
+					});
+				} else if (user_data.snow_amount == 0) {
+					await interaction.followUp({
+						content: `You don't have any snow! Use \`/collect\` to get some.`,
 						flags: MessageFlags.Ephemeral
 					});
 				} else {
-					// TODO: Check for total_food_amount milestones and increase level as needed.
-					if (user_data) {
+					++user_data.pets[petIndex].total_food;
+					++user_data.pets[petIndex].fullness;
+					--user_data.snow_amount;
 
+					if (user_data.pets[petIndex].level < 5 && user_data.pets[petIndex].total_food >= user_data.pets[petIndex].appetite) {
+						user_data.pets[petIndex].appetite += 10;
+						++user_data.pets[petIndex].level;
+						user_data.pets[petIndex].total_food = 0;
+
+						await Promise.all([
+							set_pet_appetite(interaction.member.id, petIndex, user_data.pets[petIndex].appetite),
+							set_pet_level(interaction.member.id, petIndex, user_data.pets[petIndex].level)
+						]);
+
+						await interaction.followUp({
+							content: `${user_data.pets[petIndex].name} leveled up! Their ability has gotten stronger.`,
+							flags: MessageFlags.Ephemeral
+						});
 					}
 
 					await Promise.all([
-						set_pet_total_food(interaction.member.id, petIndex, user_data.pets[petIndex].total_food + 1), // ++?
-						set_pet_fullness(interaction.member.id, petIndex, user_data.pets[petIndex].fullness + 1), // ++?
-						set_snow_amount(interaction.member.id, user_data.snow_amount - 1) // --?
+						set_pet_total_food(interaction.member.id, petIndex, user_data.pets[petIndex].total_food),
+						set_pet_fullness(interaction.member.id, petIndex, user_data.pets[petIndex].fullness),
+						set_snow_amount(interaction.member.id, user_data.snow_amount)
 					]);
 				}
 				
 				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
-			} else if (i.customId == 'rename') {
+			} else if (i.customId == 'release') {
 				await i.deferUpdate();
-				
+	
 				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
 			}
 		});

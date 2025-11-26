@@ -3,10 +3,11 @@
 
 import { MessageFlags, SlashCommandBuilder 													} from 'discord.js';
 import { build_new_collect } from '../embeds/new_collect.js';
-import { parseAchievements, get_user_data, set_snow_amount, set_ready_time, get_weather, set_packed_object, set_building, set_total_snow_amount, add_pet	} from '../database.js';
+import { parseAchievements, get_user_data, set_snow_amount, set_ready_time, get_weather, set_packed_object, set_building, set_total_snow_amount, add_pet	} from '../miscellaneous/database.js';
 import { build_new_get_achievement } from '../embeds/new_achievement.js';
 import { build_new_pet_unlocked } from '../embeds/new_pet.js';
 import pets from '../exports/pets.js';
+import log from '../miscellaneous/debug.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -16,7 +17,7 @@ export const command = {
 	async execute(interaction) {
 		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-		console.log(`\n${interaction.user.displayName} used /collect:`);
+		log(`\n${interaction.user.displayName} used /collect:`);
 
 		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), get_weather(0) ];
 
@@ -43,11 +44,8 @@ export const command = {
 
 		// Check if the user isn't ready to collect more snow.
 		if (user_data.ready_time > new Date().getTime()) {
-			const difference = user_data.ready_time - new Date().getTime();
-			const seconds = Math.ceil(difference / 1000);
-
 			await interaction.editReply({
-				content: `You have to wait ${seconds} more second${seconds == 1 ? '' : 's'} before you can collect more snow!`,
+				content: `Slow down! You can collect more snow <t:${Math.floor(user_data.ready_time / 1000)}:R>.`,
 				flags: MessageFlags.Ephemeral
 			});
 			return;
@@ -62,18 +60,19 @@ export const command = {
 			return;
 		}
 
+		const readyTime = new Date().getTime() + (weather.cooldown * 1000);
 		++user_data.snow_amount;
 		++user_data.total_snow_amount;
 
 		// Increment the user's snow amount and tell them it was a success.
 		await Promise.all([
-			set_ready_time(interaction.user.id, new Date().getTime() + (weather.cooldown * 1000)),
+			set_ready_time(interaction.user.id, readyTime),
 			set_snow_amount(interaction.member.id, user_data.snow_amount),
 			set_total_snow_amount(interaction.member.id, user_data.total_snow_amount)
 		]);
 		
 		await interaction.editReply({
-			embeds: [ build_new_collect(user_data.snow_amount) ],
+			embeds: [ build_new_collect(user_data.snow_amount, readyTime) ],
 			flags: MessageFlags.Ephemeral
 		});
 
@@ -85,7 +84,7 @@ export const command = {
 			await add_pet(interaction.member.id, pet);
 
 			await interaction.followUp({
-				embeds: [ build_new_pet_unlocked() ],
+				embeds: [ build_new_pet_unlocked(pet) ],
 				flags: MessageFlags.Ephemeral
 			});
 		}

@@ -2,9 +2,10 @@
 // Throwing a snowball has a small chance to miss and a smaller chance to crit.
 
 import { MessageFlags, SlashCommandBuilder,  																							} from 'discord.js';
-import { parseAchievements, get_user_data, set_packed_object, set_snow_amount, set_building, set_score, set_misses, set_hits, set_crits, set_times_hit, get_weather, try_add_to_leaderboard	} from '../database.js';
+import { parseAchievements, get_user_data, set_packed_object, set_snow_amount, set_building, set_score, set_misses, set_hits, set_crits, set_times_hit, get_weather, try_add_to_leaderboard	} from '../miscellaneous/database.js';
 import { build_snowball_hit, build_snowball_miss, build_snowball_block, build_snowball_block_break					    } from '../embeds/snowball.js';
 import { build_new_get_achievement } from '../embeds/new_achievement.js';
+import log from '../miscellaneous/debug.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -21,7 +22,7 @@ export const command = {
 		),
 
 	async execute(interaction) {
-		console.log(`\n${interaction.user.displayName} used /throw:`);
+		log(`\n${interaction.user.displayName} used /throw:`);
 
 		const target = interaction.options.getMember('target');
 		const [ user_data, target_data, weather ] = [

@@ -1,4 +1,5 @@
 import { MessageFlags } from "discord.js";
+import { logError } from "../miscellaneous/debug.js"
 
 export const event = {
     name: 'interactionCreate',
@@ -8,15 +9,15 @@ export const event = {
     
         const command = interaction.client.commands.get(interaction.commandName);
         if (!command) {
-            console.error(`No command matching ${interaction.commandName} was found.`);
+            logError(`No command matching ${interaction.commandName} was found.`);
             return;
         }
     
         try {
             await command.execute(interaction)
-                .catch(err => console.error(err));
+                .catch(err => logError(err));
         } catch (err) {
-            console.error(err);
+            logError(err);
             
             await interaction.reply({
                 content: 'The command could not be executed.',

@@ -1,8 +1,9 @@
-import { MongoClient, ObjectId } from "mongodb";
-import achievements from "./exports/achievements.js";
-import weather from "./exports/weathers.js";
+import { MongoClient } from "mongodb";
+import { v4 as uuidv4 } from 'uuid';
+import achievements from "../exports/achievements.js"
+import weather from "../exports/weathers.js";
 import seedrandom from "seedrandom";
-import { v4 as uuid } from "uuid";
+import log from "./debug.js";
 
 const client = new MongoClient(process.env.MONGODB_URI ?? '', {
     serverSelectionTimeoutMS: 120000,
@@ -14,8 +15,6 @@ const client = new MongoClient(process.env.MONGODB_URI ?? '', {
 // User Data.
 
 async function create_user_data(id) {
-    console.log("create");
-
     const user = {
         userID: id,
         snow_amount: 0,
@@ -33,6 +32,7 @@ async function create_user_data(id) {
         crits: 0,
         misses: 0,
         times_hit: 0,
+        active_pet: "",
         pets: [],
         achievements: []
     };
@@ -43,10 +43,9 @@ async function create_user_data(id) {
 }
 
 export async function get_user_data(id) {
-    console.log("get");
     const user = await client.db('database').collection('users').findOne({ userID: id }) ?? await create_user_data(id);
 
-    console.log(JSON.stringify(user));
+    log(JSON.stringify(user));
 
     return user;
 }
@@ -70,6 +69,7 @@ export async function reset_user_data(id) {
             crits: 0,
             misses: 0,
             times_hit: 0,
+            active_pet: "",
             pets: [],
             achievements: []
         }}
@@ -220,6 +220,15 @@ export async function set_ready_time(id, val) {
     return result;
 }
 
+export async function set_active_pet(id, val) {
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: id },
+        { $set: { active_pet: val.id }}
+    );
+
+    return result;
+}
+
 export async function parseAchievements(userData) {
     let achievementsOut = [];
 
@@ -249,12 +258,12 @@ async function add_achievement(id, val) {
 
 export async function add_pet(id, val) {
     const now = new Date();
-    const later = new Date(now.getTime() + 60 * 60 * 1000);
+    const later = new Date(now.getTime() + (val.delay) * 60 * 60 * 1000);
 
-    val.id = uuid().toString();
+    val.id = uuidv4().toString();
     val.hatch_time = later.getTime();
 
-    const user = await client.db('database').collection('users').findOne({ userID: id }) ?? await create_user_data(id);
+    const user = await client.db('database').collection('users').findOne({ userID: id }) ?? await create_user_data(userID);
     user.pets.push(val);
 
     const result = await client.db('database').collection('users').updateOne(
@@ -266,7 +275,7 @@ export async function add_pet(id, val) {
 }
 
 export async function set_pet_name(userID, petIndex, val) {
-    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(id);
+    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(userID);
     user.pets[petIndex].name = val;
     
     const result = await client.db('database').collection('users').updateOne(
@@ -277,20 +286,8 @@ export async function set_pet_name(userID, petIndex, val) {
     return result;
 }
 
-export async function set_pet_is_active(userID, petIndex, val) {
-    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(id);
-    user.pets[petIndex].is_active = val;
-    
-    const result = await client.db('database').collection('users').updateOne(
-        { userID: userID },
-        { $set: { pets: user.pets }}
-    );
-
-    return result;
-}
-
 export async function set_pet_fullness(userID, petIndex, val) {
-    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(id);
+    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(userID);
     user.pets[petIndex].fullness = val;
     
     const result = await client.db('database').collection('users').updateOne(
@@ -302,7 +299,7 @@ export async function set_pet_fullness(userID, petIndex, val) {
 }
 
 export async function set_pet_total_food(userID, petIndex, val) {
-    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(id);
+    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(userID);
     user.pets[petIndex].total_food = val;
     
     const result = await client.db('database').collection('users').updateOne(
@@ -313,6 +310,29 @@ export async function set_pet_total_food(userID, petIndex, val) {
     return result;
 }
 
+export async function set_pet_appetite(userID, petIndex, val) {
+    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(userID);
+    user.pets[petIndex].appetite = val;
+    
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: userID },
+        { $set: { pets: user.pets }}
+    );
+
+    return result;
+}
+
+export async function set_pet_level(userID, petIndex, val) {
+    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(userID);
+    user.pets[petIndex].level = val;
+    
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: userID },
+        { $set: { pets: user.pets }}
+    );
+
+    return result;
+}
 
 
 // Weather.
@@ -350,10 +370,9 @@ async function create_leaderboard_data(id) {
 }
 
 export async function get_leaderboard_data(id) {
-    console.log("get");
     const leaderboard = await client.db('database').collection('leaderboards').findOne({ guildID: id }) ?? await create_leaderboard_data(id);
 
-    console.log(JSON.stringify(leaderboard));
+    log(JSON.stringify(leaderboard));
 
     return leaderboard;
 }

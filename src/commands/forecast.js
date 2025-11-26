@@ -2,8 +2,9 @@
 // Weather is updated every 2 hours and is static across servers. Updated randomly.
 
 import { ActionRowBuilder, ButtonBuilder, MessageFlags, SlashCommandBuilder						} 	from 'discord.js';
-import { get_weather	}	from '../database.js';
+import { get_weather	}	from '../miscellaneous/database.js';
 import { build_new_weather	}	from '../embeds/new_weather.js';
+import log from '../miscellaneous/debug.js';
 
 function build_weather(row, offset) {
 	return {
@@ -21,7 +22,7 @@ export const command = {
 	async execute(interaction) {
 		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-		console.log(`\n${interaction.user.displayName} used /forecast:`);
+		log(`\n${interaction.user.displayName} used /forecast:`);
 
 		let offset = 0;
 

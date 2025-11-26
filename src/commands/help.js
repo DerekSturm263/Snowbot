@@ -2,6 +2,7 @@
 
 import { MessageFlags, SlashCommandBuilder 											} from 'discord.js';
 import { build_new_help } from '../embeds/new_help.js';
+import log from '../miscellaneous/debug.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -11,7 +12,7 @@ export const command = {
 	async execute(interaction) {
 		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-		console.log(`\n${interaction.user.displayName} used /help:`);
+	 	log(`\n${interaction.user.displayName} used /help:`);
 
         // Tell the user everything about the bot.
 		await interaction.editReply({
