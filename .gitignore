@@ -3,6 +3,7 @@
 
 # debug
 npm-debug.log*
+debug.txt
 
 # env files (can opt-in for committing if needed)
 .env*
