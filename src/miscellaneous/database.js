@@ -298,9 +298,9 @@ export async function set_pet_name(userID, petIndex, val) {
     return result;
 }
 
-export async function set_pet_fullness(userID, petIndex, val) {
+export async function set_pet_last_eat_time(userID, petIndex, val) {
     const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(userID);
-    user.pets[petIndex].fullness = val;
+    user.pets[petIndex].last_eat_time = val;
     
     const result = await client.db('database').collection('users').updateOne(
         { userID: userID },

@@ -1,6 +1,11 @@
 import { EmbedBuilder } from 'discord.js';
 
 export function build_new_pet(pet, isEgg) {
+	const now = new Date();
+
+	const earlier = new Date(now.getTime() - 2 * 60 * 60 * 1000);
+	const wayEarlier = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+	
 	return new EmbedBuilder()
 		.setColor(0xFFFFFF)
 		.setTitle(`${isEgg ? 'Unhatched Egg' : pet.name}`)
@@ -18,16 +23,11 @@ export function build_new_pet(pet, isEgg) {
 				inline: true
 			},
 			{
-				name: 'Fullness',
+				name: 'Hunger',
 				value: `${isEgg ? 'N/A'
-					: pet.fullness == -3 ? 'On the brink of collapse!'
-					: pet.fullness == -2 ? 'Starving!'
-					: pet.fullness == -1 ? 'Hungry!'
-					: pet.fullness == 0 ? 'Could Eat'
-					: pet.fullness == 1 ? 'Satiated'
-					: pet.fullness == 2 ? 'Getting Full'
-					: pet.fullness == 3 ? 'Stuffed!'
-					: '' }`,
+					: pet.last_eat_time >= earlier ? 'Full!'
+					: pet.last_eat_time <= wayEarlier ? 'Starving!'
+					: 'Could eat...' }`,
 				inline: true
 			},
 			{

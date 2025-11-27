@@ -2,7 +2,7 @@
 
 import { ActionRowBuilder, ButtonBuilder, MessageFlags, SlashCommandBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from 'discord.js';
 import { build_new_pet } from '../embeds/new_pet.js';
-import { get_user_data, set_pet_fullness, set_active_pet, set_pet_total_food, set_snow_amount, set_pet_appetite, set_pet_level, remove_pet } from '../miscellaneous/database.js';
+import { get_user_data, set_pet_last_eat_time, set_active_pet, set_pet_total_food, set_snow_amount, set_pet_appetite, set_pet_level, remove_pet } from '../miscellaneous/database.js';
 import log from '../miscellaneous/debug.js';
 
 function build_pet(row1, row2, pet) {
@@ -94,9 +94,12 @@ export const command = {
 		}
 
 		async function feed(index) {
-			if (user_data.pets[index].fullness >= 3) {
+			const now = new Date();
+			const earlier = new Date(now.getTime() - 2 * 60 * 60 * 1000);
+
+			if (user_data.pets[index].last_eat_time >= earlier) {
 				await interaction.followUp({
-					content: `${user_data.pets[index].name} is full! Try feeding them again later.`,
+					content: `${user_data.pets[index].name} is full! Try feeding them again <t:${user_data.pets[index].last_eat_time}:R>.`,
 					flags: MessageFlags.Ephemeral
 				});
 			} else if (user_data.snow_amount == 0) {
@@ -106,7 +109,7 @@ export const command = {
 				});
 			} else {
 				++user_data.pets[index].total_food;
-				++user_data.pets[index].fullness;
+				user_data.pets[index].last_eat_time = now.getTime();
 				--user_data.snow_amount;
 
 				if (user_data.pets[index].level < 5 && user_data.pets[index].total_food >= user_data.pets[index].appetite) {
@@ -127,7 +130,7 @@ export const command = {
 
 				await Promise.all([
 					set_pet_total_food(interaction.member.id, index, user_data.pets[index].total_food),
-					set_pet_fullness(interaction.member.id, index, user_data.pets[index].fullness),
+					set_pet_last_eat_time(interaction.member.id, index, now.getTime()),
 					set_snow_amount(interaction.member.id, user_data.snow_amount)
 				]);
 			}
