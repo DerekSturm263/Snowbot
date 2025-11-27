@@ -11,6 +11,7 @@ Click the above link to invite Snowbot to your server for free! From there, you 
 - [x] Weather Features
   - [x] Random Weather
   - [x] Forecast Check
+- [ ] Events
 - [ ] Pets
   - [x] Find Eggs
   - [x] Set Active Pet
@@ -23,6 +24,11 @@ Click the above link to invite Snowbot to your server for free! From there, you 
   - [x] Leaderboard
   - [x] Stats
   - [x] Achievements
+- [ ] Server-Customizable Content
+  - [ ] Buildings
+  - [ ] Objects
+  - [ ] Pets
+  - [ ] Events
 - [x] Settings
 - [x] Help
 - [x] Reset
