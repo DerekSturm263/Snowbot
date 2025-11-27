@@ -2,3 +2,23 @@
 
 import { ActionRowBuilder, ButtonBuilder, MessageFlags, SlashCommandBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from 'discord.js';
 import log from '../miscellaneous/debug.js';
+import { get_user_data } from '../miscellaneous/database.js';
+
+export const command = {
+    data: new SlashCommandBuilder()
+        .setName('setup')
+        .setDescription('Setup this server\'s custom buildings, objects, pets, and events.'),
+
+    async execute(interaction) {
+        await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+
+        log(`\n${interaction.user.displayName} used /setup:`);
+
+        const user_data = await get_user_data(interaction.member.id);
+
+        await interaction.editReply({
+            content: "Feature under construction, check back soon!",
+            flags: MessageFlags.Ephemeral
+        });
+    }
+};
