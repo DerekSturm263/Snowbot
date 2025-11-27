@@ -156,6 +156,10 @@ export const command = {
 				}
 
 				petIndex = 0;
+				if (user_data.active_pet == oldPet.id) {
+					user_data.active_pet = "";
+					set_active_pet(interaction.member.id, "");
+				}
 
 				await interaction.followUp({
 					content: `You released ${oldPet[0].name}!`,
