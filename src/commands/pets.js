@@ -144,13 +144,13 @@ export const command = {
 				petsRow.components[0].options[0].setDefault(true);
 			}
 
-			petIndex = 0;
-
 			// If the released pet was active, set no pets as active.
 			if (user_data.active_pet == oldPet.id) {
 				user_data.active_pet = "";
 				await set_active_pet(interaction.member.id, "");
 			}
+
+			petIndex = 0;
 
 			await interaction.followUp({
 				content: `You released ${oldPet[0].name}!`,
@@ -171,19 +171,19 @@ export const command = {
 			} else if (i.customId == 'setActive') {
 				await i.deferUpdate();
 
-				setActive(petIndex);
+				await setActive(petIndex);
 
 				await interaction.editReply(build_pet(petsRow, buttonsRow, user_data.pets[petIndex]));
 			} else if (i.customId == 'feed') {
 				await i.deferUpdate();
 
-				feed(petIndex);
+				await feed(petIndex);
 
 				await interaction.editReply(build_pet(petsRow, buttonsRow, user_data.pets[petIndex]));
 			} else if (i.customId == 'release') {
 				await i.deferUpdate();
 
-				release(petIndex);
+				await release(petIndex);
 
 				if (user_data.pets.length > 0) {
 					await interaction.editReply(build_pet(petsRow, buttonsRow, user_data.pets[petIndex]));
