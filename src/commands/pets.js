@@ -186,12 +186,7 @@ export const command = {
 				if (user_data.pets.length > 0) {
 					await interaction.editReply(build_pet(petsRow, buttonsRow, user_data.pets[petIndex]));
 				} else {
-					await interaction.editReply({
-						content: 'You don\'t have any pets! Use `/collect` for a chance to find one!',
-						embeds: [],
-						components: [],
-						flags: MessageFlags.Ephemeral
-					});
+					await interaction.delete();
 				}
 			}
 		});
