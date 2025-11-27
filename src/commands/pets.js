@@ -45,7 +45,7 @@ export const command = {
 					.setCustomId('pets')
 					.addOptions(
 						user_data.pets.map((pet, index) => new StringSelectMenuOptionBuilder()
-							.setLabel(`${new Date().getTime() < pet.hatch_time ? 'Unhatched Egg' : pet.name + (isDead ? ' (RIP)' : pet.id == user_data.active_pet ? ' (Active)' : '')}`)
+							.setLabel(`${new Date().getTime() < pet.hatch_time ? 'Unhatched Egg' : pet.name + (pet.last_eat_time < new Date(new Date().getTime() - 24 * 60 * 60 * 1000) ? ' (RIP)' : pet.id == user_data.active_pet ? ' (Active)' : '')}`)
 							.setValue(`${index}`)
 							.setDefault(index == petIndex)
 						)
