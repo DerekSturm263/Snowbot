@@ -162,7 +162,7 @@ export const command = {
 					flags: MessageFlags.Ephemeral
 				});
 	
-				if (petsRow.components.length > 0) {
+				if (user_data.pets.length > 0) {
 					await interaction.editReply(build_pet(petsRow, buttonsRow, user_data.pets[petIndex]));
 				} else {
 					await interaction.editReply({
