@@ -167,6 +167,8 @@ export const command = {
 				} else {
 					await interaction.editReply({
 						content: 'You don\'t have any pets! Use `/collect` for a chance to find one!',
+						embeds: [],
+						components: [],
 						flags: MessageFlags.Ephemeral
 					});
 				}
