@@ -151,7 +151,7 @@ export const command = {
 
 				petsRow.components[0].options.splice(petIndex, 1);
 
-				if (petsRow.components.length > 0) {
+				if (petsRow.components[0].options.length > 0) {
 					petsRow.components[0].options[0].setDefault(true);
 				}
 
