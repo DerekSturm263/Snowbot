@@ -37,7 +37,7 @@ export const command = {
 
 		let petIndex = 0;
 
-		const row1 = new ActionRowBuilder()
+		const petsRow = new ActionRowBuilder()
 			.addComponents(
 				new StringSelectMenuBuilder()
 					.setCustomId('pets')
@@ -50,7 +50,7 @@ export const command = {
 					)
 				);
 
-		const row2 = new ActionRowBuilder()
+		const buttonsRow = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
 					.setCustomId('setActive')
@@ -69,7 +69,7 @@ export const command = {
 					.setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time)
 			);
 
-		const message = await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
+		const message = await interaction.editReply(build_pet(petsRow, buttonsRow, user_data.pets[petIndex]));
 
 		const collector = message.createMessageComponentCollector({ time: 2 * 60 * 1000 });
 		collector.on('collect', async i => {
@@ -79,14 +79,14 @@ export const command = {
 				petIndex = Number(i.values[0]);
 
 				for (let i = 0; i < user_data.pets.length; ++i) {
-					row1.components[0].options[i].setDefault(i == petIndex);
+					petsRow.components[0].options[i].setDefault(i == petIndex);
 				}
 
-				row2.components[0].setDisabled(user_data.pets[petIndex].id == user_data.active_pet || new Date().getTime() < user_data.pets[petIndex].hatch_time);
-				row2.components[1].setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time);
-				row2.components[2].setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time);
+				buttonsRow.components[0].setDisabled(user_data.pets[petIndex].id == user_data.active_pet || new Date().getTime() < user_data.pets[petIndex].hatch_time);
+				buttonsRow.components[1].setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time);
+				buttonsRow.components[2].setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time);
 
-				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
+				await interaction.editReply(build_pet(petsRow, buttonsRow, user_data.pets[petIndex]));
 			} else if (i.customId == 'setActive') {
 				await i.deferUpdate();
 
@@ -95,12 +95,12 @@ export const command = {
 
 				for (let i = 0; i < user_data.pets.length; ++i) {
 					const suffix = user_data.pets[i].id == user_data.active_pet ? ' (Active)' : '';
-					row1.components[0].options[i].setLabel(`${new Date().getTime() < user_data.pets[i].hatch_time ? 'Unhatched Egg' : user_data.pets[i].name + suffix}`);
+					petsRow.components[0].options[i].setLabel(`${new Date().getTime() < user_data.pets[i].hatch_time ? 'Unhatched Egg' : user_data.pets[i].name + suffix}`);
 				}
 
-				row2.components[0].setDisabled(true);
+				buttonsRow.components[0].setDisabled(true);
 
-				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
+				await interaction.editReply(build_pet(petsRow, buttonsRow, user_data.pets[petIndex]));
 			} else if (i.customId == 'feed') {
 				await i.deferUpdate();
 
@@ -142,18 +142,17 @@ export const command = {
 					]);
 				}
 				
-				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
+				await interaction.editReply(build_pet(petsRow, buttonsRow, user_data.pets[petIndex]));
 			} else if (i.customId == 'release') {
 				await i.deferUpdate();
 
 				const oldPet = user_data.pets.splice(petIndex, 1);
 				await remove_pet(interaction.member.id, petIndex);
 
-				row1.components.splice(petIndex, 1);
-				row1.components[0].options.splice(petIndex, 1);
+				petsRow.components[0].options.splice(petIndex, 1);
 
-				if (row1.components.length > 0) {
-					row1.components[0].options[0].setDefault(true);
+				if (petsRow.components.length > 0) {
+					petsRow.components[0].options[0].setDefault(true);
 				}
 
 				petIndex = 0;
@@ -163,8 +162,8 @@ export const command = {
 					flags: MessageFlags.Ephemeral
 				});
 	
-				if (row1.components.length > 0) {
-					await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
+				if (petsRow.components.length > 0) {
+					await interaction.editReply(build_pet(petsRow, buttonsRow, user_data.pets[petIndex]));
 				} else {
 					await interaction.editReply({
 						content: 'You don\'t have any pets! Use `/collect` for a chance to find one!',

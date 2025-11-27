@@ -43,11 +43,11 @@ const snow_dog = {
     type: "snow_dog",
     name: "Snow Dog",
     descriptions: [
-        "A hyper snow dog that helps you out by occasionally attacking your target and dealing 2 extra damage.",
-        "A hyper snow dog that helps you out by sometimes attacking your target and dealing 3 extra damage.",
-        "A hyper snow dog that helps you out by often attacking your target and dealing 4 extra damage.",
-        "A hyper snow dog that helps you out by often attacking your target and dealing 4 extra damage.",
-        "A hyper snow dog that helps you out by often attacking your target and dealing 4 extra damage."
+        "A hyper snow dog that helps you out by occasionally attacking your target and dealing extra damage.",
+        "A hyper snow dog that helps you out by sometimes attacking your target and dealing extra damage.",
+        "A hyper snow dog that helps you out by often attacking your target and dealing extra damage.",
+        "A hyper snow dog that helps you out by often attacking your target and dealing extra damage.",
+        "A hyper snow dog that helps you out by often attacking your target and dealing extra damage."
     ],
     image: "https://media.istockphoto.com/id/97875216/photo/samoyed-puppy-running-in-the-snow.jpg?s=612x612&w=0&k=20&c=6OzpAULdvcJMeYdUBUC76gr2k_l1J2_tMnds4DcAwt8=",
     hatch_time: 0,
