@@ -262,6 +262,7 @@ export async function add_pet(id, val) {
 
     val.id = uuidv4().toString();
     val.hatch_time = later.getTime();
+    val.last_eat_time = later.getTime();
 
     const user = await client.db('database').collection('users').findOne({ userID: id }) ?? await create_user_data(userID);
     user.pets.push(val);
