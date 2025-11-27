@@ -151,6 +151,7 @@ export const command = {
 				row1.components.splice(petIndex, 1);
 
 				petIndex = 0;
+				row1.components[0].options.splice(petIndex, 1);
 
 				await interaction.followUp({
 					content: `You released ${oldPet[0].name}!`,
