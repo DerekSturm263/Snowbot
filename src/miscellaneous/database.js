@@ -373,6 +373,9 @@ export function get_weather(hourOffset) {
 async function create_leaderboard_data(id) {
     const leaderboard = {
         guildID: id,
+        buildings: [],
+        objects: [],
+        pets: [],
         users: []
     };
 

@@ -13,6 +13,11 @@ export function build_new_pet(pet, isEgg) {
 				inline: true
 			},
 			{
+				name: 'Age',
+				value: `<t:${Math.floor(pet.hatch_time / 1000)}:R>`,
+				inline: true
+			},
+			{
 				name: 'Fullness',
 				value: `${isEgg ? 'N/A'
 					: pet.fullness == -3 ? 'On the brink of collapse!'
