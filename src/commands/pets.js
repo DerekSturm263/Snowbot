@@ -99,7 +99,7 @@ export const command = {
 
 			if (user_data.pets[index].last_eat_time >= earlier) {
 				await interaction.followUp({
-					content: `${user_data.pets[index].name} is full! Try feeding them again <t:${Mathf.floor(user_data.pets[index].last_eat_time / 1000)}:R>.`,
+					content: `${user_data.pets[index].name} is full! Try feeding them again <t:${Math.floor(user_data.pets[index].last_eat_time / 1000)}:R>.`,
 					flags: MessageFlags.Ephemeral
 				});
 			} else if (user_data.snow_amount == 0) {
