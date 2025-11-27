@@ -13,8 +13,8 @@ export function build_new_pet(pet, isEgg) {
 				inline: true
 			},
 			{
-				name: 'Age',
-				value: `${!isEgg ? `<t:${Math.floor(pet.hatch_time / 1000)}:R>` : 'N/A'}`,
+				name: 'Birthdate',
+				value: `${!isEgg ? `<t:${Math.floor(pet.hatch_time / 1000)}:D>` : 'N/A'}`,
 				inline: true
 			},
 			{
