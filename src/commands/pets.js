@@ -148,10 +148,11 @@ export const command = {
 
 				const oldPet = user_data.pets.splice(petIndex, 1);
 				await remove_pet(interaction.member.id, petIndex);
+
 				row1.components.splice(petIndex, 1);
+				row1.components[0].options.splice(petIndex, 1);
 
 				petIndex = 0;
-				row1.components[0].options.splice(petIndex, 1);
 
 				await interaction.followUp({
 					content: `You released ${oldPet[0].name}!`,
