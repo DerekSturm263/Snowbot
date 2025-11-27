@@ -84,7 +84,7 @@ export const command = {
 
 				row2.components[0].setDisabled(user_data.pets[petIndex].id == user_data.active_pet || new Date().getTime() < user_data.pets[petIndex].hatch_time);
 				row2.components[1].setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time);
-				//row2.components[2].setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time);
+				row2.components[2].setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time);
 
 				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
 			} else if (i.customId == 'setActive') {
@@ -151,7 +151,10 @@ export const command = {
 
 				row1.components.splice(petIndex, 1);
 				row1.components[0].options.splice(petIndex, 1);
-				row1.components[0].options[0].setDefault(true);
+
+				if (row1.components.length > 0) {
+					row1.components[0].options[0].setDefault(true);
+				}
 
 				petIndex = 0;
 
@@ -160,7 +163,14 @@ export const command = {
 					flags: MessageFlags.Ephemeral
 				});
 	
-				await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
+				if (row1.components.length > 0) {
+					await interaction.editReply(build_pet(row1, row2, user_data.pets[petIndex]));
+				} else {
+					await interaction.editReply({
+						content: 'You don\'t have any pets! Use `/collect` for a chance to find one!',
+						flags: MessageFlags.Ephemeral
+					});
+				}
 			}
 		});
 	}
