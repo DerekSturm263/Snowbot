@@ -151,6 +151,7 @@ export const command = {
 
 				row1.components.splice(petIndex, 1);
 				row1.components[0].options.splice(petIndex, 1);
+				row1.components[0].options[0].setDefault(true);
 
 				petIndex = 0;
 
