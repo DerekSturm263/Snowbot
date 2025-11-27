@@ -6,10 +6,12 @@ import { get_user_data, set_pet_last_eat_time, set_active_pet, set_pet_total_foo
 import log from '../miscellaneous/debug.js';
 
 function build_pet(row1, row2, pet) {
-	const isEgg = new Date().getTime() < pet.hatch_time;
+	const now = new Date();
+	const isEgg = now.getTime() < pet.hatch_time;
+	const isDead = pet.last_eat_time < new Date(now.getTime() - 24 * 60 * 60 * 1000);
 
 	return {
-		embeds: [ build_new_pet(pet, isEgg) ],
+		embeds: [ build_new_pet(pet, isEgg, isDead) ],
 		components: [ row1, row2 ],
 		flags: MessageFlags.Ephemeral
 	};
@@ -50,23 +52,27 @@ export const command = {
 					)
 				);
 
+		const now = new Date();
+		const isEgg = now.getTime() < user_data.pets[petIndex].hatch_time;
+		const isDead = user_data.pets[petIndex].last_eat_time < new Date(now.getTime() - 24 * 60 * 60 * 1000);
+
 		const buttonsRow = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
 					.setCustomId('setActive')
 					.setLabel('Set As Active Pet')
 					.setStyle('Primary')
-					.setDisabled(user_data.pets[petIndex].id == user_data.active_pet || new Date().getTime() < user_data.pets[petIndex].hatch_time),
+					.setDisabled(user_data.pets[petIndex].id == user_data.active_pet || isEgg || isDead),
 				new ButtonBuilder()
 					.setCustomId('feed')
 					.setLabel('Feed')
 					.setStyle('Secondary')
-					.setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time),
+					.setDisabled(isEgg || isDead),
 				new ButtonBuilder()
 					.setCustomId('release')
 					.setLabel('Release')
 					.setStyle('Danger')
-					.setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time)
+					.setDisabled(isEgg)
 			);
 
 		function selectPet(index) {
@@ -76,9 +82,13 @@ export const command = {
 				petsRow.components[0].options[i].setDefault(i == index);
 			}
 
-			buttonsRow.components[0].setDisabled(user_data.pets[index].id == user_data.active_pet || new Date().getTime() < user_data.pets[index].hatch_time);
-			buttonsRow.components[1].setDisabled(new Date().getTime() < user_data.pets[index].hatch_time);
-			buttonsRow.components[2].setDisabled(new Date().getTime() < user_data.pets[index].hatch_time);
+			const now = new Date();
+			const isEgg = now.getTime() < user_data.pets[index].hatch_time;
+			const isDead = user_data.pets[index].last_eat_time < new Date(now.getTime() - 24 * 60 * 60 * 1000);
+
+			buttonsRow.components[0].setDisabled(user_data.pets[index].id == user_data.active_pet || isEgg || isDead);
+			buttonsRow.components[1].setDisabled(isEgg || isDead);
+			buttonsRow.components[2].setDisabled(isEgg || isDead);
 		}
 
 		async function setActive(index) {
@@ -86,8 +96,12 @@ export const command = {
 			await set_active_pet(interaction.member.id, user_data.pets[index]);
 
 			for (let i = 0; i < user_data.pets.length; ++i) {
-				const suffix = user_data.pets[i].id == user_data.active_pet ? ' (Active)' : '';
-				petsRow.components[0].options[i].setLabel(`${new Date().getTime() < user_data.pets[i].hatch_time ? 'Unhatched Egg' : user_data.pets[i].name + suffix}`);
+				const now = new Date();
+				const isEgg = now.getTime() < user_data.pets[i].hatch_time;
+				const isDead = user_data.pets[i].last_eat_time < new Date(now.getTime() - 24 * 60 * 60 * 1000);
+
+				const suffix = isDead ? 'RIP' : user_data.pets[i].id == user_data.active_pet ? ' (Active)' : '';
+				petsRow.components[0].options[i].setLabel(`${isEgg ? 'Unhatched Egg' : user_data.pets[i].name + suffix}`);
 			}
 
 			buttonsRow.components[0].setDisabled(true);
@@ -95,8 +109,8 @@ export const command = {
 
 		async function feed(index) {
 			const now = new Date();
-			const earlier = new Date(now.getTime() - 2 * 60 * 60 * 1000);
-			const later = new Date(user_data.pets[index].last_eat_time +  2 * 60 * 60 * 1000);
+			const earlier = new Date(now.getTime() - 1 * 60 * 60 * 1000);
+			const later = new Date(user_data.pets[index].last_eat_time +  1 * 60 * 60 * 1000);
 
 			if (user_data.pets[index].last_eat_time >= earlier) {
 				await interaction.followUp({
