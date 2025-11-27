@@ -73,12 +73,12 @@ export const command = {
 			petIndex = index;
 
 			for (let i = 0; i < user_data.pets.length; ++i) {
-				petsRow.components[0].options[i].setDefault(i == petIndex);
+				petsRow.components[0].options[i].setDefault(i == index);
 			}
 
-			buttonsRow.components[0].setDisabled(user_data.pets[petIndex].id == user_data.active_pet || new Date().getTime() < user_data.pets[petIndex].hatch_time);
-			buttonsRow.components[1].setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time);
-			buttonsRow.components[2].setDisabled(new Date().getTime() < user_data.pets[petIndex].hatch_time);
+			buttonsRow.components[0].setDisabled(user_data.pets[index].id == user_data.active_pet || new Date().getTime() < user_data.pets[index].hatch_time);
+			buttonsRow.components[1].setDisabled(new Date().getTime() < user_data.pets[index].hatch_time);
+			buttonsRow.components[2].setDisabled(new Date().getTime() < user_data.pets[index].hatch_time);
 		}
 
 		async function setActive(index) {
@@ -139,18 +139,16 @@ export const command = {
 
 			petsRow.components[0].options.splice(index, 1);
 
-			// If there are still pets left in your inventory, select the first one.
-			if (user_data.pets.length > 0) {
-				petsRow.components[0].options[0].setDefault(true);
-			}
-
 			// If the released pet was active, set no pets as active.
 			if (user_data.active_pet == oldPet.id) {
 				user_data.active_pet = "";
 				await set_active_pet(interaction.member.id, "");
 			}
 
-			petIndex = 0;
+			// If there are still pets left in your inventory, select the first one.
+			if (user_data.pets.length > 0) {
+				selectPet(0);
+			}
 
 			await interaction.followUp({
 				content: `You released ${oldPet[0].name}!`,
