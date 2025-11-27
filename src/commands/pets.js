@@ -96,10 +96,11 @@ export const command = {
 		async function feed(index) {
 			const now = new Date();
 			const earlier = new Date(now.getTime() - 2 * 60 * 60 * 1000);
+			const later = new Date(user_data.pets[index].last_eat_time +  2 * 60 * 60 * 1000);
 
 			if (user_data.pets[index].last_eat_time >= earlier) {
 				await interaction.followUp({
-					content: `${user_data.pets[index].name} is full! Try feeding them again <t:${Math.floor(user_data.pets[index].last_eat_time / 1000)}:R>.`,
+					content: `${user_data.pets[index].name} is full! Try feeding them again <t:${Math.floor(later / 1000)}:R>.`,
 					flags: MessageFlags.Ephemeral
 				});
 			} else if (user_data.snow_amount == 0) {
