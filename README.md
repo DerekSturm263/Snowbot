@@ -17,7 +17,7 @@ Click the above link to invite Snowbot to your server for free! From there, you 
   - [x] Set Active Pet
   - [ ] Feed Pet
   - [x] Level Up Pet
-  - [ ] Release Pet
+  - [x] Release Pet
   - [ ] Pet Abilities
   - [ ] Pet Notifications
 - [x] Social Features 
