@@ -50,8 +50,17 @@ export const command = {
 			return;
 		}
 
+		let chance = Math.random();
+		const pet = user_data.pets.find(pet => pet.id == user_data.id);
+		if (pet && pet.type == "snow_cat") {
+			chance += pet.level * 0.1;
+		}
+
 		// Pick a random item to pack.
-		const randomIndex = Math.floor(Math.random() * objects.length);
+		const randomIndex = Math.floor(chance * objects.length);
+		if (randomIndex >= objects.length - 1)
+			randomIndex = objects.length - 1;
+
 		const item = objects[randomIndex];
 
 		++user_data.total_packed_objects;

@@ -76,10 +76,15 @@ export const command = {
 		
 		await interaction.deferReply();
 
-		const state = Math.random();
+		let state = Math.random();
 
 		if (target.presence && target.presence.status != "online") {
 			state += 0.5;
+		}
+
+		const pet = user_data.pets.find(pet => pet.id == user_data.id);
+		if (pet && pet.type == "snow_bunny") {
+			state += pet.level * 0.1;
 		}
 
 		const miss = state < 0.15;
@@ -91,8 +96,19 @@ export const command = {
 			set_packed_object(interaction.member.id, null)
 		]);
 
+		const pet2 = target_data.pets.find(pet => pet.id == user_data.id);
+		let hitPet = false;
+
+		if (pet2 && pet2.type == "snow_fox") {
+			const blockChance = Math.random();
+
+			if (blockChance < pet2.level) {
+				hitPet = true;
+			}
+		}
+
 		// Check if the snowball missed.
-		if (miss) {
+		if (miss || hitPet) {
 			++user_data.misses;
 
 			await set_misses(interaction.member.id, user_data.misses);
@@ -108,7 +124,7 @@ export const command = {
 			}
 
 			await interaction.editReply({
-				embeds: [ build_snowball_miss(target) ]
+				embeds: [ build_snowball_miss(target, hitPet, pet2?.name) ]
 			});
 			return;
 		}

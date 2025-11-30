@@ -256,9 +256,11 @@ async function add_achievement(id, val) {
     return result;
 }
 
-export async function add_pet(id, val) {
+export async function add_pet(id, val, hatchOffset) {
     const now = new Date();
-    const later = new Date(now.getTime() + (val.delay) * 60 * 60 * 1000);
+
+    const delay = val.delay - hatchOffset;
+    const later = new Date(now.getTime() + (delay < 0 ? 0 : delay) * 60 * 60 * 1000);
 
     val.id = uuidv4().toString();
     val.hatch_time = later.getTime();

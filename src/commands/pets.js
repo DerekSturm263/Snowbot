@@ -88,7 +88,7 @@ export const command = {
 
 			buttonsRow.components[0].setDisabled(user_data.pets[index].id == user_data.active_pet || isEgg || isDead);
 			buttonsRow.components[1].setDisabled(isEgg || isDead);
-			buttonsRow.components[2].setDisabled(isEgg || isDead);
+			buttonsRow.components[2].setDisabled(isEgg);
 		}
 
 		async function setActive(index) {
