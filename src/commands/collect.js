@@ -21,7 +21,16 @@ export const command = {
 
 		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), get_weather(0) ];
 
-		if (weather.cooldown == -2) {
+		const pet2 = user_data.pets.find(pet => pet.id == user_data.id);
+		let bypassWeather = false;
+		let bypassCooldown = 0;
+
+		if (pet2 && pet2.type == "snowman") {
+			bypassWeather = true;
+			bypassCooldown = 10 - pet2.level;
+		}
+
+		if (!bypassWeather && weather.cooldown == -2) {
 			await Promise.all([
 				set_snow_amount(interaction.member.id, 0),
 				set_packed_object(interaction.member.id, null),
@@ -34,7 +43,7 @@ export const command = {
 		}
 		
 		// Check if it isn't snowing.
-		if (weather.cooldown < 0) {
+		if (!bypassWeather && weather.cooldown < 0) {
 			await interaction.editReply({
 				content: `It isn't snowing! Wait for the weather to change!`,
 				flags: MessageFlags.Ephemeral
@@ -60,7 +69,8 @@ export const command = {
 			return;
 		}
 
-		const readyTime = new Date().getTime() + (weather.cooldown * 1000);
+		let readyTime = new Date().getTime() + (bypassWeather ? bypassCooldown : weather.cooldown) * 1000;
+		
 		++user_data.snow_amount;
 		++user_data.total_snow_amount;
 
@@ -76,12 +86,24 @@ export const command = {
 			flags: MessageFlags.Ephemeral
 		});
 
-		const petChance = Math.random() < 0.05;
+		let petChance = Math.random() < 0.05;
+
+		const pet3 = user_data.pets.find(pet => pet.id == user_data.id);
+		if (pet3 && pet3.type == "snow_dragon") {
+			petChance += pet3.level * 0.075;
+		}
+
 		if (petChance) {
 			const randomIndex = Math.floor(Math.random() * pets.length);
 			const pet = pets[randomIndex];
 
-			await add_pet(interaction.member.id, pet);
+			const currentPet = user_data.pets.find(pet => pet.id == user_data.id);
+			let hatchOffset = 0;
+			if (currentPet && currentPet.type == "snow_dog") {
+				hatchOffset = currentPet.level * 0.4;
+			}
+
+			await add_pet(interaction.member.id, pet, hatchOffset);
 
 			await interaction.followUp({
 				embeds: [ build_new_pet_unlocked(pet) ],

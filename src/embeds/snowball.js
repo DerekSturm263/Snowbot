@@ -74,6 +74,16 @@ function snowball_miss_messages(id) {
 	];
 };
 
+function snowball_pet_miss_messages(id, name) {
+	return [
+		`You tried pelting <@${id}> with a snowball, but their ${name} blocked your shot!`,
+		`You attempted to throw a snowball at <@${id}>, but their ${name} got in the way!`,
+		`Despite giving it everything you had, you hit <@${id}>'s ${name} instead!`,
+		`You tried aiming at <@${id}>, but it hit their ${name}!`,
+		`You got distracted and completely missed <@${id}>, hitting their ${name} instead!`
+	];
+};
+
 function snowball_block_messages(id, build) {
 	return [
 		`You tried your best to throw a snowball at <@${id}>, but it was blocked by their **${build.name}**! It has **${build.hits}** hit${build.hits == 1 ? '' : 's'} left until it shatters!`,
@@ -109,13 +119,13 @@ export function build_snowball_hit(member, item, score, score2, member2, crit, a
 		.setImage(snowball_hit_images[randomImageIndex]);
 };
 
-export function build_snowball_miss(member) {
+export function build_snowball_miss(member, fromPet, petName) {
 	const randomMessageIndex = Math.floor(Math.random() * snowball_miss_messages(0).length);
 
 	return new EmbedBuilder()
 		.setColor(0x787878)
 		.setTitle('Miss!')
-		.setDescription(snowball_miss_messages(member.user.id)[randomMessageIndex]);
+		.setDescription((fromPet ? snowball_pet_miss_messages(member.user.id, petName) : snowball_miss_messages(member.user.id))[randomMessageIndex]);
 };
 
 export function build_snowball_block(member, build) {

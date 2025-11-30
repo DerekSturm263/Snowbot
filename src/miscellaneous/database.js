@@ -256,18 +256,33 @@ async function add_achievement(id, val) {
     return result;
 }
 
-export async function add_pet(id, val) {
+export async function add_pet(id, val, hatchOffset) {
     const now = new Date();
-    const later = new Date(now.getTime() + (val.delay) * 60 * 60 * 1000);
+
+    const delay = val.delay - hatchOffset;
+    const later = new Date(now.getTime() + (delay < 0 ? 0 : delay) * 60 * 60 * 1000);
 
     val.id = uuidv4().toString();
     val.hatch_time = later.getTime();
+    val.last_eat_time = later.getTime();
 
     const user = await client.db('database').collection('users').findOne({ userID: id }) ?? await create_user_data(userID);
     user.pets.push(val);
 
     const result = await client.db('database').collection('users').updateOne(
         { userID: id },
+        { $set: { pets: user.pets }}
+    );
+
+    return result;
+}
+
+export async function remove_pet(userID, petIndex) {
+    const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(userID);
+    user.pets.splice(petIndex, 1);
+
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: userID },
         { $set: { pets: user.pets }}
     );
 
@@ -286,9 +301,9 @@ export async function set_pet_name(userID, petIndex, val) {
     return result;
 }
 
-export async function set_pet_fullness(userID, petIndex, val) {
+export async function set_pet_last_eat_time(userID, petIndex, val) {
     const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(userID);
-    user.pets[petIndex].fullness = val;
+    user.pets[petIndex].last_eat_time = val;
     
     const result = await client.db('database').collection('users').updateOne(
         { userID: userID },
@@ -361,6 +376,9 @@ export function get_weather(hourOffset) {
 async function create_leaderboard_data(id) {
     const leaderboard = {
         guildID: id,
+        buildings: [],
+        objects: [],
+        pets: [],
         users: []
     };
 

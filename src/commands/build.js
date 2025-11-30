@@ -45,8 +45,6 @@ export const command = {
 		const build = interaction.options.get('build').value;
 		const buildObj = builds.find(item => item.id == build);
 
-		buildObj.cost += weather.building_cost_modifier;
-
 		// Check if the user entered an invalid value.
 		if (buildObj == null) {
 			await interaction.editReply({
@@ -65,6 +63,13 @@ export const command = {
 			return;
 		}
 
+		buildObj.cost += weather.building_cost_modifier;
+
+		const pet = user_data.pets.find(pet => pet.id == user_data.id);
+		if (pet && pet.type == "snow_owl") {
+			buildObj.cost -= pet.level;
+		}
+
 		// Check if the user doesn't have enough snow to build.
 		if (user_data.snow_amount < buildObj.cost) {
 			await interaction.editReply({
@@ -75,12 +80,13 @@ export const command = {
 		}
 
 		++user_data.total_buildings;
+		user_data.snow_amount -= buildObj.cost;
 
 		// Set the new building and decrement the user's snow amount.
 		await Promise.all([
 			set_building(interaction.member.id, buildObj),
 			set_total_buildings(interaction.member.id, user_data.total_buildings),
-			set_snow_amount(interaction.member.id, user_data.snow_amount - buildObj.cost)
+			set_snow_amount(interaction.member.id, user_data.snow_amount)
 		]);
 
 		// Tell the user the building was a success.

@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "@google-cloud/logging-winston": "^6.0.1",
-    "discord.js": "^14.24.2",
+    "discord.js": "^14.25.1",
     "dotenv": "^17.2.3",
     "mongodb": "^7.0.0",
     "seedrandom": "^3.0.5",
