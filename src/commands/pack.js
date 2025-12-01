@@ -23,12 +23,12 @@ export const command = {
 			await Promise.all([
 				set_snow_amount(interaction.member.id, 0),
 				set_packed_object(interaction.member.id, { id: "" }),
-				set_building(interaction.member.id, { id: "", hits_left: 0 })
+				set_building(interaction.member.id, { id: "", hits: 0 })
 			]);
 
 			user_data.snow_amount = 0;
 			user_data.packed_object = "";
-			user_data.building = { id: "", hits_left: 0 };
+			user_data.building = { id: "", hits: 0 };
 		}
 		
 		// Check if the user is already packed something.

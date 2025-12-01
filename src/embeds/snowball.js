@@ -142,7 +142,7 @@ export function build_snowball_block_break(member, item, score, score2, member2,
 
 	return new EmbedBuilder()
 		.setColor(0x00FF00)
-		.setTitle(`Defense Broken!${crit ? ' (Critical!)' : ''}`)
+		.setTitle(`Defense Broken!${crit ? ' (Critical)' : ''}`)
 		.setDescription(snowball_block_break_messages(member.user.id, build)[randomMessageIndex])
 		.addFields(
 			{ name: `${member2.user.displayName}`,	value: `Score: ${score} (+${amount})`,	inline: true },

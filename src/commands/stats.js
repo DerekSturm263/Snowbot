@@ -26,12 +26,12 @@ export const command = {
 			await Promise.all([
 				set_snow_amount(target.id, 0),
 				set_packed_object(target.id, { id: "" }),
-				set_building(target.id, { id: "", hits_left: 0 })
+				set_building(target.id, { id: "", hits: 0 })
 			]);
 
 			user_data.snow_amount = 0;
 			user_data.packed_object = "";
-			user_data.building = { id: "", hits_left: 0 };
+			user_data.building = { id: "", hits: 0 };
 		}
 		
 		// Tell the user the stats.

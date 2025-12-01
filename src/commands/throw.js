@@ -40,7 +40,7 @@ export const command = {
 			await Promise.all([
 				set_snow_amount(interaction.member.id, 0),
 				set_packed_object(interaction.member.id, { id: "" }),
-				set_building(interaction.member.id, { id: "", hits_left: 0 })
+				set_building(interaction.member.id, { id: "", hits: 0 })
 			]);
 
 			user_data.snow_amount = 0;
@@ -159,7 +159,7 @@ export const command = {
 				]);
 				
 				// Remove the building and tell the user it was broken.
-				await set_building(target.user.id, { id: "", hits_left: 0 });
+				await set_building(target.user.id, { id: "", hits: 0 });
 				await interaction.editReply({
 					embeds: [ build_snowball_block_break(target, user_data.packed_object, newScore, target_data.score, interaction.member, crit, amount, server_data.buildings.find(item => item.id == target_data.building.id)) ]
 				});
@@ -168,7 +168,7 @@ export const command = {
 			}
 
 			// Update the building and tell the user it was hit.
-			await set_building(target.user.id, target_data.building);
+			await set_building(target.user.id, { id: target_data.building.id, hits: target_data.building.hits_left });
 			await interaction.editReply({
 				embeds: [ build_snowball_block(target, server_data.buildings.find(item => item.id == target_data.building.id), target_data.building.hits_left) ]
 			});

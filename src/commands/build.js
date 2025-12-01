@@ -31,12 +31,12 @@ export const command = {
 			await Promise.all([
 				set_snow_amount(interaction.member.id, 0),
 				set_packed_object(interaction.member.id, { id: "" }),
-				set_building(interaction.member.id, { id: "", hits_left: 0 })
+				set_building(interaction.member.id, { id: "", hits: 0 })
 			]);
 
 			user_data.snow_amount = 0;
 			user_data.packed_object = "";
-			user_data.building = { id: "", hits_left: 0 };
+			user_data.building = { id: "", hits: 0 };
 		}
 
 		let buildingIndex = 0;
@@ -127,7 +127,7 @@ export const command = {
 
 		async function destroyBuilding() {
 			const oldBuilding = server_data.buildings.find(item => item.id == user_data.building.id);
-			user_data.building = { id: "", hits_left: 0 };
+			user_data.building = { id: "", hits: 0 };
 
 			const suffix = user_data.building.id != "" ? ' (Something Already Built!)' : server_data.buildings[buildingIndex].cost + buildModifier > user_data.snow_amount ? ' (Can\'t Afford!)' : '';
 
@@ -136,7 +136,7 @@ export const command = {
 			buttonsRow.components[0].setDisabled(server_data.buildings[buildingIndex].cost + buildModifier > user_data.snow_amount);
 			buttonsRow.components[1].setDisabled(true);
 
-			await set_building(interaction.member.id, { id: "", hits_left: 0 });
+			await set_building(interaction.member.id, { id: "", hits: 0 });
 
 			await interaction.followUp({
 				content: `You destroyed your ${oldBuilding.name}!`,
