@@ -145,7 +145,7 @@ export const command = {
 
 				await Promise.all([
 					set_score(interaction.member.id, newScore),
-					try_add_to_server(interaction.guild.id, interaction.member.id),
+					try_add_to_server(interaction.guild.id, interaction.member.id)
 				]);
 				
 				// Remove the building and tell the user it was broken.

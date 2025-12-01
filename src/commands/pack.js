@@ -34,7 +34,7 @@ export const command = {
 			user_data.building = { id: "", hits_left: 0 };
 		}
 		
-		// Check if the user is already packed something.
+		// Check if the user has already packed something.
 		if (user_data.packed_object != "") {
 			const object = server_data.objects.find(item => item.id == user_data.packed_object);
 
