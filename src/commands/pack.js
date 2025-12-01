@@ -27,8 +27,8 @@ export const command = {
 			]);
 
 			user_data.snow_amount = 0;
-			user_data.packed_object = null;
-			user_data.building = null;
+			user_data.packed_object = "";
+			user_data.building = { id: "", hits_left: 0 };
 		}
 		
 		// Check if the user is already packed something.

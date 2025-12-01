@@ -197,7 +197,7 @@ export const command = {
 		
 		// Tell the user the snowball hit.
 		const message = await interaction.editReply({
-			embeds: [ build_snowball_hit(target, user_data.packed_object, newScore, target_data.score, interaction.member, crit, amount) ],
+			embeds: [ build_snowball_hit(target, server_data.objects.find(item => item.id == user_data.packed_object.id), newScore, target_data.score, interaction.member, crit, amount) ],
 			withResponse: true
 		});
 
