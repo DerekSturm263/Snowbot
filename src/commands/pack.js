@@ -3,7 +3,7 @@
 
 import { MessageFlags, SlashCommandBuilder				} from 'discord.js';
 import { parseAchievements, get_user_data, set_packed_object, get_weather, set_total_packed_objects, set_snow_amount, set_building, get_server_data	} from '../miscellaneous/database.js';
-import { build_new_pack 					} from '../embeds/new_packs.js';
+import { build_new_pack, build_new_pack_existing 					} from '../embeds/new_packs.js';
 import { build_new_get_achievement } from '../embeds/new_achievement.js';
 import log from '../miscellaneous/debug.js';
 
@@ -22,8 +22,8 @@ export const command = {
 		if (weather.cooldown == -2) {
 			await Promise.all([
 				set_snow_amount(interaction.member.id, 0),
-				set_packed_object(interaction.member.id, null),
-				set_building(interaction.member.id, null)
+				set_packed_object(interaction.member.id, { id: "" }),
+				set_building(interaction.member.id, { id: "", hits_left: 0 })
 			]);
 
 			user_data.snow_amount = 0;
@@ -32,9 +32,12 @@ export const command = {
 		}
 		
 		// Check if the user is already packed something.
-		if (user_data.packed_object != null) {
+		if (user_data.packed_object != "") {
+			const object = server_data.objects.find(item => item.id == user_data.packed_object);
+
 			await interaction.editReply({
-				content: `You already have a ${user_data.packed_object.name} in your snowball!`,
+				content: "You already have the following in your snowball:",
+				embeds: [ build_new_pack_existing(object) ],
 				flags: MessageFlags.Ephemeral
 			});
 			return;

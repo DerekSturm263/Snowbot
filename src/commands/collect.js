@@ -3,7 +3,7 @@
 
 import { MessageFlags, SlashCommandBuilder 													} from 'discord.js';
 import { build_new_collect } from '../embeds/new_collect.js';
-import { parseAchievements, get_user_data, set_snow_amount, set_ready_time, get_weather, set_packed_object, set_building, set_total_snow_amount, add_pet, get_server_data	} from '../miscellaneous/database.js';
+import { parseAchievements, get_user_data, set_snow_amount, set_ready_time, get_weather, set_packed_object, set_building, set_total_snow_amount, add_pet, get_server_data, set_total_pets	} from '../miscellaneous/database.js';
 import { build_new_get_achievement } from '../embeds/new_achievement.js';
 import { build_new_pet_unlocked } from '../embeds/new_pet.js';
 import log from '../miscellaneous/debug.js';
@@ -32,8 +32,8 @@ export const command = {
 		if (!bypassWeather && weather.cooldown == -2) {
 			await Promise.all([
 				set_snow_amount(interaction.member.id, 0),
-				set_packed_object(interaction.member.id, null),
-				set_building(interaction.member.id, null)
+				set_packed_object(interaction.member.id, { id: "" }),
+				set_building(interaction.member.id, { id: "", hits_left: 0 })
 			]);
 
 			user_data.snow_amount = 0;
@@ -85,14 +85,14 @@ export const command = {
 			flags: MessageFlags.Ephemeral
 		});
 
-		let petChance = Math.random() < 0.05;
+		let petChance = Math.random();
 
 		const pet3 = user_data.pets.find(pet => pet.id == user_data.id);
 		if (pet3 && pet3.type == "snow_dragon") {
 			petChance += pet3.level * 0.075;
 		}
 
-		if (petChance) {
+		if (petChance > 0.95) {
 			const pets = server_data.pets.map(pet => new Array(pet.count).fill(pet.type)).flat();
 
 			const randomIndex = Math.floor(Math.random() * pets.length);
@@ -104,7 +104,12 @@ export const command = {
 				hatchOffset = currentPet.level * 0.4;
 			}
 
-			await add_pet(interaction.member.id, pet, hatchOffset);
+			++user_data.total_pets;
+
+			await Promise.all([
+				add_pet(interaction.member.id, pet, hatchOffset),
+				set_total_pets(interaction.member.id, user_data.total_pets)
+			]);
 
 			await interaction.followUp({
 				embeds: [ build_new_pet_unlocked(pet) ],

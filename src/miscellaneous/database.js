@@ -23,9 +23,12 @@ async function create_user_data(id) {
         userID: id,
         snow_amount: 0,
         total_snow_amount: 0,
-        packed_object: null,
+        packed_object: "",
         total_packed_objects: 0,
-        building: null,
+        building: {
+            id: "",
+            hits_left: 0
+        },
         total_buildings: 0,
         ready_time: 0,
         show_pet_updates: true,
@@ -38,6 +41,7 @@ async function create_user_data(id) {
         times_hit: 0,
         active_pet: "",
         pets: [],
+        total_pets: 0,
         achievements: []
     };
 
@@ -60,9 +64,12 @@ export async function reset_user_data(id) {
         { $set: {
             snow_amount: 0,
             total_snow_amount: 0,
-            packed_object: null,
+            packed_object: "",
             total_packed_objects: 0,
-            building: null,
+            building: {
+                id: "",
+                hits_left: 0
+            },
             total_buildings: 0,
             ready_time: 0,
             show_pet_updates: true,
@@ -75,6 +82,7 @@ export async function reset_user_data(id) {
             times_hit: 0,
             active_pet: "",
             pets: [],
+            total_pets: 0,
             achievements: []
         }}
     );
@@ -110,7 +118,7 @@ export async function set_total_snow_amount(id, val) {
 export async function set_packed_object(id, val) {
     const result = await client.db('database').collection('users').updateOne(
         { userID: id },
-        { $set: { packed_object: val }}
+        { $set: { packed_object: val.id }}
     );
 
     return result;
@@ -128,7 +136,10 @@ export async function set_total_packed_objects(id, val) {
 export async function set_building(id, val) {
     const result = await client.db('database').collection('users').updateOne(
         { userID: id },
-        { $set: { building: val }}
+        { $set: { building: {
+            id: val.id,
+            hits_left: val.hits
+        } }}
     );
 
     return result;
@@ -228,6 +239,15 @@ export async function set_active_pet(id, val) {
     const result = await client.db('database').collection('users').updateOne(
         { userID: id },
         { $set: { active_pet: val.id }}
+    );
+
+    return result;
+}
+
+export async function set_total_pets(id, val) {
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: id },
+        { $set: { total_pets: val }}
     );
 
     return result;

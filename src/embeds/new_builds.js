@@ -4,7 +4,7 @@ export function build_new_building(build, costModifier, currentSnow) {
 	return new EmbedBuilder()
         .setColor(currentSnow >= build.cost + costModifier ? 0x00FF00 : 0xFF0000)
 		.setTitle(`${build.name}`)
-		//.setDescription(`${build.description}`)
+		.setDescription(`${build.description}`)
         .setImage(build.image)
         .addFields(
 			{
@@ -13,12 +13,12 @@ export function build_new_building(build, costModifier, currentSnow) {
 				inline: true
 			},
 			{
-				name: 'Cost',
+				name: 'Snow Cost',
 				value: `${build.cost + costModifier}`,
 				inline: true
 			},
 			{
-				name: 'You Have',
+				name: 'Current Snow Collected',
 				value: `${currentSnow}`,
 				inline: true
 			}
@@ -29,7 +29,7 @@ export function build_new_building_buy(build) {
 	return new EmbedBuilder()
 		.setColor(0xFFFFFF)
 		.setTitle(`You built a **${build.name}**!`)
-		.setDescription('Your new building will takes hits for you until it breaks.')
+		.setDescription(`Your new building will takes ${build.hits} hit${build.hits > 1 ? 's' : ''} for you until it breaks.`)
         .setImage(build.image)
         .addFields({
 			name: 'Current Health',
