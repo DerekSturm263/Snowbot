@@ -57,7 +57,7 @@ const snow_wolf = {
 const snow_bunny = {
     id: "snow_bunny",
     name: "Snow Bunny",
-    description: "A prosperous snow bunny that does its part by increasing your luck a when throwing snowballs.",
+    description: "A prosperous snow bunny that does its part by increasing your luck when throwing snowballs.",
     image: "https://media.istockphoto.com/id/510955047/photo/white-snowshoe-hare-on-snow.jpg?s=612x612&w=0&k=20&c=7TafMOjjgAF9sLz37Qlh7ChkjaoJ7ch15P7nSt5_Og0=",
     hatch_time: 0,
     appetite: 20,
