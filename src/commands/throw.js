@@ -2,9 +2,8 @@
 // Throwing a snowball has a small chance to miss and a smaller chance to crit.
 
 import { MessageFlags, SlashCommandBuilder,  																							} from 'discord.js';
-import { parseAchievements, get_user_data, set_packed_object, set_snow_amount, set_building, set_score, set_misses, set_hits, set_crits, set_times_hit, get_weather, try_add_to_server, get_server_data	} from '../miscellaneous/database.js';
+import { get_user_data, set_packed_object, set_snow_amount, set_building, set_score, set_misses, set_hits, set_crits, set_times_hit, get_weather, try_add_to_server, get_server_data, tryGetAchievements	} from '../miscellaneous/database.js';
 import { build_snowball_hit, build_snowball_miss, build_snowball_block, build_snowball_block_break					    } from '../embeds/snowball.js';
-import { build_new_get_achievement } from '../embeds/new_achievement.js';
 import log from '../miscellaneous/debug.js';
 
 export const command = {
@@ -115,17 +114,8 @@ export const command = {
 			++user_data.misses;
 
 			await set_misses(interaction.member.id, user_data.misses);
-
-			const achievements = await parseAchievements(user_data);
-
-			if (user_data.show_achievements) {
-				await Promise.all(achievements.map(async item => {
-					interaction.member.send({
-						embeds: [ build_new_get_achievement(item) ]
-					});
-				}));
-			}
-
+			await tryGetAchievements(user_data, interaction.member);
+			
 			await interaction.editReply({
 				embeds: [ build_snowball_miss(target, hitPet, pet2?.name) ]
 			});
@@ -205,25 +195,10 @@ export const command = {
 			});
 			await message.forward(target.user.dmChannel);
 		}
-		
-		const achievements = await parseAchievements(user_data);
 
-		if (user_data.show_achievements) {
-			await Promise.all(achievements.map(async item => {
-				interaction.member.send({
-					embeds: [ build_new_get_achievement(item) ]
-				});
-			}));
-		}
-
-		const achievements2 = await parseAchievements(target_data);
-
-		if (target_data.show_achievements) {
-			await Promise.all(achievements2.map(async item => {
-				target.user.send({
-					embeds: [ build_new_get_achievement(item) ]
-				});
-			}));
-		}
+		await Promise.all([
+			tryGetAchievements(user_data, interaction.member),
+			tryGetAchievements(target_data, target.user)
+		]);
 	}
 }

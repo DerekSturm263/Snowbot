@@ -2,9 +2,8 @@
 // What you put in the snowball impacts how long another user hit with the snowball is timed out for.
 
 import { MessageFlags, SlashCommandBuilder				} from 'discord.js';
-import { parseAchievements, get_user_data, set_packed_object, get_weather, set_total_packed_objects, set_snow_amount, set_building, get_server_data	} from '../miscellaneous/database.js';
+import { get_user_data, set_packed_object, get_weather, set_total_packed_objects, set_snow_amount, set_building, get_server_data, tryGetAchievements	} from '../miscellaneous/database.js';
 import { build_new_pack, build_new_pack_existing 					} from '../embeds/new_packs.js';
-import { build_new_get_achievement } from '../embeds/new_achievement.js';
 import log from '../miscellaneous/debug.js';
 
 export const command = {
@@ -84,14 +83,6 @@ export const command = {
 			flags: MessageFlags.Ephemeral
 		});
 		
-		const achievements = await parseAchievements(user_data);
-
-		if (user_data.show_achievements) {
-			await Promise.all(achievements.map(async item => {
-				interaction.member.send({
-					embeds: [ build_new_get_achievement(item) ]
-				});
-			}));
-		}
+		await tryGetAchievements(user_data, interaction.member);
 	}
 };

@@ -2,12 +2,13 @@ import { MongoClient } from "mongodb";
 import { v4 as uuidv4 } from 'uuid';
 import seedrandom from "seedrandom";
 import log from "./debug.js";
-import achievements from "../exports/achievements.js"
+import achievements from "../exports/achievements.js";
 import weather from "../exports/weathers.js";
 import buildings from "../exports/buildings.js";
 import pets from "../exports/pets.js";
 import objects from "../exports/objects.js";
 import events from "../exports/events.js";
+import { build_new_get_achievement } from "../embeds/new_achievement.js";
 
 const client = new MongoClient(process.env.MONGODB_URI ?? '', {
     serverSelectionTimeoutMS: 120000,
@@ -288,7 +289,19 @@ export async function set_total_pets(id, val) {
     return result;
 }
 
-export async function parseAchievements(userData) {
+export async function tryGetAchievements(user_data, member) {
+    const achievements = await parseAchievements(user_data);
+    
+    if (user_data.show_achievements) {
+        await Promise.all(achievements.map(async item => {
+            member.send({
+                embeds: [ build_new_get_achievement(item) ]
+            });
+        }));
+    }
+}
+
+async function parseAchievements(userData) {
     let achievementsOut = [];
 
     for (let i = 0; i < achievements.length; ++i) {

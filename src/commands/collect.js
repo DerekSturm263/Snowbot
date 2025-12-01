@@ -3,8 +3,7 @@
 
 import { MessageFlags, SlashCommandBuilder 													} from 'discord.js';
 import { build_new_collect } from '../embeds/new_collect.js';
-import { parseAchievements, get_user_data, set_snow_amount, set_ready_time, get_weather, set_packed_object, set_building, set_total_snow_amount, add_pet, get_server_data, set_total_pets	} from '../miscellaneous/database.js';
-import { build_new_get_achievement } from '../embeds/new_achievement.js';
+import { tryGetAchievements, get_user_data, set_snow_amount, set_ready_time, get_weather, set_packed_object, set_building, set_total_snow_amount, add_pet, get_server_data, set_total_pets	} from '../miscellaneous/database.js';
 import { build_new_pet_unlocked } from '../embeds/new_pet.js';
 import log from '../miscellaneous/debug.js';
 
@@ -121,14 +120,6 @@ export const command = {
 			});
 		}
 
-		const achievements = await parseAchievements(user_data);
-
-		if (user_data.show_achievements) {
-			await Promise.all(achievements.map(async item => {
-				interaction.member.send({
-					embeds: [ build_new_get_achievement(item) ]
-				});
-			}));
-		}
+		await tryGetAchievements(user_data, interaction.member);
 	}
 };

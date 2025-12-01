@@ -2,9 +2,8 @@
 // What you build will give you a certain number of shots to block.
 
 import { MessageFlags, SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder 							} from 'discord.js';
-import { parseAchievements, get_user_data, set_snow_amount, set_building, get_weather, set_total_buildings, set_packed_object, get_server_data	} from '../miscellaneous/database.js';
+import { get_user_data, set_snow_amount, set_building, get_weather, set_total_buildings, set_packed_object, get_server_data, tryGetAchievements	} from '../miscellaneous/database.js';
 import { build_new_building 							} from '../embeds/new_builds.js';
-import { build_new_get_achievement } from '../embeds/new_achievement.js';
 import log from '../miscellaneous/debug.js';
 
 function build_building(row1, row2, building, costModifier, currentSnow) {
@@ -115,15 +114,7 @@ export const command = {
 				set_snow_amount(interaction.member.id, user_data.snow_amount)
 			]);
 
-			const achievements = await parseAchievements(user_data);
-
-			if (user_data.show_achievements) {
-				await Promise.all(achievements.map(async item => {
-					interaction.member.send({
-						embeds: [ build_new_get_achievement(item) ]
-					});
-				}));
-			}
+			await tryGetAchievements(user_data, interaction.member);
 		}
 
 		async function destroyBuilding() {
