@@ -5,7 +5,7 @@ import log from "./debug.js";
 import achievements from "../exports/achievements.js"
 import weather from "../exports/weathers.js";
 import buildings from "../exports/buildings.js";
-import pets from "../exports/events.js";
+import pets from "../exports/pets.js";
 import objects from "../exports/objects.js";
 import events from "../exports/events.js";
 
