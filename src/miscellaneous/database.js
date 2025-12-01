@@ -1,9 +1,13 @@
 import { MongoClient } from "mongodb";
 import { v4 as uuidv4 } from 'uuid';
-import achievements from "../exports/achievements.js"
-import weather from "../exports/weathers.js";
 import seedrandom from "seedrandom";
 import log from "./debug.js";
+import achievements from "../exports/achievements.js"
+import weather from "../exports/weathers.js";
+import buildings from "../exports/buildings.js";
+import pets from "../exports/events.js";
+import objects from "../exports/objects.js";
+import events from "../exports/events.js";
 
 const client = new MongoClient(process.env.MONGODB_URI ?? '', {
     serverSelectionTimeoutMS: 120000,
@@ -376,10 +380,11 @@ export function get_weather(hourOffset) {
 async function create_leaderboard_data(id) {
     const leaderboard = {
         guildID: id,
-        buildings: [],
-        objects: [],
-        pets: [],
-        users: []
+        users: [],
+        buildings: buildings,
+        objects: objects,
+        pets: pets,
+        events: events
     };
 
     const result = await client.db('database').collection('leaderboards').insertOne(leaderboard);
