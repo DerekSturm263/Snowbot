@@ -45,7 +45,7 @@ export const command = {
 
 			user_data.snow_amount = 0;
 			user_data.packed_object = "";
-			user_data.building = { id: "", hitsLeft: 0 };
+			user_data.building = { id: "", hits_left: 0 };
 		}
 		
 		// Get the snow amount and check if the user has any snow.
@@ -105,7 +105,7 @@ export const command = {
 		if (pet2 && pet2.type == "snow_fox") {
 			const blockChance = Math.random();
 
-			if (blockChance < pet2.level) {
+			if (blockChance < pet2.level * 0.1) {
 				hitPet = true;
 			}
 		}
@@ -134,6 +134,11 @@ export const command = {
 
 		let amount = (crit ? 2 : 1) * (((user_data.packed_object ? user_data.packed_object.damage : 0) + 1));
 
+		if (crit) {
+			++user_data.crits;
+			await set_crits(interaction.member.id, user_data.crits);
+		}
+
 		// Get the building if the user has one.
 		if (target_data.building.id != "") {
 			// Decrement the number of hits on the building.
@@ -141,11 +146,6 @@ export const command = {
 			
 			// Check if the building is broken.
 			if (target_data.building.hits_left <= 0) {
-				if (crit) {
-					++user_data.crits;
-					await set_crits(interaction.member.id, user_data.crits);
-				}
-
 				// Increment the user's score.
 				amount = (crit ? 2 : 1) * server_data.buildings.find(item => item.id == target_data.building.id).hits;
 				const newScore = user_data.score + amount;
@@ -176,11 +176,6 @@ export const command = {
 			return;
 		}
 		
-		if (crit) {
-			++user_data.crits;
-			await set_crits(interaction.member.id, user_data.crits);
-		}
-
 		// Increment the user's score.
 		const newScore = user_data.score + amount;
 

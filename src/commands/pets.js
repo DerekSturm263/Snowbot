@@ -27,7 +27,11 @@ export const command = {
 
 		log(`\n${interaction.user.displayName} used /pets:`);
 
-		const [ user_data, server_data, weather ] = [ await get_user_data(interaction.member.id), await get_server_data(interaction.guild.id), get_weather(0) ];
+		const [ user_data, server_data, weather ] = [
+			await get_user_data(interaction.member.id),
+			await get_server_data(interaction.guild.id),
+			get_weather(0)
+		];
 
 		if (weather.cooldown == -2) {
 			await Promise.all([
@@ -38,7 +42,7 @@ export const command = {
 
 			user_data.snow_amount = 0;
 			user_data.packed_object = "";
-			user_data.building = { id: "", hits: 0 };
+			user_data.building = { id: "", hits_left: 0 };
 		}
 
 		if (user_data.pets.length == 0) {

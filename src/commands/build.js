@@ -25,7 +25,11 @@ export const command = {
 
 		log(`\n${interaction.user.displayName} used /build:`);
 
-		const [ user_data, server_data, weather ] = [ await get_user_data(interaction.member.id), await get_server_data(interaction.guild.id), get_weather(0) ];
+		const [ user_data, server_data, weather ] = [
+			await get_user_data(interaction.member.id),
+			await get_server_data(interaction.guild.id),
+			get_weather(0)
+		];
 
 		if (weather.cooldown == -2) {
 			await Promise.all([
@@ -36,7 +40,7 @@ export const command = {
 
 			user_data.snow_amount = 0;
 			user_data.packed_object = "";
-			user_data.building = { id: "", hits: 0 };
+			user_data.building = { id: "", hits_left: 0 };
 		}
 
 		let buildingIndex = 0;
@@ -127,7 +131,7 @@ export const command = {
 
 		async function destroyBuilding() {
 			const oldBuilding = server_data.buildings.find(item => item.id == user_data.building.id);
-			user_data.building = { id: "", hits: 0 };
+			user_data.building = { id: "", hits_left: 0 };
 
 			const suffix = user_data.building.id != "" ? ' (Something Already Built!)' : server_data.buildings[buildingIndex].cost + buildModifier > user_data.snow_amount ? ' (Can\'t Afford!)' : '';
 
