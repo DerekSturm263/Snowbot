@@ -22,7 +22,7 @@ const igloo = {
     id: "igloo",
     name: "Igloo",
     description: "This super protective igloo will stop a few snowballs for you.",
-    image: 'https://grandshelters.com/wp-content/uploads/2019/06/how-to-build-an-igloo-P0268-live.jpg',
+    image: 'https://sgwebcms.s3.us-east-2.amazonaws.com/media/uploads/2020/12/Copy-of-Untitled-25-463x388.png',
     icon: "🍙",
     cost: 7,
     hits: 4
@@ -52,7 +52,7 @@ const snow_castle = {
     id: "snow_castle",
     name: "Snow Castle",
     description: "This expertly-made snow castle will stop a dozen snowballs in their tracks.",
-    image: 'https://i.cbc.ca/1.5921736.1613842806!/fileImage/httpImage/image.JPG_gen/derivatives/16x9_780/2021-snow-castle-in-yellowknife.JPG',
+    image: 'https://specnwt.s3.ca-central-1.amazonaws.com/wp-content/uploads/2023/09/10004250/snowking_hannaheden_05_webszie_0.jpg',
     icon: "🏰",
     cost: 16,
     hits: 12
