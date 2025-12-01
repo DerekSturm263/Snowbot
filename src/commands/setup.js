@@ -17,7 +17,7 @@ export const command = {
         const user_data = await get_user_data(interaction.member.id);
 
         await interaction.editReply({
-            content: "Feature under construction, check back soon!",
+            content: "Feature under construction, check back soon! If you'd like to help test beta versions of the bot, join the [official development server](https://discord.gg/tpfVdFsYKg).",
             flags: MessageFlags.Ephemeral
         });
     }

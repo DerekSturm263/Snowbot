@@ -11,16 +11,7 @@ import log from '../miscellaneous/debug.js';
 export const command = {
 	data: new SlashCommandBuilder()
 		.setName('build')
-		.setDescription('Build something out of snow! Requires that you\'re holding snow. Items are cheaper in heavier snow.')
-		.addStringOption(option => option
-			.setName('build')
-			.setDescription('What to build.')
-			.setRequired(true)
-			.addChoices(builds.map(item => ({
-				name: `${item.name} (cost: ${item.cost} snow, blocks: ${item.hits} hit${item.hits == 1 ? '' : 's'})`,
-				value: item.id
-			})))
-		),
+		.setDescription('Build something out of snow! Requires that you\'re holding snow. Items are cheaper during heavy snow.'),
 	
 	async execute(interaction) {
 		await interaction.deferReply({ flags: MessageFlags.Ephemeral });

@@ -12,7 +12,7 @@ import log from '../miscellaneous/debug.js';
 export const command = {
 	data: new SlashCommandBuilder()
 		.setName('collect')
-		.setDescription('Collect some fresh snow from off the ground.'),
+		.setDescription('Collect some fresh snow from off the ground. Has a chance to reveal an egg!'),
 
 	async execute(interaction) {
 		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
