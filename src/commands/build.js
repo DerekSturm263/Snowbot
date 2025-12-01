@@ -5,7 +5,7 @@ import { MessageFlags, SlashCommandBuilder 							} from 'discord.js';
 import { parseAchievements, get_user_data, set_snow_amount, set_building, get_weather, set_total_buildings, set_packed_object	} from '../miscellaneous/database.js';
 import { build_new_building 							} from '../embeds/new_builds.js';
 import { build_new_get_achievement } from '../embeds/new_achievement.js';
-import builds from '../exports/builds.js';
+import builds from '../exports/buildings.js';
 import log from '../miscellaneous/debug.js';
 
 export const command = {
