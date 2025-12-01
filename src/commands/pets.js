@@ -25,7 +25,7 @@ export const command = {
 	async execute(interaction) {
 		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-		log(`\n${interaction.user.displayName} used /pets:`);
+		log(`\n${interaction.user.displayName} from ${interaction.guild.name} from ${interaction.guild.name} used /pets:`);
 
 		const [ user_data, server_data, weather ] = [
 			await get_user_data(interaction.member.id),

@@ -22,7 +22,7 @@ export const command = {
 		),
 
 	async execute(interaction) {
-		log(`\n${interaction.user.displayName} used /throw:`);
+		log(`\n${interaction.user.displayName} from ${interaction.guild.name} used /throw:`);
 
 		const target = interaction.options.getMember('target');
 		const [ user_data, target_data, server_data, weather ] = [

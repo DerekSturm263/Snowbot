@@ -3,7 +3,7 @@
 
 import { MessageFlags, SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder 							} from 'discord.js';
 import { parseAchievements, get_user_data, set_snow_amount, set_building, get_weather, set_total_buildings, set_packed_object, get_server_data	} from '../miscellaneous/database.js';
-import { build_new_building_buy, build_new_building 							} from '../embeds/new_builds.js';
+import { build_new_building 							} from '../embeds/new_builds.js';
 import { build_new_get_achievement } from '../embeds/new_achievement.js';
 import log from '../miscellaneous/debug.js';
 
@@ -23,7 +23,7 @@ export const command = {
 	async execute(interaction) {
 		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-		log(`\n${interaction.user.displayName} used /build:`);
+		log(`\n${interaction.user.displayName} from ${interaction.guild.name} used /build:`);
 
 		const [ user_data, server_data, weather ] = [
 			await get_user_data(interaction.member.id),
@@ -84,9 +84,6 @@ export const command = {
 		function selectBuilding(index) {
 			buildingIndex = index;
 
-			console.log(JSON.stringify(server_data.buildings));
-			console.log(JSON.stringify(server_data.buildings[index]));
-		
 			for (let i = 0; i < server_data.buildings.length; ++i) {
 				buildingsRow.components[0].options[i].setDefault(i == index);
 			}

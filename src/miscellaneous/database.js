@@ -45,6 +45,8 @@ async function create_user_data(id) {
         achievements: []
     };
 
+    log(`User with id ${id} does not exist. Creating new user data.`);
+
     const result = await client.db('database').collection('users').insertOne(user);
 
     return user;
@@ -53,7 +55,7 @@ async function create_user_data(id) {
 export async function get_user_data(id) {
     const user = await client.db('database').collection('users').findOne({ userID: id }) ?? await create_user_data(id);
 
-    log(JSON.stringify(user));
+    log(`Retrieving data for user ${id}. ${JSON.stringify(user, null, 2)}`);
 
     return user;
 }
@@ -87,6 +89,8 @@ export async function reset_user_data(id) {
         }}
     );
 
+    log(`Resetting data for user ${id}.`);
+
     return result;
 }
 
@@ -95,13 +99,12 @@ export async function reset_user_data(id) {
 // Setters.
 
 export async function set_snow_amount(id, val) {
-    if (val > 20)
-        val = 20;
-    
     const result = await client.db('database').collection('users').updateOne(
         { userID: id },
         { $set: { snow_amount: val }}
     );
+
+    log(`Setting user with id ${userID}'s snow amount to ${val}`);
 
     return result;
 }
@@ -112,6 +115,8 @@ export async function set_total_snow_amount(id, val) {
         { $set: { total_snow_amount: val }}
     );
 
+    log(`Setting user with id ${userID}'s total snow amount to ${val}`);
+
     return result;
 }
 
@@ -120,6 +125,8 @@ export async function set_packed_object(id, val) {
         { userID: id },
         { $set: { packed_object: val.id }}
     );
+    
+    log(`Setting user with id ${userID}'s packed object to ${val.id}`);
 
     return result;
 }
@@ -129,6 +136,8 @@ export async function set_total_packed_objects(id, val) {
         { userID: id },
         { $set: { total_packed_objects: val }}
     );
+
+    log(`Setting user with id ${userID}'s total packed objects to ${val}`);
 
     return result;
 }
@@ -142,6 +151,8 @@ export async function set_building(id, val) {
         } }}
     );
 
+    log(`Setting user with id ${userID}'s building to ${val.id} with hits ${val.hits}`);
+
     return result;
 }
 
@@ -150,6 +161,8 @@ export async function set_total_buildings(id, val) {
         { userID: id },
         { $set: { total_buildings: val }}
     );
+
+    log(`Setting user with id ${userID}'s total buildings to ${val}`);
 
     return result;
 }
@@ -160,6 +173,8 @@ export async function set_show_pet_updates(id, val) {
         { $set: { show_pet_updates: val }}
     );
 
+    log(`Setting user with id ${userID}'s show pet updates to ${val}`);
+
     return result;
 }
 
@@ -168,6 +183,8 @@ export async function set_show_achievements(id, val) {
         { userID: id },
         { $set: { show_achievements: val }}
     );
+
+    log(`Setting user with id ${userID}'s show achievements to ${val}`);
 
     return result;
 }
@@ -178,6 +195,8 @@ export async function set_show_pings(id, val) {
         { $set: { show_pings: val }}
     );
 
+    log(`Setting user with id ${userID}'s show pings to ${val}`);
+
     return result;
 }
 
@@ -186,6 +205,8 @@ export async function set_score(id, val) {
         { userID: id },
         { $set: { score: val }}
     );
+
+    log(`Setting user with id ${userID}'s score to ${val}`);
 
     return result;
 }
@@ -196,6 +217,8 @@ export async function set_hits(id, val) {
         { $set: { hits: val }}
     );
 
+    log(`Setting user with id ${userID}'s hits to ${val}`);
+
     return result;
 }
 
@@ -204,6 +227,8 @@ export async function set_crits(id, val) {
         { userID: id },
         { $set: { crits: val }}
     );
+
+    log(`Setting user with id ${userID}'s crits to ${val}`);
 
     return result;
 }
@@ -214,6 +239,8 @@ export async function set_misses(id, val) {
         { $set: { misses: val }}
     );
 
+    log(`Setting user with id ${userID}'s misses to ${val}`);
+
     return result;
 }
 
@@ -222,6 +249,8 @@ export async function set_times_hit(id, val) {
         { userID: id },
         { $set: { times_hit: val }}
     );
+
+    log(`Setting user with id ${userID}'s times hit to ${val}`);
 
     return result;
 }
@@ -232,6 +261,8 @@ export async function set_ready_time(id, val) {
         { $set: { ready_time: val }}
     );
 
+    log(`Setting user with id ${userID}'s ready time to ${val}`);
+
     return result;
 }
 
@@ -241,6 +272,8 @@ export async function set_active_pet(id, val) {
         { $set: { active_pet: val.id }}
     );
 
+    log(`Setting user with id ${userID}'s active pet to ${val.id}`);
+
     return result;
 }
 
@@ -249,6 +282,8 @@ export async function set_total_pets(id, val) {
         { userID: id },
         { $set: { total_pets: val }}
     );
+
+    log(`Setting user with id ${userID}'s total pets to ${val}`);
 
     return result;
 }
@@ -322,6 +357,8 @@ export async function set_pet_name(userID, petIndex, val) {
         { $set: { pets: user.pets }}
     );
 
+    log(`Setting user with id ${userID}'s pet name at index ${petIndex} to ${val}`);
+
     return result;
 }
 
@@ -333,6 +370,8 @@ export async function set_pet_last_eat_time(userID, petIndex, val) {
         { userID: userID },
         { $set: { pets: user.pets }}
     );
+
+    log(`Setting user with id ${userID}'s pet last eat time at index ${petIndex} to ${val}`);
 
     return result;
 }
@@ -346,6 +385,8 @@ export async function set_pet_total_food(userID, petIndex, val) {
         { $set: { pets: user.pets }}
     );
 
+    log(`Setting user with id ${userID}'s pet total food at index ${petIndex} to ${val}`);
+
     return result;
 }
 
@@ -358,6 +399,8 @@ export async function set_pet_appetite(userID, petIndex, val) {
         { $set: { pets: user.pets }}
     );
 
+    log(`Setting user with id ${userID}'s pet appetite at index ${petIndex} to ${val}`);
+
     return result;
 }
 
@@ -369,6 +412,8 @@ export async function set_pet_level(userID, petIndex, val) {
         { userID: userID },
         { $set: { pets: user.pets }}
     );
+
+    log(`Setting user with id ${userID}'s pet level at index ${petIndex} to ${val}`);
 
     return result;
 }
@@ -390,6 +435,8 @@ export function get_weather(hourOffset) {
     if (newWeather.cooldown > 0)
         newWeather.cooldown += Math.floor(rng() * 5) - 2;
 
+    log(`Getting current weather as ${JSON.stringify(newWeather, null, 2)}`);
+
     return newWeather;
 }
 
@@ -407,6 +454,8 @@ async function create_server_data(id) {
         events: events
     };
 
+    log(`Server with id ${id} does not exist. Creating new server data.`);
+
     const result = await client.db('database').collection('leaderboards').insertOne(leaderboard);
 
     return leaderboard;
@@ -415,7 +464,7 @@ async function create_server_data(id) {
 export async function get_server_data(id) {
     const leaderboard = await client.db('database').collection('leaderboards').findOne({ guildID: id }) ?? await create_server_data(id);
 
-    log(JSON.stringify(leaderboard));
+    log(`Retrieving data for server ${id}. ${JSON.stringify(leaderboard, null, 2)}`);
 
     return leaderboard;
 }
@@ -424,6 +473,8 @@ export async function try_add_to_server(guildID, userID) {
     const leaderboard = await get_server_data(guildID);
 
     if (!leaderboard.users.includes(userID)) {
+        log(`User with id ${userID} is not yet active in server with id ${guildID}. Adding user to guild.`);
+
         leaderboard.users.push(userID);
         
         await client.db('database').collection('leaderboards').updateOne(

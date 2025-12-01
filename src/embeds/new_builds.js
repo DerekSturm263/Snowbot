@@ -24,15 +24,3 @@ export function build_new_building(build, costModifier, currentSnow) {
 			}
 		);
 };
-
-export function build_new_building_buy(build) {
-	return new EmbedBuilder()
-		.setColor(0xFFFFFF)
-		.setTitle(`You built a **${build.name}**!`)
-		.setDescription(`Your new building will takes ${build.hits} hit${build.hits > 1 ? 's' : ''} for you until it breaks.`)
-        .setImage(build.image)
-        .addFields({
-			name: 'Current Health',
-			value: `${build.hits}`
-		});
-};

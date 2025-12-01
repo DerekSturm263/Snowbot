@@ -4,7 +4,7 @@ export const event = {
     name: 'clientReady',
     async execute(client) {
         log(`${client.user.tag} is online.`);
-        log(`========================================================================`);
+        log(`==================================================================================================================`);
 
         client.user.setActivity(`/help | ${client.guilds.cache.size} servers`);
     }

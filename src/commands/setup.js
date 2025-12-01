@@ -13,7 +13,7 @@ export const command = {
     async execute(interaction) {
         await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-        log(`\n${interaction.user.displayName} used /setup:`);
+        log(`\n${interaction.user.displayName} from ${interaction.guild.name} used /setup:`);
 
         const user_data = await get_user_data(interaction.member.id);
 

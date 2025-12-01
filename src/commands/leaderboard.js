@@ -14,7 +14,7 @@ export const command = {
 	async execute(interaction) {
     	await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-		log(`\n${interaction.user.displayName} used /leaderboard:`);
+		log(`\n${interaction.user.displayName} from ${interaction.guild.name} used /leaderboard:`);
 
 		// Get the leaderboard data for this server.
 		const leaderboard = await get_server_data(interaction.guild.id);
