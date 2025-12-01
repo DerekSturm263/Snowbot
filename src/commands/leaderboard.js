@@ -1,7 +1,7 @@
 // Displays the leaderboard based on each user's score.
 
 import { MessageFlags, SlashCommandBuilder 	}	from 'discord.js';
-import { get_leaderboard_data, get_user_data		}	from '../miscellaneous/database.js';
+import { get_server_data, get_user_data		}	from '../miscellaneous/database.js';
 import { build_new_leaderboard 	}	from '../embeds/embed_leaderboard.js';
 import log from '../miscellaneous/debug.js'
 
@@ -17,7 +17,7 @@ export const command = {
 		log(`\n${interaction.user.displayName} used /leaderboard:`);
 
 		// Get the leaderboard data for this server.
-		const leaderboard = await get_leaderboard_data(interaction.guild.id);
+		const leaderboard = await get_server_data(interaction.guild.id);
 
 		if (leaderboard.users.length == 0) {
 			await interaction.editReply({

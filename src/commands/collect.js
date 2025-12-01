@@ -3,10 +3,9 @@
 
 import { MessageFlags, SlashCommandBuilder 													} from 'discord.js';
 import { build_new_collect } from '../embeds/new_collect.js';
-import { parseAchievements, get_user_data, set_snow_amount, set_ready_time, get_weather, set_packed_object, set_building, set_total_snow_amount, add_pet	} from '../miscellaneous/database.js';
+import { parseAchievements, get_user_data, set_snow_amount, set_ready_time, get_weather, set_packed_object, set_building, set_total_snow_amount, add_pet, get_server_data	} from '../miscellaneous/database.js';
 import { build_new_get_achievement } from '../embeds/new_achievement.js';
 import { build_new_pet_unlocked } from '../embeds/new_pet.js';
-import pets from '../exports/pets.js';
 import log from '../miscellaneous/debug.js';
 
 export const command = {
@@ -19,7 +18,7 @@ export const command = {
 
 		log(`\n${interaction.user.displayName} used /collect:`);
 
-		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), get_weather(0) ];
+		const [ user_data, server_data, weather ] = [ await get_user_data(interaction.member.id), await get_server_data(interaction.guild.id), get_weather(0) ];
 
 		const pet2 = user_data.pets.find(pet => pet.id == user_data.id);
 		let bypassWeather = false;
@@ -94,8 +93,10 @@ export const command = {
 		}
 
 		if (petChance) {
+			const pets = server_data.pets.map(pet => new Array(pet.count).fill(pet.type)).flat();
+
 			const randomIndex = Math.floor(Math.random() * pets.length);
-			const pet = pets[randomIndex];
+			const pet = server_data.pets.find(item => item.id == pets[randomIndex]);
 
 			const currentPet = user_data.pets.find(pet => pet.id == user_data.id);
 			let hatchOffset = 0;

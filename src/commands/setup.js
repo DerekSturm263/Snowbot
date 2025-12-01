@@ -1,13 +1,14 @@
 // Lets server admins manage the server's buildings, events, objects, and pets.
 
-import { ActionRowBuilder, ButtonBuilder, MessageFlags, SlashCommandBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from 'discord.js';
-import log from '../miscellaneous/debug.js';
+import { ActionRowBuilder, ButtonBuilder, MessageFlags, PermissionFlagsBits, SlashCommandBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from 'discord.js';
 import { get_user_data } from '../miscellaneous/database.js';
+import log from '../miscellaneous/debug.js';
 
 export const command = {
     data: new SlashCommandBuilder()
         .setName('setup')
-        .setDescription('Setup this server\'s custom buildings, objects, pets, and events.'),
+        .setDescription('Setup this server\'s custom buildings, objects, pets, and events.')
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 
     async execute(interaction) {
         await interaction.deferReply({ flags: MessageFlags.Ephemeral });
