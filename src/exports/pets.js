@@ -15,7 +15,8 @@ const snow_worm = {
     last_eat_time: 0,
     total_food: 0,
     level: 1,
-    delay: 0.5
+    delay: 0.5,
+    count: 1
 }
 
 const snow_dog = {
@@ -35,7 +36,8 @@ const snow_dog = {
     last_eat_time: 0,
     total_food: 0,
     level: 1,
-    delay: 1
+    delay: 1,
+    count: 2
 };
 
 const snow_cat = {
@@ -55,7 +57,8 @@ const snow_cat = {
     last_eat_time: 0,
     total_food: 0,
     level: 1,
-    delay: 1
+    delay: 1,
+    count: 2
 };
 
 const snow_wolf = {
@@ -75,7 +78,8 @@ const snow_wolf = {
     last_eat_time: 0,
     total_food: 0,
     level: 1,
-    delay: 1.5
+    delay: 1.5,
+    count: 2
 };
 
 const snow_bunny = {
@@ -95,7 +99,8 @@ const snow_bunny = {
     last_eat_time: 0,
     total_food: 0,
     level: 1,
-    delay: 1.5
+    delay: 1.5,
+    count: 2
 };
 
 const snow_fox = {
@@ -115,7 +120,8 @@ const snow_fox = {
     last_eat_time: 0,
     total_food: 0,
     level: 1,
-    delay: 1.5
+    delay: 1.5,
+    count: 2
 };
 
 const snowman = {
@@ -135,7 +141,8 @@ const snowman = {
     last_eat_time: 0,
     total_food: 0,
     level: 1,
-    delay: 2
+    delay: 2,
+    count: 2
 };
 
 const snow_owl = {
@@ -155,7 +162,8 @@ const snow_owl = {
     last_eat_time: 0,
     total_food: 0,
     level: 1,
-    delay: 2
+    delay: 2,
+    count: 1
 };
 
 const snow_dragon = {
@@ -175,30 +183,18 @@ const snow_dragon = {
     last_eat_time: 0,
     total_food: 0,
     level: 1,
-    delay: 2.5
+    delay: 2.5,
+    count: 1
 };
 
 export default [
     snow_worm,
-    snow_worm,
-    snow_dog,
-    snow_dog,
     snow_dog,
     snow_cat,
-    snow_cat,
-    snow_cat,
-    snow_wolf,
-    snow_wolf,
     snow_wolf,
     snow_bunny,
-    snow_bunny,
-    snow_bunny,
-    snow_fox,
-    snow_fox,
     snow_fox,
     snowman,
-    snowman,
-    snow_owl,
     snow_owl,
     snow_dragon
 ];
