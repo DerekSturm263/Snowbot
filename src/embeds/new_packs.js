@@ -3,7 +3,7 @@ import { EmbedBuilder } from 'discord.js';
 export function build_new_pack(obj) {
 	return new EmbedBuilder()
 		.setColor(0xFFFFFF)
-		.setTitle(`You packed a **${obj.name}** in your snowball!`)
+		.setTitle(`You packed a ${obj.icon} **${obj.name}** in your snowball!`)
 		.setDescription(`${obj.description}`)
         .setImage(obj.image)
         .addFields(
@@ -18,7 +18,7 @@ export function build_new_pack(obj) {
 export function build_new_pack_existing(obj) {
 	return new EmbedBuilder()
 		.setColor(0xFFFFFF)
-		.setTitle(`${obj.name}`)
+		.setTitle(`${obj.icon} **${obj.name}**`)
 		.setDescription(`${obj.description}`)
         .setImage(obj.image)
         .addFields(
