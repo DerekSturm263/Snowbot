@@ -51,7 +51,7 @@ const rock = {
 const razor_blade = {
 	id: "razor_blade",
     name: "Razor Blade",
-    description: "Believe it or not, not the most dangerous thing you can find (not by a long shot).",
+    description: "Believe it or not, not the most dangerous thing you can find (and not by a long shot).",
 	image: 'https://www.razorbladeco.com/content/images/thumbs/0001368_60-0146-personna-stainless-steel-coated-non-oiled-double-edge-blade-2000-blades_300.jpeg',
 	icon: "🗡️",
 	damage: 2,
