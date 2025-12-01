@@ -51,7 +51,7 @@ export const command = {
 					.setCustomId('buildings')
 					.addOptions(
 						server_data.buildings.map((building, index) => new StringSelectMenuOptionBuilder()
-							.setLabel(`${building.name}` + `${user_data.building.id == building.id ? ` (Active, Current Health: ${user_data.building.hits_left})` : ''}`)
+							.setLabel(`${building.icon} ${building.name}` + `${user_data.building.id == building.id ? ` (Active, Current Health: ${user_data.building.hits_left})` : ''}`)
 							.setValue(`${index}`)
 							.setDefault(index == 0)
 						)
@@ -103,7 +103,7 @@ export const command = {
 
 			const suffix = user_data.building.id != "" ? ' (Something Already Built!)' : server_data.buildings[index].cost + buildModifier > user_data.snow_amount ? ' (Can\'t Afford!)' : '';
 
-			buildingsRow.components[0].options[index].setLabel(`${server_data.buildings[index].name} (Active, Current Health: ${user_data.building.hits_left})`);
+			buildingsRow.components[0].options[index].setLabel(`${server_data.buildings[index].icon} ${server_data.buildings[index].name} (Active, Current Health: ${user_data.building.hits_left})`);
 			buttonsRow.components[0].setLabel(`Build For ${server_data.buildings[index].cost + buildModifier} Snow` + suffix);
 			buttonsRow.components[0].setDisabled(true);
 			buttonsRow.components[1].setDisabled(false);
@@ -132,7 +132,7 @@ export const command = {
 
 			const suffix = user_data.building.id != "" ? ' (Something Already Built!)' : server_data.buildings[buildingIndex].cost + buildModifier > user_data.snow_amount ? ' (Can\'t Afford!)' : '';
 
-			buildingsRow.components[0].options[buildingIndex].setLabel(`${server_data.buildings[buildingIndex].name}`);
+			buildingsRow.components[0].options[buildingIndex].setLabel(`${server_data.buildings[buildingIndex].icon} ${server_data.buildings[buildingIndex].name}`);
 			buttonsRow.components[0].setLabel(`Build For ${server_data.buildings[buildingIndex].cost + buildModifier} Snow` + suffix);
 			buttonsRow.components[0].setDisabled(server_data.buildings[buildingIndex].cost + buildModifier > user_data.snow_amount);
 			buttonsRow.components[1].setDisabled(true);
