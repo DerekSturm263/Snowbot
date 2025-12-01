@@ -104,7 +104,7 @@ export async function set_snow_amount(id, val) {
         { $set: { snow_amount: val }}
     );
 
-    log(`Setting user with id ${userID}'s snow amount to ${val}`);
+    log(`Setting user with id ${id}'s snow amount to ${val}`);
 
     return result;
 }
@@ -115,7 +115,7 @@ export async function set_total_snow_amount(id, val) {
         { $set: { total_snow_amount: val }}
     );
 
-    log(`Setting user with id ${userID}'s total snow amount to ${val}`);
+    log(`Setting user with id ${id}'s total snow amount to ${val}`);
 
     return result;
 }
@@ -126,7 +126,7 @@ export async function set_packed_object(id, val) {
         { $set: { packed_object: val.id }}
     );
     
-    log(`Setting user with id ${userID}'s packed object to ${val.id}`);
+    log(`Setting user with id ${id}'s packed object to ${val.id}`);
 
     return result;
 }
@@ -137,7 +137,7 @@ export async function set_total_packed_objects(id, val) {
         { $set: { total_packed_objects: val }}
     );
 
-    log(`Setting user with id ${userID}'s total packed objects to ${val}`);
+    log(`Setting user with id ${id}'s total packed objects to ${val}`);
 
     return result;
 }
@@ -151,7 +151,7 @@ export async function set_building(id, val) {
         } }}
     );
 
-    log(`Setting user with id ${userID}'s building to ${val.id} with hits ${val.hits}`);
+    log(`Setting user with id ${id}'s building to ${val.id} with hits ${val.hits}`);
 
     return result;
 }
@@ -162,7 +162,7 @@ export async function set_total_buildings(id, val) {
         { $set: { total_buildings: val }}
     );
 
-    log(`Setting user with id ${userID}'s total buildings to ${val}`);
+    log(`Setting user with id ${id}'s total buildings to ${val}`);
 
     return result;
 }
@@ -173,7 +173,7 @@ export async function set_show_pet_updates(id, val) {
         { $set: { show_pet_updates: val }}
     );
 
-    log(`Setting user with id ${userID}'s show pet updates to ${val}`);
+    log(`Setting user with id ${id}'s show pet updates to ${val}`);
 
     return result;
 }
@@ -184,7 +184,7 @@ export async function set_show_achievements(id, val) {
         { $set: { show_achievements: val }}
     );
 
-    log(`Setting user with id ${userID}'s show achievements to ${val}`);
+    log(`Setting user with id ${id}'s show achievements to ${val}`);
 
     return result;
 }
@@ -195,7 +195,7 @@ export async function set_show_pings(id, val) {
         { $set: { show_pings: val }}
     );
 
-    log(`Setting user with id ${userID}'s show pings to ${val}`);
+    log(`Setting user with id ${id}'s show pings to ${val}`);
 
     return result;
 }
@@ -206,7 +206,7 @@ export async function set_score(id, val) {
         { $set: { score: val }}
     );
 
-    log(`Setting user with id ${userID}'s score to ${val}`);
+    log(`Setting user with id ${id}'s score to ${val}`);
 
     return result;
 }
@@ -217,7 +217,7 @@ export async function set_hits(id, val) {
         { $set: { hits: val }}
     );
 
-    log(`Setting user with id ${userID}'s hits to ${val}`);
+    log(`Setting user with id ${id}'s hits to ${val}`);
 
     return result;
 }
@@ -228,7 +228,7 @@ export async function set_crits(id, val) {
         { $set: { crits: val }}
     );
 
-    log(`Setting user with id ${userID}'s crits to ${val}`);
+    log(`Setting user with id ${id}'s crits to ${val}`);
 
     return result;
 }
@@ -239,7 +239,7 @@ export async function set_misses(id, val) {
         { $set: { misses: val }}
     );
 
-    log(`Setting user with id ${userID}'s misses to ${val}`);
+    log(`Setting user with id ${id}'s misses to ${val}`);
 
     return result;
 }
@@ -250,7 +250,7 @@ export async function set_times_hit(id, val) {
         { $set: { times_hit: val }}
     );
 
-    log(`Setting user with id ${userID}'s times hit to ${val}`);
+    log(`Setting user with id ${id}'s times hit to ${val}`);
 
     return result;
 }
@@ -261,7 +261,7 @@ export async function set_ready_time(id, val) {
         { $set: { ready_time: val }}
     );
 
-    log(`Setting user with id ${userID}'s ready time to ${val}`);
+    log(`Setting user with id ${id}'s ready time to ${val}`);
 
     return result;
 }
@@ -272,7 +272,7 @@ export async function set_active_pet(id, val) {
         { $set: { active_pet: val.id }}
     );
 
-    log(`Setting user with id ${userID}'s active pet to ${val.id}`);
+    log(`Setting user with id ${id}'s active pet to ${val.id}`);
 
     return result;
 }
@@ -283,7 +283,7 @@ export async function set_total_pets(id, val) {
         { $set: { total_pets: val }}
     );
 
-    log(`Setting user with id ${userID}'s total pets to ${val}`);
+    log(`Setting user with id ${id}'s total pets to ${val}`);
 
     return result;
 }
