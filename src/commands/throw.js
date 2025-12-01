@@ -2,7 +2,7 @@
 // Throwing a snowball has a small chance to miss and a smaller chance to crit.
 
 import { MessageFlags, SlashCommandBuilder,  																							} from 'discord.js';
-import { parseAchievements, get_user_data, set_packed_object, set_snow_amount, set_building, set_score, set_misses, set_hits, set_crits, set_times_hit, get_weather, try_add_to_leaderboard	} from '../miscellaneous/database.js';
+import { parseAchievements, get_user_data, set_packed_object, set_snow_amount, set_building, set_score, set_misses, set_hits, set_crits, set_times_hit, get_weather, try_add_to_server	} from '../miscellaneous/database.js';
 import { build_snowball_hit, build_snowball_miss, build_snowball_block, build_snowball_block_break					    } from '../embeds/snowball.js';
 import { build_new_get_achievement } from '../embeds/new_achievement.js';
 import log from '../miscellaneous/debug.js';
@@ -152,7 +152,7 @@ export const command = {
 
 				await Promise.all([
 					set_score(interaction.member.id, newScore),
-					try_add_to_leaderboard(interaction.guild.id, interaction.member.id),
+					try_add_to_server(interaction.guild.id, interaction.member.id),
 				]);
 				
 				// Remove the building and tell the user it was broken.
@@ -188,8 +188,8 @@ export const command = {
 			set_score(interaction.member.id, newScore),
 			set_hits(interaction.member.id, user_data.hits),
 			set_times_hit(target.user.id, target_data.times_hit),
-			try_add_to_leaderboard(interaction.guild.id, interaction.member.id),
-			try_add_to_leaderboard(interaction.guild.id, target.user.id)
+			try_add_to_server(interaction.guild.id, interaction.member.id),
+			try_add_to_server(interaction.guild.id, target.user.id)
 		]);
 		
 		// Tell the user the snowball hit.

@@ -7,7 +7,7 @@ export function build_new_pet(pet, isEgg, isDead) {
 	const wayEarlier = new Date(now.getTime() - 24 * 60 * 60 * 1000);
 	
 	return new EmbedBuilder()
-		.setColor(0xFFFFFF)
+        .setColor(isDead ? 0x00FF00 : 0xFF0000)
 		.setTitle(`${isEgg ? 'Unhatched Egg' : `${pet.name}${isDead ? ' (RIP)' : ''}`}`)
         .setDescription(`${isEgg ? `This egg will hatch **<t:${Math.floor(pet.hatch_time / 1000)}:R>**.` : isDead ? 'This pet died from not being fed for over 24 hours. Rest in peace.' : pet.descriptions[pet.level - 1]}`)
 		.setImage(isEgg ? "https://images.everydayhealth.com/images/news/an-egg-day-lower-dementia-risk-1440x810.jpg?sfvrsn=d81b2e39_3" : isDead ? "https://media.istockphoto.com/id/901964114/photo/rip-headstone.jpg?s=612x612&w=0&k=20&c=GV_qkhh8VxGFtTHu5950cvhKzlfOMw7DS7dHqoo3rRE=" : pet.image)

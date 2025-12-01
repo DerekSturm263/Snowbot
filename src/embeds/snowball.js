@@ -109,7 +109,7 @@ export function build_snowball_hit(member, item, score, score2, member2, crit, a
     const randomMessageIndex = Math.floor(Math.random() * snowball_hit_messages(0, item).length);
 	
 	return new EmbedBuilder()
-		.setColor(0xFFFFFF)
+		.setColor(0x00FF00)
 		.setTitle(crit ? 'Critical Hit!' : 'Hit!')
 		.setDescription(snowball_hit_messages(member.user.id, item)[randomMessageIndex])
 		.addFields(
@@ -123,7 +123,7 @@ export function build_snowball_miss(member, fromPet, petName) {
 	const randomMessageIndex = Math.floor(Math.random() * snowball_miss_messages(0).length);
 
 	return new EmbedBuilder()
-		.setColor(0x787878)
+		.setColor(0xFF0000)
 		.setTitle('Miss!')
 		.setDescription((fromPet ? snowball_pet_miss_messages(member.user.id, petName) : snowball_miss_messages(member.user.id))[randomMessageIndex]);
 };
@@ -132,7 +132,7 @@ export function build_snowball_block(member, build) {
 	const randomMessageIndex = Math.floor(Math.random() * snowball_block_messages(0, build).length);
 
 	return new EmbedBuilder()
-		.setColor(0x787878)
+		.setColor(0xFF0000)
 		.setTitle('Blocked!')
 		.setDescription(snowball_block_messages(member.user.id, build)[randomMessageIndex]);
 };
@@ -141,7 +141,7 @@ export function build_snowball_block_break(member, item, score, score2, member2,
 	const randomMessageIndex = Math.floor(Math.random() * snowball_block_break_messages(0, build).length);
 
 	return new EmbedBuilder()
-		.setColor(0xFFFFFF)
+		.setColor(0x00FF00)
 		.setTitle(`Defense Broken!${crit ? ' (Critical!)' : ''}`)
 		.setDescription(snowball_block_break_messages(member.user.id, build)[randomMessageIndex])
 		.addFields(

@@ -377,7 +377,7 @@ export function get_weather(hourOffset) {
 
 // Leaderboard.
 
-async function create_leaderboard_data(id) {
+async function create_server_data(id) {
     const leaderboard = {
         guildID: id,
         users: [],
@@ -392,16 +392,16 @@ async function create_leaderboard_data(id) {
     return leaderboard;
 }
 
-export async function get_leaderboard_data(id) {
-    const leaderboard = await client.db('database').collection('leaderboards').findOne({ guildID: id }) ?? await create_leaderboard_data(id);
+export async function get_server_data(id) {
+    const leaderboard = await client.db('database').collection('leaderboards').findOne({ guildID: id }) ?? await create_server_data(id);
 
     log(JSON.stringify(leaderboard));
 
     return leaderboard;
 }
 
-export async function try_add_to_leaderboard(guildID, userID) {
-    const leaderboard = await get_leaderboard_data(guildID);
+export async function try_add_to_server(guildID, userID) {
+    const leaderboard = await get_server_data(guildID);
 
     if (!leaderboard.users.includes(userID)) {
         leaderboard.users.push(userID);

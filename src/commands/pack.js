@@ -2,10 +2,9 @@
 // What you put in the snowball impacts how long another user hit with the snowball is timed out for.
 
 import { MessageFlags, SlashCommandBuilder				} from 'discord.js';
-import { parseAchievements, get_user_data, set_packed_object, get_weather, set_total_packed_objects, set_snow_amount, set_building	} from '../miscellaneous/database.js';
+import { parseAchievements, get_user_data, set_packed_object, get_weather, set_total_packed_objects, set_snow_amount, set_building, get_server_data	} from '../miscellaneous/database.js';
 import { build_new_pack 					} from '../embeds/new_packs.js';
 import { build_new_get_achievement } from '../embeds/new_achievement.js';
-import objects from '../exports/objects.js';
 import log from '../miscellaneous/debug.js';
 
 export const command = {
@@ -18,7 +17,7 @@ export const command = {
 
 		log(`\n${interaction.user.displayName} used /pack:`);
 
-		const [ user_data, weather ] = [ await get_user_data(interaction.member.id), get_weather(0) ];
+		const [ user_data, server_data, weather ] = [ await get_user_data(interaction.member.id), await get_server_data(interaction.guild.id), get_weather(0) ];
 
 		if (weather.cooldown == -2) {
 			await Promise.all([
@@ -56,12 +55,14 @@ export const command = {
 			chance += pet.level * 0.1;
 		}
 
+		const objects = server_data.objects.map(object => new Array(object.count).fill(object.id)).flat();
+
 		// Pick a random item to pack.
 		const randomIndex = Math.floor(chance * objects.length);
 		if (randomIndex >= objects.length - 1)
 			randomIndex = objects.length - 1;
 
-		const item = objects[randomIndex];
+		const item = server_data.objects.find(item => item.id == objects[randomIndex]);
 
 		++user_data.total_packed_objects;
 
