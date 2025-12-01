@@ -170,7 +170,7 @@ export const command = {
 			// Update the building and tell the user it was hit.
 			await set_building(target.user.id, { id: target_data.building.id, hits: target_data.building.hits_left });
 			await interaction.editReply({
-				embeds: [ build_snowball_block(target, server_data.buildings.find(item => item.id == target_data.building.id), target_data.building.hits_left) ]
+				embeds: [ build_snowball_block(target, server_data.buildings.find(item => item.id == target_data.building.id), target_data.building.hits_left, crit) ]
 			});
 			
 			return;

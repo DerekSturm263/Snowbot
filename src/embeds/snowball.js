@@ -128,12 +128,12 @@ export function build_snowball_miss(member, fromPet, petName) {
 		.setDescription((fromPet ? snowball_pet_miss_messages(member.user.id, petName) : snowball_miss_messages(member.user.id))[randomMessageIndex]);
 };
 
-export function build_snowball_block(member, build, hitsLeft) {
+export function build_snowball_block(member, build, hitsLeft, crit) {
 	const randomMessageIndex = Math.floor(Math.random() * snowball_block_messages(0, build, hitsLeft).length);
 
 	return new EmbedBuilder()
 		.setColor(0xFF0000)
-		.setTitle('Blocked!')
+		.setTitle(`Blocked!${crit ? ' (Critical)' : ''}`)
 		.setDescription(snowball_block_messages(member.user.id, build, hitsLeft)[randomMessageIndex]);
 };
 
