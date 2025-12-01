@@ -2,7 +2,7 @@
 
 import { MessageFlags, SlashCommandBuilder    }   from 'discord.js';
 import { build_new_stats 		}	from '../embeds/new_stats.js';
-import { get_user_data, get_weather, set_snow_amount, set_building, set_packed_object }   from '../miscellaneous/database.js';
+import { get_user_data, get_weather, set_snow_amount, set_building, set_packed_object, get_server_data }   from '../miscellaneous/database.js';
 import log from '../miscellaneous/debug.js';
 
 export const command = {
@@ -20,13 +20,13 @@ export const command = {
 		log(`\n${interaction.user.displayName} used /stats:`);
 
 		const target = interaction.options.getMember('user') ?? interaction.member;
-		const [ user_data, weather ] = [ await get_user_data(target.id), get_weather(0) ];
+		const [ user_data, server_data, weather ] = [ await get_user_data(target.id), await get_server_data(interaction.guild.id), get_weather(0) ];
 
 		if (weather.cooldown == -2) {
 			await Promise.all([
 				set_snow_amount(target.id, 0),
-				set_packed_object(target.id, null),
-				set_building(target.id, null)
+				set_packed_object(target.id, { id: "" }),
+				set_building(target.id, { id: "", hits_left: 0 })
 			]);
 
 			user_data.snow_amount = 0;
@@ -36,7 +36,7 @@ export const command = {
 		
 		// Tell the user the stats.
 		await interaction.editReply({
-			embeds: [ build_new_stats(target.displayName, user_data, target != interaction.member) ],
+			embeds: [ build_new_stats(target.displayName, user_data, server_data, target != interaction.member) ],
 			flags: MessageFlags.Ephemeral
 		});
 	}

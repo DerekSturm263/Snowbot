@@ -69,12 +69,12 @@ const blizzard = {
 };
 
 export default [
+    blizzard,
     sunny,
     clear,
     light_snow,
     medium_snow,
     medium_snow,
     heavy_snow,
-    snowstorm,
-    blizzard
+    snowstorm
 ];

@@ -1,63 +1,53 @@
 import { EmbedBuilder } from 'discord.js';
 
-export function build_new_stats(name, data, hide_data) {
+export function build_new_stats(name, user_data, server_data, hide_data) {
 	return new EmbedBuilder()
 		.setColor(0xFFFFFF)
 		.setTitle(`${name}'s Stats`)
         .addFields(
 			{
 				name: 'Current Score',
-				value: `${data.score}`,
+				value: `${user_data.score}`,
 				inline: true
 			},
 			{
 				name: 'Hits',
-				value: `${data.hits}`,
+				value: `${user_data.hits}`,
 				inline: true
 			},
 			{
 				name: 'Crits',
-				value: `${data.crits}`,
+				value: `${user_data.crits}`,
 				inline: true
 			},
 			{
 				name: 'Misses',
-				value: `${data.misses}`,
+				value: `${user_data.misses}`,
 				inline: true
 			},
 			{
 				name: 'Times Hit',
-				value: `${data.times_hit}`,
+				value: `${user_data.times_hit}`,
 				inline: true
 			},
 			{
 				name: 'Current Snow Collected',
-				value: hide_data ? '???' : `${data.snow_amount}`,
-				inline: true
-			},
-			{
-				name: 'Current Packed Item',
-				value: hide_data ? '???' : `${data.packed_object ? `${data.packed_object.name}\n(Damage: +${data.packed_object.damage})` : 'None'}`,
-				inline: true
-			},
-			{
-				name: 'Current Building',
-				value: hide_data ? '???' : `${data.building ? `${data.building.name}\n(Hits Left: ${data.building.hits})` : 'None'}`,
+				value: hide_data ? '???' : `${user_data.snow_amount}`,
 				inline: true
 			},
 			{
 				name: 'Total Snow Collected',
-				value: `${data.total_snow_amount}`,
+				value: `${user_data.total_snow_amount}`,
 				inline: true
 			},
 			{
 				name: 'Total Packed Items',
-				value: `${data.total_packed_objects}`,
+				value: `${user_data.total_packed_objects}`,
 				inline: true
 			},
 			{
 				name: 'Total Buildings',
-				value: `${data.total_buildings}`,
+				value: `${user_data.total_buildings}`,
 				inline: true
 			}
 		);

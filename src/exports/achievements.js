@@ -238,6 +238,46 @@ const snow_novice5 = {
     value: 100
 };
 
+const finders_keepers = {
+    id: "finders_keepers",
+    name: "Finders Keepers!",
+    description: "Find your first snow egg.",
+    property: "total_pets",
+    value: 1
+};
+
+const finders_keepers2 = {
+    id: "finders_keepers2",
+    name: "Eggcellent",
+    description: "Find a total of 5 snow eggs.",
+    property: "total_pets",
+    value: 5
+};
+
+const finders_keepers3 = {
+    id: "finders_keepers3",
+    name: "Pack Leader",
+    description: "Find a total of 10 snow eggs.",
+    property: "total_pets",
+    value: 10
+};
+
+const finders_keepers4 = {
+    id: "finders_keepers4",
+    name: "Ice Ice Baby",
+    description: "Find a total of 25 snow eggs.",
+    property: "total_pets",
+    value: 25
+};
+
+const finders_keepers5 = {
+    id: "finders_keepers5",
+    name: "Noah's Ark",
+    description: "Find a total of 50 snow eggs.",
+    property: "total_pets",
+    value: 50
+};
+
 const snow_stuffer = {
     id: "snow_stuffer",
     name: "Locked & Loaded",
@@ -309,6 +349,11 @@ export default [
     snow_novice3,
     snow_novice4,
     snow_novice5,
+    finders_keepers,
+    finders_keepers2,
+    finders_keepers3,
+    finders_keepers4,
+    finders_keepers5,
     snow_stuffer,
     snow_stuffer2,
     snow_stuffer3,

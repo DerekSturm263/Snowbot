@@ -9,7 +9,7 @@ export function build_new_help() {
 
             '`/collect`: Collects some fresh snow from off the ground. Snow is needed to use `/throw`, `/build`, and `/pack`.\n\n' +
 
-            '`/throw`: Throws a snowball at someone! When someone is hit by a snowball, by default, they get timed out for 3 seconds.\n\n' +
+            '`/throw`: Throws a snowball at someone! When you hit someone with a snowball, you\'ll gain a point.\n\n' +
 
             '`/build`: Builds something out of snow to take hits for you. Each build will block hits until it eventually breaks.\n\n' +
 
@@ -19,13 +19,15 @@ export function build_new_help() {
             
             '`/forecast`: Checks the current and upcoming weather. Each weather type impacts the cooldown on `/collect`, among other things.\n\n' +
 
-            '`/stats`: Checks a user\'s stats, including snow collected, current packed object, current building, and more.\n\n' +
+            '`/stats`: Checks a user\'s stats, including snow collected, total hits, total misses, and more.\n\n' +
 
             '`/achievements`: Shows you all achievements, including hidden ones (with limited information).\n\n' + 
 
             '`/leaderboard`: Checks this server\'s leaderboard. The leaderboard is organized from who has the most to least points.\n\n' +
             
             '`/settings`: Lets you change personal settings related to the bot.\n\n' +
+            
+            '`/setup` (admins only): Lets you set up custom objects, buildings, and pets for this server.\n\n' +
 
             '`/reset`: Resets all of your stats and achievements to their defaults.'
         );

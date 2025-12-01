@@ -2,7 +2,7 @@
 
 import { ActionRowBuilder, ButtonBuilder, MessageFlags, SlashCommandBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from 'discord.js';
 import { build_new_pet } from '../embeds/new_pet.js';
-import { get_user_data, set_pet_last_eat_time, set_active_pet, set_pet_total_food, set_snow_amount, set_pet_appetite, set_pet_level, remove_pet } from '../miscellaneous/database.js';
+import { get_user_data, set_pet_last_eat_time, set_active_pet, set_pet_total_food, set_snow_amount, set_pet_appetite, set_pet_level, remove_pet, set_packed_object, set_building, get_server_data, get_weather } from '../miscellaneous/database.js';
 import log from '../miscellaneous/debug.js';
 
 function build_pet(row1, row2, pet) {
@@ -27,7 +27,19 @@ export const command = {
 
 		log(`\n${interaction.user.displayName} used /pets:`);
 
-        const user_data = await get_user_data(interaction.member.id);
+		const [ user_data, server_data, weather ] = [ await get_user_data(interaction.member.id), await get_server_data(interaction.guild.id), get_weather(0) ];
+
+		if (weather.cooldown == -2) {
+			await Promise.all([
+				set_snow_amount(interaction.member.id, 0),
+				set_packed_object(interaction.member.id, { id: "" }),
+				set_building(interaction.member.id, { id: "", hits_left: 0 })
+			]);
+
+			user_data.snow_amount = 0;
+			user_data.packed_object = null;
+			user_data.building = null;
+		}
 
 		if (user_data.pets.length == 0) {
 			await interaction.editReply({
