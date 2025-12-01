@@ -341,6 +341,8 @@ export async function add_pet(id, val, hatchOffset) {
     const user = await client.db('database').collection('users').findOne({ userID: id }) ?? await create_user_data(userID);
     user.pets.push(val);
 
+    log(`Adding new pet with data ${JSON.stringify(val, null, 2)} from user with id ${id}`);
+
     const result = await client.db('database').collection('users').updateOne(
         { userID: id },
         { $set: { pets: user.pets }}
@@ -352,6 +354,8 @@ export async function add_pet(id, val, hatchOffset) {
 export async function remove_pet(userID, petIndex) {
     const user = await client.db('database').collection('users').findOne({ userID: userID }) ?? await create_user_data(userID);
     user.pets.splice(petIndex, 1);
+
+    log(`Removing pet at index ${petIndex} from user with id ${userID}`);
 
     const result = await client.db('database').collection('users').updateOne(
         { userID: userID },
