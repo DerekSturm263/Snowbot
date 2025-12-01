@@ -73,6 +73,7 @@ export default [
     clear,
     light_snow,
     medium_snow,
+    medium_snow,
     heavy_snow,
     snowstorm,
     blizzard
