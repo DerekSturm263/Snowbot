@@ -57,7 +57,7 @@ export const command = {
 					)
 				);
 
-		const buildModifier = weather.building_cost_modifier;
+		let buildModifier = weather.building_cost_modifier;
 
 		try_pet_ability(user_data, "snow_owl", (pet) => {
 			buildModifier -= pet.level;

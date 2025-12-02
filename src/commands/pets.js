@@ -159,7 +159,7 @@ export const command = {
 
 				await Promise.all([
 					set_pet_total_food(interaction.member.id, index, user_data.pets[index].total_food),
-					set_pet_last_eat_time(interaction.member.id, index, now.getTime()),
+					set_pet_last_eat_time(interaction.member.id, index, user_data.pets[index].last_eat_time),
 					set_snow_amount(interaction.member.id, user_data.snow_amount)
 				]);
 			}

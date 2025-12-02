@@ -340,7 +340,7 @@ export async function add_pet(id, archetype, hatchOffset) {
         name: archetype.name,
         hatch_time: later.getTime(),
         appetite: archetype.appetite,
-        last_eat_time: later.getTime(),
+        last_eat_time: now.getTime(),
         total_food: 0,
         level: 1
     };
