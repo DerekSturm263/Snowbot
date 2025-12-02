@@ -270,10 +270,10 @@ export async function set_ready_time(id, val) {
 export async function set_active_pet(id, val) {
     const result = await client.db('database').collection('users').updateOne(
         { userID: id },
-        { $set: { active_pet: val.id }}
+        { $set: { active_pet: val.uuid }}
     );
 
-    log(`Setting user with id ${id}'s active pet to ${val.id}`);
+    log(`Setting user with id ${id}'s active pet to ${val.uuid}`);
 
     return result;
 }
@@ -328,27 +328,34 @@ async function add_achievement(id, val) {
     return result;
 }
 
-export async function add_pet(id, val, hatchOffset) {
+export async function add_pet(id, archetype, hatchOffset) {
     const now = new Date();
 
-    const delay = val.delay - hatchOffset;
+    const delay = archetype.delay - hatchOffset;
     const later = new Date(now.getTime() + (delay < 0 ? 0 : delay) * 60 * 60 * 1000);
 
-    val.id = uuidv4().toString();
-    val.hatch_time = later.getTime();
-    val.last_eat_time = later.getTime();
+    const instance = {
+        uuid: uuidv4(),
+        archetype_id: archetype.id,
+        name: archetype.name,
+        hatch_time: later.getTime(),
+        appetite: archetype.appetite,
+        last_eat_time: later.getTime(),
+        total_food: 0,
+        level: 1
+    };
 
-    const user = await client.db('database').collection('users').findOne({ userID: id }) ?? await create_user_data(userID);
-    user.pets.push(val);
+    const user = await client.db('database').collection('users').findOne({ userID: id }) ?? await create_user_data(id);
+    user.pets.push(instance);
 
-    log(`Adding new pet with data ${JSON.stringify(val, null, 2)} from user with id ${id}`);
+    log(`Adding new pet with data ${JSON.stringify(instance, null, 2)} from user with id ${id}`);
 
     const result = await client.db('database').collection('users').updateOne(
         { userID: id },
         { $set: { pets: user.pets }}
     );
 
-    return result;
+    return instance;
 }
 
 export async function remove_pet(userID, petIndex) {
@@ -433,6 +440,14 @@ export async function set_pet_level(userID, petIndex, val) {
     log(`Setting user with id ${userID}'s pet level at index ${petIndex} to ${val}`);
 
     return result;
+}
+
+export function try_pet_ability(user_data, type, action) {
+	const pet = user_data.pets.find(pet => pet.uuid == user_data.active_pet);
+	
+    if (pet && pet.archetype_id == type) {
+        action(pet);
+	}
 }
 
 

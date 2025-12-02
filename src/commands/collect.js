@@ -3,7 +3,7 @@
 
 import { MessageFlags, SlashCommandBuilder 													} from 'discord.js';
 import { build_new_collect } from '../embeds/new_collect.js';
-import { tryGetAchievements, get_user_data, set_snow_amount, set_ready_time, get_weather, set_packed_object, set_building, set_total_snow_amount, add_pet, get_server_data, set_total_pets	} from '../miscellaneous/database.js';
+import { tryGetAchievements, get_user_data, set_snow_amount, set_ready_time, get_weather, set_packed_object, set_building, set_total_snow_amount, add_pet, get_server_data, set_total_pets, try_pet_ability	} from '../miscellaneous/database.js';
 import { build_new_pet_unlocked } from '../embeds/new_pet.js';
 import log from '../miscellaneous/debug.js';
 
@@ -23,14 +23,13 @@ export const command = {
 			get_weather(0)
 		];
 
-		const pet2 = user_data.pets.find(pet => pet.id == user_data.id);
 		let bypassWeather = false;
 		let bypassCooldown = 0;
 
-		if (pet2 && pet2.type == "snowman") {
+		try_pet_ability(user_data, "snowman", (pet) => {
 			bypassWeather = true;
-			bypassCooldown = 10 - pet2.level;
-		}
+			bypassCooldown = 10 - pet.level;
+		});
 
 		if (!bypassWeather && weather.cooldown == -2) {
 			await Promise.all([
@@ -47,7 +46,7 @@ export const command = {
 		// Check if it isn't snowing.
 		if (!bypassWeather && weather.cooldown < 0) {
 			await interaction.editReply({
-				content: `It isn't snowing! Wait for the weather to change!`,
+				content: 'It isn\'t snowing right now! Use `/forecast` to see when it will change.',
 				flags: MessageFlags.Ephemeral
 			});
 			return;
@@ -90,32 +89,29 @@ export const command = {
 
 		let petChance = Math.random();
 
-		const pet3 = user_data.pets.find(pet => pet.id == user_data.id);
-		if (pet3 && pet3.type == "snow_dragon") {
-			petChance += pet3.level * 0.075;
-		}
+		try_pet_ability(user_data, "snow_dragon", (pet) => {
+			petChance += pet.level * 0.075;
+		});
 
 		if (petChance > 0.95) {
-			const pets = server_data.pets.map(pet => new Array(pet.count).fill(pet.type)).flat();
+			const pets = server_data.pets.map(pet => new Array(pet.count).fill(pet.id)).flat();
 
 			const randomIndex = Math.floor(Math.random() * pets.length);
-			const pet = server_data.pets.find(item => item.id == pets[randomIndex]);
+			const archetype = server_data.pets.find(item => item.id == pets[randomIndex]);
 
-			const currentPet = user_data.pets.find(pet => pet.id == user_data.id);
 			let hatchOffset = 0;
-			if (currentPet && currentPet.type == "snow_dog") {
-				hatchOffset = currentPet.level * 0.4;
-			}
+
+			try_pet_ability(user_data, "snow_dog", (pet) => {
+				hatchOffset = pet.level * 0.4;
+			});
 
 			++user_data.total_pets;
+			const instance = await add_pet(interaction.member.id, archetype, hatchOffset);
 
-			await Promise.all([
-				add_pet(interaction.member.id, pet, hatchOffset),
-				set_total_pets(interaction.member.id, user_data.total_pets)
-			]);
+			set_total_pets(interaction.member.id, user_data.total_pets);
 
 			await interaction.followUp({
-				embeds: [ build_new_pet_unlocked(pet) ],
+				embeds: [ build_new_pet_unlocked(archetype, instance) ],
 				flags: MessageFlags.Ephemeral
 			});
 		}

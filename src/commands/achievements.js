@@ -8,6 +8,7 @@ import log from '../miscellaneous/debug.js';
 
 function build_achievements(row, user_data, page, itemCount) {
 	return {
+		content: `You currently have ${user_data.achievements.length}/${achievements.length} achievements unlocked`,
 		embeds: achievements.slice(page * itemCount, page * itemCount + itemCount).map(achievement => {
 	        return build_new_list_achievement(achievement, user_data.achievements.includes(achievement.id));
     	}),

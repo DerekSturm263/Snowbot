@@ -18,7 +18,7 @@ export function build_new_building(build, costModifier, currentSnow) {
 				inline: true
 			},
 			{
-				name: 'Current Snow Collected',
+				name: 'Current Snow In-Hand',
 				value: `${currentSnow}`,
 				inline: true
 			}

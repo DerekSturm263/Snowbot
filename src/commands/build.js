@@ -2,7 +2,7 @@
 // What you build will give you a certain number of shots to block.
 
 import { MessageFlags, SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder 							} from 'discord.js';
-import { get_user_data, set_snow_amount, set_building, get_weather, set_total_buildings, set_packed_object, get_server_data, tryGetAchievements	} from '../miscellaneous/database.js';
+import { get_user_data, set_snow_amount, set_building, get_weather, set_total_buildings, set_packed_object, get_server_data, tryGetAchievements, try_pet_ability	} from '../miscellaneous/database.js';
 import { build_new_building 							} from '../embeds/new_builds.js';
 import log from '../miscellaneous/debug.js';
 
@@ -59,10 +59,9 @@ export const command = {
 
 		const buildModifier = weather.building_cost_modifier;
 
-		const pet = user_data.pets.find(pet => pet.id == user_data.id);
-		if (pet && pet.type == "snow_owl") {
+		try_pet_ability(user_data, "snow_owl", (pet) => {
 			buildModifier -= pet.level;
-		}
+		});
 
 		const suffix = user_data.building.id != "" ? ' (Something Already Built!)' : server_data.buildings[buildingIndex].cost + buildModifier > user_data.snow_amount ? ' (Can\'t Afford!!)' : '';
 
@@ -81,8 +80,6 @@ export const command = {
 			);
 
 		function selectBuilding(index) {
-			buildingIndex = index;
-
 			for (let i = 0; i < server_data.buildings.length; ++i) {
 				buildingsRow.components[0].options[i].setDefault(i == index);
 			}
@@ -92,6 +89,8 @@ export const command = {
 			buttonsRow.components[0].setLabel(`Build For ${server_data.buildings[index].cost + buildModifier} Snow` + suffix);
 			buttonsRow.components[0].setDisabled(user_data.building.id != "" || server_data.buildings[index].cost + buildModifier > user_data.snow_amount);
 			buttonsRow.components[1].setDisabled(server_data.buildings[index].id != user_data.building.id);
+
+			return index;
 		}
 
 		async function createBuilding(index) {
@@ -143,7 +142,7 @@ export const command = {
 			if (i.customId == 'buildings') {
 				await i.deferUpdate();
 
-				selectBuilding(Number(i.values[0]));
+				buildingIndex = selectBuilding(Number(i.values[0]));
 
 				await interaction.editReply(build_building(buildingsRow, buttonsRow, server_data.buildings[buildingIndex], buildModifier, user_data.snow_amount));
 			} else if (i.customId == 'build') {

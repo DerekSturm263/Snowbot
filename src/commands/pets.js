@@ -5,13 +5,9 @@ import { build_new_pet } from '../embeds/new_pet.js';
 import { get_user_data, set_pet_last_eat_time, set_active_pet, set_pet_total_food, set_snow_amount, set_pet_appetite, set_pet_level, remove_pet, set_packed_object, set_building, get_server_data, get_weather } from '../miscellaneous/database.js';
 import log from '../miscellaneous/debug.js';
 
-function build_pet(row1, row2, pet) {
-	const now = new Date();
-	const isEgg = now.getTime() < pet.hatch_time;
-	const isDead = pet.last_eat_time < new Date(now.getTime() - 24 * 60 * 60 * 1000);
-
+function build_pet(row1, row2, archetype, instance, currentSnow) {
 	return {
-		embeds: [ build_new_pet(pet, isEgg, isDead) ],
+		embeds: [ build_new_pet(archetype, instance, currentSnow) ],
 		components: [ row1, row2 ],
 		flags: MessageFlags.Ephemeral
 	};
@@ -61,7 +57,7 @@ export const command = {
 					.setCustomId('pets')
 					.addOptions(
 						user_data.pets.map((pet, index) => new StringSelectMenuOptionBuilder()
-							.setLabel(`${new Date().getTime() < pet.hatch_time ? '🥚 Unhatched Egg' : `${pet.icon} ${pet.name}` + (pet.last_eat_time < new Date(new Date().getTime() - 24 * 60 * 60 * 1000) ? ' (RIP)' : pet.id == user_data.active_pet ? ' (Active)' : '')}`)
+							.setLabel(`${new Date().getTime() < pet.hatch_time ? '🥚 Unhatched Egg' : `${pet.last_eat_time < new Date(new Date().getTime() - 24 * 60 * 60 * 1000) ? '💀' : server_data.pets.find(pet => pet.id == user_data.pets[index].archetype_id).icon} ${pet.name}` + (pet.last_eat_time < new Date(new Date().getTime() - 24 * 60 * 60 * 1000) ? ' (RIP)' : pet.uuid == user_data.active_pet ? ' (Active)' : '')}`)
 							.setValue(`${index}`)
 							.setDefault(index == petIndex)
 						)
@@ -78,10 +74,10 @@ export const command = {
 					.setCustomId('setActive')
 					.setLabel('Set As Active Pet')
 					.setStyle('Primary')
-					.setDisabled(user_data.pets[petIndex].id == user_data.active_pet || isEgg || isDead),
+					.setDisabled(user_data.pets[petIndex].uuid == user_data.active_pet || isEgg || isDead),
 				new ButtonBuilder()
 					.setCustomId('feed')
-					.setLabel('Feed')
+					.setLabel('Feed For 1 Snow')
 					.setStyle('Secondary')
 					.setDisabled(isEgg || isDead),
 				new ButtonBuilder()
@@ -92,8 +88,6 @@ export const command = {
 			);
 
 		function selectPet(index) {
-			petIndex = index;
-
 			for (let i = 0; i < user_data.pets.length; ++i) {
 				petsRow.components[0].options[i].setDefault(i == index);
 			}
@@ -102,13 +96,15 @@ export const command = {
 			const isEgg = now.getTime() < user_data.pets[index].hatch_time;
 			const isDead = user_data.pets[index].last_eat_time < new Date(now.getTime() - 24 * 60 * 60 * 1000);
 
-			buttonsRow.components[0].setDisabled(user_data.pets[index].id == user_data.active_pet || isEgg || isDead);
+			buttonsRow.components[0].setDisabled(user_data.pets[index].uuid == user_data.active_pet || isEgg || isDead);
 			buttonsRow.components[1].setDisabled(isEgg || isDead);
 			buttonsRow.components[2].setDisabled(isEgg);
+
+			return index;
 		}
 
 		async function setActive(index) {
-			user_data.active_pet = user_data.pets[index].id;
+			user_data.active_pet = user_data.pets[index].uuid;
 			await set_active_pet(interaction.member.id, user_data.pets[index]);
 
 			for (let i = 0; i < user_data.pets.length; ++i) {
@@ -116,8 +112,10 @@ export const command = {
 				const isEgg = now.getTime() < user_data.pets[i].hatch_time;
 				const isDead = user_data.pets[i].last_eat_time < new Date(now.getTime() - 24 * 60 * 60 * 1000);
 
-				const suffix = isDead ? 'RIP' : user_data.pets[i].id == user_data.active_pet ? ' (Active)' : '';
-				petsRow.components[0].options[i].setLabel(`${isEgg ? '🥚 Unhatched Egg' : `${user_data.pets[i].icon} ${user_data.pets[i].name}` + suffix}`);
+				const suffix = isDead ? ' (RIP)' : user_data.pets[i].uuid == user_data.active_pet ? ' (Active)' : '';
+				const archetype = server_data.pets.find(pet => pet.id == user_data.pets[i].archetype_id);
+
+				petsRow.components[0].options[i].setLabel(`${isEgg ? '🥚 Unhatched Egg' : `${isDead ? '💀' : archetype.icon} ${user_data.pets[i].name}` + suffix}`);
 			}
 
 			buttonsRow.components[0].setDisabled(true);
@@ -190,35 +188,41 @@ export const command = {
 			});
 		}
 
-		const message = await interaction.editReply(build_pet(petsRow, buttonsRow, user_data.pets[petIndex]));
+		const archetype = server_data.pets.find(pet => pet.id == user_data.pets[petIndex].archetype_id);
+		const message = await interaction.editReply(build_pet(petsRow, buttonsRow, archetype, user_data.pets[petIndex], user_data.snow_amount));
 
 		const collector = message.createMessageComponentCollector({ time: 2 * 60 * 1000 });
 		collector.on('collect', async i => {
 			if (i.customId == 'pets') {
 				await i.deferUpdate();
 
-				selectPet(Number(i.values[0]));
+				petIndex = selectPet(Number(i.values[0]));
 
-				await interaction.editReply(build_pet(petsRow, buttonsRow, user_data.pets[petIndex]));
+				const archetype = server_data.pets.find(pet => pet.id == user_data.pets[petIndex].archetype_id);
+				await interaction.editReply(build_pet(petsRow, buttonsRow, archetype, user_data.pets[petIndex], user_data.snow_amount));
 			} else if (i.customId == 'setActive') {
 				await i.deferUpdate();
 
 				await setActive(petIndex);
 
-				await interaction.editReply(build_pet(petsRow, buttonsRow, user_data.pets[petIndex]));
+				const archetype = server_data.pets.find(pet => pet.id == user_data.pets[petIndex].archetype_id);
+				await interaction.editReply(build_pet(petsRow, buttonsRow, archetype, user_data.pets[petIndex], user_data.snow_amount));
 			} else if (i.customId == 'feed') {
 				await i.deferUpdate();
 
 				await feed(petIndex);
 
-				await interaction.editReply(build_pet(petsRow, buttonsRow, user_data.pets[petIndex]));
+				const archetype = server_data.pets.find(pet => pet.id == user_data.pets[petIndex].archetype_id);
+				await interaction.editReply(build_pet(petsRow, buttonsRow, archetype, user_data.pets[petIndex], user_data.snow_amount));
 			} else if (i.customId == 'release') {
 				await i.deferUpdate();
 
 				await release(petIndex);
+				petIndex = 0;
 
 				if (user_data.pets.length > 0) {
-					await interaction.editReply(build_pet(petsRow, buttonsRow, user_data.pets[petIndex]));
+					const archetype = server_data.pets.find(pet => pet.id == user_data.pets[petIndex].archetype_id);
+					await interaction.editReply(build_pet(petsRow, buttonsRow, archetype, user_data.pets[petIndex], user_data.snow_amount));
 				} else {
 					await interaction.delete();
 				}

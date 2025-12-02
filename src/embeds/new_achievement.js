@@ -3,7 +3,7 @@ import { EmbedBuilder } from 'discord.js';
 export function build_new_list_achievement(achievement, isUnlocked) {
     return new EmbedBuilder()
         .setColor(isUnlocked ? 0x00FF00 : 0xFF0000)
-        .setTitle(`${achievement.name}`)
+        .setTitle(`${achievement.icon} **${achievement.name}**`)
         .setDescription(`${achievement.description}`)
         .addFields(
             {
@@ -17,6 +17,6 @@ export function build_new_list_achievement(achievement, isUnlocked) {
 export function build_new_get_achievement(achievement) {
     return new EmbedBuilder()
         .setColor(0xFFFFFF)
-        .setTitle(`Achievement Unlocked: **${achievement.name}**`)
+        .setTitle(`Achievement Unlocked: ${achievement.icon} **${achievement.name}**`)
         .setDescription(`${achievement.description}`);
 };

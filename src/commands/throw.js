@@ -2,7 +2,7 @@
 // Throwing a snowball has a small chance to miss and a smaller chance to crit.
 
 import { MessageFlags, SlashCommandBuilder,  																							} from 'discord.js';
-import { get_user_data, set_packed_object, set_snow_amount, set_building, set_score, set_misses, set_hits, set_crits, set_times_hit, get_weather, try_add_to_server, get_server_data, tryGetAchievements	} from '../miscellaneous/database.js';
+import { get_user_data, set_packed_object, set_snow_amount, set_building, set_score, set_misses, set_hits, set_crits, set_times_hit, get_weather, try_add_to_server, get_server_data, tryGetAchievements, try_pet_ability	} from '../miscellaneous/database.js';
 import { build_snowball_hit, build_snowball_miss, build_snowball_block, build_snowball_block_break					    } from '../embeds/snowball.js';
 import log from '../miscellaneous/debug.js';
 
@@ -82,10 +82,9 @@ export const command = {
 			state += 0.5;
 		}
 
-		const pet = user_data.pets.find(pet => pet.id == user_data.id);
-		if (pet && pet.type == "snow_bunny") {
+		try_pet_ability(user_data, "snow_bunny", (pet) => {
 			state += pet.level * 0.1;
-		}
+		});
 
 		const miss = state < 0.15;
 		const crit = state >= 0.9;
@@ -98,16 +97,17 @@ export const command = {
 			set_packed_object(interaction.member.id, { id: "" })
 		]);
 
-		const pet2 = target_data.pets.find(pet => pet.id == user_data.id);
+		let petName = "";
 		let hitPet = false;
 
-		if (pet2 && pet2.type == "snow_fox") {
+		try_pet_ability(target_data, "snow_fox", (pet) => {
+			petName = pet.name;
 			const blockChance = Math.random();
 
-			if (blockChance < pet2.level * 0.1) {
+			if (blockChance < pet.level * 0.1) {
 				hitPet = true;
 			}
-		}
+		});
 
 		// Check if the snowball missed.
 		if (miss || hitPet) {
@@ -117,7 +117,7 @@ export const command = {
 			await tryGetAchievements(user_data, interaction.member);
 			
 			await interaction.editReply({
-				embeds: [ build_snowball_miss(target, hitPet, pet2?.name) ]
+				embeds: [ build_snowball_miss(target, hitPet, petName) ]
 			});
 			return;
 		}

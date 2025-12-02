@@ -2,14 +2,14 @@
 // What you put in the snowball impacts how long another user hit with the snowball is timed out for.
 
 import { MessageFlags, SlashCommandBuilder				} from 'discord.js';
-import { get_user_data, set_packed_object, get_weather, set_total_packed_objects, set_snow_amount, set_building, get_server_data, tryGetAchievements	} from '../miscellaneous/database.js';
+import { get_user_data, set_packed_object, get_weather, set_total_packed_objects, set_snow_amount, set_building, get_server_data, tryGetAchievements, try_pet_ability	} from '../miscellaneous/database.js';
 import { build_new_pack, build_new_pack_existing 					} from '../embeds/new_packs.js';
 import log from '../miscellaneous/debug.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
 		.setName('pack')
-		.setDescription('Pack a snowball with something random! Requires that you\'re holding at least 2 snow.'),
+		.setDescription('Pack a snowball with something random! Requires that you\'re already holding snow.'),
 		
 	async execute(interaction) {
     	await interaction.deferReply({ flags: MessageFlags.Ephemeral });
@@ -47,19 +47,21 @@ export const command = {
 		}
 
 		// Check if the user doesn't have enough snow.
-		if (user_data.snow_amount < 2) {
+		if (user_data.snow_amount < 1) {
 			await interaction.editReply({
-				content: 'You must have at least 2 snow in your hand to pack something in! Use `/collect` to get some.',
+				content: 'You need some snow in your hand to pack something in! Use `/collect` to get some.',
 				flags: MessageFlags.Ephemeral
 			});
 			return;
 		}
 
 		let chance = Math.random();
-		const pet = user_data.pets.find(pet => pet.id == user_data.id);
-		if (pet && pet.type == "snow_cat") {
+
+		try_pet_ability(user_data, "snow_cat", (pet) => {
 			chance += pet.level * 0.1;
-		}
+		});
+
+		chance += user_data.snow_amount / 80;
 
 		const objects = server_data.objects.map(object => new Array(object.count).fill(object.id)).flat();
 

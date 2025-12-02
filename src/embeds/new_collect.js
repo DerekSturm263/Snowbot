@@ -6,7 +6,7 @@ export function build_new_collect(amount, readyTime) {
 		.setTitle('You collected some snow!')
 		.setDescription(`You can collect more <t:${Math.floor(readyTime / 1000)}:R>`)
         .addFields({
-			name: 'Snow Collected',
+			name: 'Current Snow In-Hand',
 			value: `${amount}/20`
 		});
 };

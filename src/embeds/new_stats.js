@@ -31,7 +31,7 @@ export function build_new_stats(name, user_data, server_data, hide_data) {
 				inline: true
 			},
 			{
-				name: 'Current Snow Collected',
+				name: 'Current Snow In-Hand',
 				value: hide_data ? '???' : `${user_data.snow_amount}`,
 				inline: true
 			},
@@ -48,6 +48,11 @@ export function build_new_stats(name, user_data, server_data, hide_data) {
 			{
 				name: 'Total Buildings',
 				value: `${user_data.total_buildings}`,
+				inline: true
+			},
+			{
+				name: 'Total Pets Owned',
+				value: `${user_data.total_pets}`,
 				inline: true
 			}
 		);
