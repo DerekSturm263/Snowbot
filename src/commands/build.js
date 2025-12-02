@@ -63,15 +63,16 @@ export const command = {
 			buildModifier -= pet.level;
 		});
 
-		const suffix = user_data.building.id != "" ? ' (Something Already Built!)' : server_data.buildings[buildingIndex].cost + buildModifier > user_data.snow_amount ? ' (Can\'t Afford!!)' : '';
+		const cost = server_data.buildings[buildingIndex].cost + buildModifier;
+		const suffix = user_data.building.id != "" ? ' (Something Already Built!)' : cost > user_data.snow_amount ? ' (Can\'t Afford!!)' : '';
 
 		const buttonsRow = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
 					.setCustomId('build')
-					.setLabel(`Build For ${server_data.buildings[buildingIndex].cost + buildModifier} Snow` + suffix)
+					.setLabel(`Build For ${cost > 0 ? cost : 0} Snow` + suffix)
 					.setStyle('Primary')
-					.setDisabled(user_data.building.id != "" || server_data.buildings[buildingIndex].cost + buildModifier > user_data.snow_amount),
+					.setDisabled(user_data.building.id != "" || cost > user_data.snow_amount),
 				new ButtonBuilder()
 					.setCustomId('destroy')
 					.setLabel('Destroy')
@@ -84,10 +85,11 @@ export const command = {
 				buildingsRow.components[0].options[i].setDefault(i == index);
 			}
 
-			const suffix = user_data.building.id != "" ? ' (Something Already Built!)' : server_data.buildings[index].cost + buildModifier > user_data.snow_amount ? ' (Can\'t Afford!)' : '';
+			const cost = server_data.buildings[index].cost + buildModifier;
+			const suffix = user_data.building.id != "" ? ' (Something Already Built!)' : cost > user_data.snow_amount ? ' (Can\'t Afford!)' : '';
 
-			buttonsRow.components[0].setLabel(`Build For ${server_data.buildings[index].cost + buildModifier} Snow` + suffix);
-			buttonsRow.components[0].setDisabled(user_data.building.id != "" || server_data.buildings[index].cost + buildModifier > user_data.snow_amount);
+			buttonsRow.components[0].setLabel(`Build For ${cost > 0 ? cost : 0} Snow` + suffix);
+			buttonsRow.components[0].setDisabled(user_data.building.id != "" || cost > user_data.snow_amount);
 			buttonsRow.components[1].setDisabled(server_data.buildings[index].id != user_data.building.id);
 
 			return index;
@@ -95,14 +97,15 @@ export const command = {
 
 		async function createBuilding(index) {
 			user_data.building = { id: server_data.buildings[index].id, hits_left: server_data.buildings[index].hits };
-
 			++user_data.total_buildings;
-			user_data.snow_amount -= server_data.buildings[index].cost + buildModifier;
 
-			const suffix = user_data.building.id != "" ? ' (Something Already Built!)' : server_data.buildings[index].cost + buildModifier > user_data.snow_amount ? ' (Can\'t Afford!)' : '';
+			const cost = server_data.buildings[index].cost + buildModifier;
+			user_data.snow_amount -= cost > 0 ? cost : 0;
+
+			const suffix = user_data.building.id != "" ? ' (Something Already Built!)' : cost > user_data.snow_amount ? ' (Can\'t Afford!)' : '';
 
 			buildingsRow.components[0].options[index].setLabel(`${server_data.buildings[index].icon} ${server_data.buildings[index].name} (Active, Current Health: ${user_data.building.hits_left})`);
-			buttonsRow.components[0].setLabel(`Build For ${server_data.buildings[index].cost + buildModifier} Snow` + suffix);
+			buttonsRow.components[0].setLabel(`Build For ${cost > 0 ? cost : 0} Snow` + suffix);
 			buttonsRow.components[0].setDisabled(true);
 			buttonsRow.components[1].setDisabled(false);
 
@@ -120,11 +123,12 @@ export const command = {
 			const oldBuilding = server_data.buildings.find(item => item.id == user_data.building.id);
 			user_data.building = { id: "", hits_left: 0 };
 
-			const suffix = user_data.building.id != "" ? ' (Something Already Built!)' : server_data.buildings[buildingIndex].cost + buildModifier > user_data.snow_amount ? ' (Can\'t Afford!)' : '';
+			const cost = server_data.buildings[buildingIndex].cost + buildModifier;
+			const suffix = user_data.building.id != "" ? ' (Something Already Built!)' : cost > user_data.snow_amount ? ' (Can\'t Afford!)' : '';
 
 			buildingsRow.components[0].options[buildingIndex].setLabel(`${server_data.buildings[buildingIndex].icon} ${server_data.buildings[buildingIndex].name}`);
-			buttonsRow.components[0].setLabel(`Build For ${server_data.buildings[buildingIndex].cost + buildModifier} Snow` + suffix);
-			buttonsRow.components[0].setDisabled(server_data.buildings[buildingIndex].cost + buildModifier > user_data.snow_amount);
+			buttonsRow.components[0].setLabel(`Build For ${cost > 0 ? cost : 0} Snow` + suffix);
+			buttonsRow.components[0].setDisabled(cost > user_data.snow_amount);
 			buttonsRow.components[1].setDisabled(true);
 
 			await set_building(interaction.member.id, { id: "", hits: 0 });

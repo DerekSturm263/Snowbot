@@ -72,6 +72,10 @@ export const command = {
 
 		let readyTime = new Date().getTime() + (bypassWeather ? bypassCooldown : weather.cooldown) * 1000;
 		
+		try_pet_ability(user_data, "snow_wolf", (pet) => {
+			readyTime -= pet.level * 1000;
+		});
+
 		++user_data.snow_amount;
 		++user_data.total_snow_amount;
 
