@@ -2,7 +2,7 @@
 // Throwing a snowball has a small chance to miss and a smaller chance to crit.
 
 import { MessageFlags, SlashCommandBuilder,  																							} from 'discord.js';
-import { get_user_data, set_packed_object, set_snow_amount, set_building, set_score, set_misses, set_hits, set_crits, set_times_hit, get_weather, try_add_to_server, get_server_data, tryGetAchievements, try_pet_ability	} from '../miscellaneous/database.js';
+import { get_user_data, set_packed_object, set_snow_amount, set_building, set_score, set_misses, set_hits, set_crits, set_times_hit, get_weather, get_server_data, invoke_pet_events, invoke_event	} from '../miscellaneous/database.js';
 import { build_snowball_hit, build_snowball_miss, build_snowball_block, build_snowball_block_break					    } from '../embeds/snowball.js';
 import log from '../miscellaneous/debug.js';
 
@@ -12,7 +12,7 @@ export const command = {
 		.setDescription('Throw a snowball at someone! Requires that you\'re holding snow.')
 		.addUserOption(option => option
 			.setName('target')
-			.setDescription('The unfortunate victim.')
+			.setDescription('Who the snowball is being thrown at.')
 			.setRequired(true))
 		.addBooleanOption(option => option
 			.setName('ping')
@@ -31,20 +31,18 @@ export const command = {
 			get_weather(0)
 		];
 
+		await invoke_event(0, server_data);
+
 		if (user_data.snow_amount == 0 || interaction.member.id == target.user.id || target.user.bot) {
 			await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 		}
 
 		if (weather.cooldown == -2) {
 			await Promise.all([
-				set_snow_amount(interaction.member.id, 0),
-				set_packed_object(interaction.member.id, { id: "" }),
-				set_building(interaction.member.id, { id: "", hits: 0 })
+				set_snow_amount(user_data, 0),
+				set_packed_object(user_data, { id: "" }),
+				set_building(user_data, { id: "", hits: 0 })
 			]);
-
-			user_data.snow_amount = 0;
-			user_data.packed_object = "";
-			user_data.building = { id: "", hits_left: 0 };
 		}
 		
 		// Get the snow amount and check if the user has any snow.
@@ -77,44 +75,40 @@ export const command = {
 		await interaction.deferReply();
 
 		let state = Math.random();
-
 		if (target.presence && target.presence.status != "online") {
 			state += 0.5;
 		}
 
-		try_pet_ability(user_data, "snow_bunny", (pet) => {
-			state += pet.level * 0.1;
-		});
+		invoke_pet_events(user_data, target_data, "onTryThrow");
+		//state += pet.level * 0.1;
 
-		const miss = state < 0.15;
-		const crit = state >= 0.9;
+		const miss = state < server_data.miss_chance;
+		const crit = state >= server_data.crit_chance;
+		const critMultiplier = crit ? 2 : 1;
 
-		--user_data.snow_amount;
+		let amount = critMultiplier * (((user_data.packed_object != "" ? server_data.objects.find(item => item.id == user_data.packed_object).damage : 0) + 1));
+		let oldObject = user_data.packed_object;
 
 		// Decrement the snow amount.
 		await Promise.all([
-			set_snow_amount(interaction.member.id, user_data.snow_amount),
-			set_packed_object(interaction.member.id, { id: "" })
+			set_snow_amount(user_data, user_data.snow_amount - 1),
+			set_packed_object(user_data, { id: "" })
 		]);
 
 		let petName = "";
 		let hitPet = false;
 
-		try_pet_ability(target_data, "snow_fox", (pet) => {
-			petName = pet.name;
-			const blockChance = Math.random();
+		invoke_pet_events(user_data, target_data, "onThrow");
+		//petName = pet.name;
+		//const blockChance = Math.random();
 
-			if (blockChance < pet.level * 0.1) {
-				hitPet = true;
-			}
-		});
+		//if (blockChance < pet.level * 0.1) {
+		//	hitPet = true;
+		//}
 
 		// Check if the snowball missed.
 		if (miss || hitPet) {
-			++user_data.misses;
-
-			await set_misses(interaction.member.id, user_data.misses);
-			await tryGetAchievements(user_data, interaction.member);
+			await set_misses(user_data, interaction.member, user_data.misses + 1);
 			
 			await interaction.editReply({
 				embeds: [ build_snowball_miss(target, hitPet, petName) ]
@@ -122,67 +116,49 @@ export const command = {
 			return;
 		}
 
-		let amount = (crit ? 2 : 1) * (((user_data.packed_object ? user_data.packed_object.damage : 0) + 1));
-
 		if (crit) {
-			++user_data.crits;
-			await set_crits(interaction.member.id, user_data.crits);
+			await set_crits(user_data, interaction.member, user_data.crits + 1);
 		}
 
 		// Get the building if the user has one.
 		if (target_data.building.id != "") {
 			// Decrement the number of hits on the building.
-			target_data.building.hits_left -= amount;
+			await set_building(target_data, { id: target_data.building.id, hits: target_data.building.hits_left - amount });
 			
 			// Check if the building is broken.
 			if (target_data.building.hits_left <= 0) {
 				// Increment the user's score.
-				amount = (crit ? 2 : 1) * server_data.buildings.find(item => item.id == target_data.building.id).hits;
-				const newScore = user_data.score + amount;
-
-				++user_data.hits;
-				++target_data.times_hit;
+				amount = critMultiplier * server_data.buildings.find(item => item.id == target_data.building.id).hits;
+				const oldBuilding = target_data.building.id;
 
 				await Promise.all([
-					set_score(interaction.member.id, newScore),
-					try_add_to_server(interaction.guild.id, interaction.member.id)
+					set_hits(user_data, interaction.member, user_data.hits + 1),
+					set_times_hit(target_data, target.user, target_data.times_hit + 1),
+					set_score(user_data, interaction.guild.id, interaction.member, user_data.score + amount),
+					set_building(target_data, { id: "", hits: 0 })
 				]);
 				
-				// Remove the building and tell the user it was broken.
-				await set_building(target.user.id, { id: "", hits: 0 });
 				await interaction.editReply({
-					embeds: [ build_snowball_block_break(target, user_data.packed_object, newScore, target_data.score, interaction.member, crit, amount, server_data.buildings.find(item => item.id == target_data.building.id)) ]
+					embeds: [ build_snowball_block_break(target, server_data.objects.find(item => item.id == oldObject), user_data.score, target_data.score, interaction.member, crit, amount, server_data.buildings.find(item => item.id == oldBuilding)) ]
 				});
-				
 				return;
 			}
 
-			// Update the building and tell the user it was hit.
-			await set_building(target.user.id, { id: target_data.building.id, hits: target_data.building.hits_left });
 			await interaction.editReply({
 				embeds: [ build_snowball_block(target, server_data.buildings.find(item => item.id == target_data.building.id), target_data.building.hits_left, crit) ]
 			});
-			
 			return;
 		}
 		
-		// Increment the user's score.
-		const newScore = user_data.score + amount;
-
-		++user_data.hits;
-		++target_data.times_hit;
-
 		await Promise.all([
-			set_score(interaction.member.id, newScore),
-			set_hits(interaction.member.id, user_data.hits),
-			set_times_hit(target.user.id, target_data.times_hit),
-			try_add_to_server(interaction.guild.id, interaction.member.id),
-			try_add_to_server(interaction.guild.id, target.user.id)
+			set_hits(user_data, interaction.member, user_data.hits + 1),
+			set_times_hit(target_data, target.user, target_data.times_hit + 1),
+			set_score(user_data, interaction.guild.id, interaction.member, user_data.score + amount)
 		]);
 		
 		// Tell the user the snowball hit.
 		const message = await interaction.editReply({
-			embeds: [ build_snowball_hit(target, server_data.objects.find(item => item.id == user_data.packed_object.id), newScore, target_data.score, interaction.member, crit, amount) ],
+			embeds: [ build_snowball_hit(target, server_data.objects.find(item => item.id == oldObject), user_data.score, target_data.score, interaction.member, crit, amount) ],
 			withResponse: true
 		});
 
@@ -195,10 +171,5 @@ export const command = {
 			});
 			await message.forward(target.user.dmChannel);
 		}
-
-		await Promise.all([
-			tryGetAchievements(user_data, interaction.member),
-			tryGetAchievements(target_data, target.user)
-		]);
 	}
 }

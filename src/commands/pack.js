@@ -2,7 +2,7 @@
 // What you put in the snowball impacts how long another user hit with the snowball is timed out for.
 
 import { MessageFlags, SlashCommandBuilder				} from 'discord.js';
-import { get_user_data, set_packed_object, get_weather, set_total_packed_objects, set_snow_amount, set_building, get_server_data, tryGetAchievements, try_pet_ability	} from '../miscellaneous/database.js';
+import { get_user_data, set_packed_object, get_weather, set_total_packed_objects, set_snow_amount, set_building, get_server_data, invoke_pet_events, invoke_event	} from '../miscellaneous/database.js';
 import { build_new_pack, build_new_pack_existing 					} from '../embeds/new_packs.js';
 import log from '../miscellaneous/debug.js';
 
@@ -22,16 +22,14 @@ export const command = {
 			get_weather(0)
 		];
 
+		await invoke_event(0, server_data);
+
 		if (weather.cooldown == -2) {
 			await Promise.all([
-				set_snow_amount(interaction.member.id, 0),
-				set_packed_object(interaction.member.id, { id: "" }),
-				set_building(interaction.member.id, { id: "", hits: 0 })
+				set_snow_amount(user_data, 0),
+				set_packed_object(user_data, { id: "" }),
+				set_building(user_data, { id: "", hits: 0 })
 			]);
-
-			user_data.snow_amount = 0;
-			user_data.packed_object = "";
-			user_data.building = { id: "", hits_left: 0 };
 		}
 		
 		// Check if the user has already packed something.
@@ -55,36 +53,29 @@ export const command = {
 			return;
 		}
 
-		let chance = Math.random();
+		let chance = Math.random() + user_data.snow_amount / 80;
 
-		try_pet_ability(user_data, "snow_cat", (pet) => {
-			chance += pet.level * 0.1;
-		});
-
-		chance += user_data.snow_amount / 80;
+		invoke_pet_events(user_data, server_data, "onPack");
+		//chance += pet.level * 0.1;
 
 		const objects = server_data.objects.map(object => new Array(object.count).fill(object.id)).flat();
 
 		// Pick a random item to pack.
-		const randomIndex = Math.floor(chance * objects.length);
+		let randomIndex = Math.floor(chance * objects.length);
 		if (randomIndex >= objects.length - 1)
 			randomIndex = objects.length - 1;
 
 		const item = server_data.objects.find(item => item.id == objects[randomIndex]);
 
-		++user_data.total_packed_objects;
-
 		// Set the packed object and tell the user it was a success.
 		await Promise.all([
-			set_packed_object(interaction.member.id, item),
-			set_total_packed_objects(interaction.member.id, user_data.total_packed_objects)
+			set_packed_object(user_data, item),
+			set_total_packed_objects(user_data, interaction.member, user_data.total_packed_objects + 1)
 		]);
 		
 		await interaction.editReply({
 			embeds: [ build_new_pack(item) ],
 			flags: MessageFlags.Ephemeral
 		});
-		
-		await tryGetAchievements(user_data, interaction.member);
 	}
 };

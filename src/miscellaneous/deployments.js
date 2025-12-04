@@ -40,7 +40,7 @@ export async function init_commands(client, token, clientId) {
         client.commands.set(command.data.name, command);
 
         log(`Command: ${command.data.name} was loaded successfully.`);
-        log(` - Contents: ${JSON.stringify(command)}\n`);
+        log(` - Contents: ${JSON.stringify(command, null, 2)}\n`);
     }
 };
 
@@ -54,7 +54,7 @@ export async function init_events(client) {
 						   : client.on  (event.name, (...args) => event.execute(...args));
 
 				log(`Event: ${event.name} was loaded successfully.`);
-                log(` - Contents: ${JSON.stringify(obj)}\n`);
+                log(` - Contents: ${JSON.stringify(obj,  null, 2)}\n`);
 			})
 			.catch(err => logError(err));
     }

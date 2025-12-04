@@ -2,13 +2,13 @@
 // What you build will give you a certain number of shots to block.
 
 import { MessageFlags, SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder 							} from 'discord.js';
-import { get_user_data, set_snow_amount, set_building, get_weather, set_total_buildings, set_packed_object, get_server_data, tryGetAchievements, try_pet_ability	} from '../miscellaneous/database.js';
+import { get_user_data, set_snow_amount, set_building, get_weather, set_total_buildings, set_packed_object, get_server_data, invoke_pet_events, invoke_event	} from '../miscellaneous/database.js';
 import { build_new_building 							} from '../embeds/new_builds.js';
 import log from '../miscellaneous/debug.js';
 
-function build_building(row1, row2, building, costModifier, currentSnow) {
+function build_building(row1, row2, building, costModifier, currentSnow, isActive) {
 	return {
-		embeds: [ build_new_building(building, costModifier, currentSnow) ],
+		embeds: [ build_new_building(building, costModifier, currentSnow, isActive) ],
 		components: [ row1, row2 ],
 		flags: MessageFlags.Ephemeral
 	};
@@ -30,16 +30,14 @@ export const command = {
 			get_weather(0)
 		];
 
+		await invoke_event(0, server_data);
+
 		if (weather.cooldown == -2) {
 			await Promise.all([
-				set_snow_amount(interaction.member.id, 0),
-				set_packed_object(interaction.member.id, { id: "" }),
-				set_building(interaction.member.id, { id: "", hits: 0 })
+				set_snow_amount(user_data, 0),
+				set_packed_object(user_data, { id: "" }),
+				set_building(user_data, { id: "", hits: 0 })
 			]);
-
-			user_data.snow_amount = 0;
-			user_data.packed_object = "";
-			user_data.building = { id: "", hits_left: 0 };
 		}
 
 		let buildingIndex = 0;
@@ -59,9 +57,7 @@ export const command = {
 
 		let buildModifier = weather.building_cost_modifier;
 
-		try_pet_ability(user_data, "snow_owl", (pet) => {
-			buildModifier -= pet.level;
-		});
+		invoke_pet_events(user_data, server_data, "onTryBuild");
 
 		const cost = server_data.buildings[buildingIndex].cost + buildModifier;
 		const suffix = user_data.building.id != "" ? ' (Something Already Built!)' : cost > user_data.snow_amount ? ' (Can\'t Afford!!)' : '';
@@ -81,12 +77,12 @@ export const command = {
 			);
 
 		function selectBuilding(index) {
+			const cost = server_data.buildings[index].cost + buildModifier;
+			const suffix = user_data.building.id != "" ? ' (Something Already Built!)' : cost > user_data.snow_amount ? ' (Can\'t Afford!)' : '';
+
 			for (let i = 0; i < server_data.buildings.length; ++i) {
 				buildingsRow.components[0].options[i].setDefault(i == index);
 			}
-
-			const cost = server_data.buildings[index].cost + buildModifier;
-			const suffix = user_data.building.id != "" ? ' (Something Already Built!)' : cost > user_data.snow_amount ? ' (Can\'t Afford!)' : '';
 
 			buttonsRow.components[0].setLabel(`Build For ${cost > 0 ? cost : 0} Snow` + suffix);
 			buttonsRow.components[0].setDisabled(user_data.building.id != "" || cost > user_data.snow_amount);
@@ -96,42 +92,32 @@ export const command = {
 		}
 
 		async function createBuilding(index) {
-			user_data.building = { id: server_data.buildings[index].id, hits_left: server_data.buildings[index].hits };
-			++user_data.total_buildings;
-
 			const cost = server_data.buildings[index].cost + buildModifier;
-			user_data.snow_amount -= cost > 0 ? cost : 0;
-
-			const suffix = user_data.building.id != "" ? ' (Something Already Built!)' : cost > user_data.snow_amount ? ' (Can\'t Afford!)' : '';
-
-			buildingsRow.components[0].options[index].setLabel(`${server_data.buildings[index].icon} ${server_data.buildings[index].name} (Active, Current Health: ${user_data.building.hits_left})`);
-			buttonsRow.components[0].setLabel(`Build For ${cost > 0 ? cost : 0} Snow` + suffix);
-			buttonsRow.components[0].setDisabled(true);
-			buttonsRow.components[1].setDisabled(false);
 
 			// Set the new building and decrement the user's snow amount.
 			await Promise.all([
-				set_building(interaction.member.id, server_data.buildings[index]),
-				set_total_buildings(interaction.member.id, user_data.total_buildings),
-				set_snow_amount(interaction.member.id, user_data.snow_amount)
+				set_building(user_data, { id: server_data.buildings[index].id, hits: server_data.buildings[index].hits }),
+				set_total_buildings(user_data, interaction.member, user_data.total_buildings + 1),
+				set_snow_amount(user_data, user_data.snow_amount - (cost > 0 ? cost : 0))
 			]);
 
-			await tryGetAchievements(user_data, interaction.member);
+			buildingsRow.components[0].options[index].setLabel(`${server_data.buildings[index].icon} ${server_data.buildings[index].name} (Active, Current Health: ${user_data.building.hits_left})`);
+			buttonsRow.components[0].setLabel(`Build For ${cost > 0 ? cost : 0} Snow (Something Already Built!)`);
+			buttonsRow.components[0].setDisabled(true);
+			buttonsRow.components[1].setDisabled(false);
 		}
 
 		async function destroyBuilding() {
-			const oldBuilding = server_data.buildings.find(item => item.id == user_data.building.id);
-			user_data.building = { id: "", hits_left: 0 };
-
 			const cost = server_data.buildings[buildingIndex].cost + buildModifier;
-			const suffix = user_data.building.id != "" ? ' (Something Already Built!)' : cost > user_data.snow_amount ? ' (Can\'t Afford!)' : '';
+			const suffix = cost > user_data.snow_amount ? ' (Can\'t Afford!)' : '';
+
+			const oldBuilding = server_data.buildings.find(item => item.id == user_data.building.id);
+			await set_building(user_data, { id: "", hits: 0 });
 
 			buildingsRow.components[0].options[buildingIndex].setLabel(`${server_data.buildings[buildingIndex].icon} ${server_data.buildings[buildingIndex].name}`);
 			buttonsRow.components[0].setLabel(`Build For ${cost > 0 ? cost : 0} Snow` + suffix);
 			buttonsRow.components[0].setDisabled(cost > user_data.snow_amount);
 			buttonsRow.components[1].setDisabled(true);
-
-			await set_building(interaction.member.id, { id: "", hits: 0 });
 
 			await interaction.followUp({
 				content: `You destroyed your ${oldBuilding.name}!`,
@@ -139,7 +125,7 @@ export const command = {
 			});
 		}
 
-		const message = await interaction.editReply(build_building(buildingsRow, buttonsRow, server_data.buildings[buildingIndex], buildModifier, user_data.snow_amount));
+		const message = await interaction.editReply(build_building(buildingsRow, buttonsRow, server_data.buildings[buildingIndex], buildModifier, user_data.snow_amount, server_data.buildings[buildingIndex].id == user_data.building.id));
 
 		const collector = message.createMessageComponentCollector({ time: 2 * 60 * 1000 });
 		collector.on('collect', async i => {
@@ -148,19 +134,19 @@ export const command = {
 
 				buildingIndex = selectBuilding(Number(i.values[0]));
 
-				await interaction.editReply(build_building(buildingsRow, buttonsRow, server_data.buildings[buildingIndex], buildModifier, user_data.snow_amount));
+				await interaction.editReply(build_building(buildingsRow, buttonsRow, server_data.buildings[buildingIndex], buildModifier, user_data.snow_amount, server_data.buildings[buildingIndex].id == user_data.building.id));
 			} else if (i.customId == 'build') {
 				await i.deferUpdate();
 
 				await createBuilding(buildingIndex);
 
-				await interaction.editReply(build_building(buildingsRow, buttonsRow, server_data.buildings[buildingIndex], buildModifier, user_data.snow_amount));
+				await interaction.editReply(build_building(buildingsRow, buttonsRow, server_data.buildings[buildingIndex], buildModifier, user_data.snow_amount, server_data.buildings[buildingIndex].id == user_data.building.id));
 			} else if (i.customId == 'destroy') {
 				await i.deferUpdate();
 
 				await destroyBuilding();
 
-				await interaction.editReply(build_building(buildingsRow, buttonsRow, server_data.buildings[buildingIndex], buildModifier, user_data.snow_amount));
+				await interaction.editReply(build_building(buildingsRow, buttonsRow, server_data.buildings[buildingIndex], buildModifier, user_data.snow_amount, server_data.buildings[buildingIndex].id == user_data.building.id));
 			}
 		});
 	}

@@ -7,13 +7,13 @@ function getHourRoundedDown(offset) {
 	return later;
 }
 
-export function build_new_weather(weather, offset) {
-    return new EmbedBuilder()
+export function build_new_weather(weather, event, offset) {
+    const embed = new EmbedBuilder()
         .setColor(weather.cooldown >= 0 ? 0x00FF00 : 0xFF0000)
 		.setTitle(`${offset == 0 ? "Current" : "Upcoming"} Weather: ${weather.icon} **${weather.name}**`)
 		.setDescription(`${weather.description}`)
 		.setImage(weather.image)
-		.addFields(
+		.addFields([
 			{
 				name: 'Date',
 				value: `<t:${Math.floor(getHourRoundedDown(offset) / 1000)}:D>`,
@@ -39,5 +39,14 @@ export function build_new_weather(weather, offset) {
 				value: `${weather.building_cost_modifier} Snow`,
 				inline: true
 			}
-		);
+		]);
+
+	if (event != null) {
+		embed.addFields({
+			name: 'Event!',
+			value: `${event.icon} **${event.name}**: ${event.description}`
+		});
+	}
+
+	return embed;
 };

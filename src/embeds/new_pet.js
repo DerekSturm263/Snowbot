@@ -9,7 +9,7 @@ export function build_new_pet(archetype, instance, currentSnow) {
 	const isDead = instance.last_eat_time < wayEarlier;
 	
 	return new EmbedBuilder()
-        .setColor(isDead ? 0x00FF00 : 0xFF0000)
+        .setColor(isDead ? 0xFF0000 : 0x00FF00)
 		.setTitle(`${isEgg ? '🥚 Unhatched Egg' : `${isDead ? '💀' : archetype.icon} **${instance.name}**${isDead ? ' (RIP)' : ''}`}`)
         .setDescription(`${isEgg ? `This egg will hatch **<t:${Math.floor(instance.hatch_time / 1000)}:R>**.` : isDead ? 'This pet died from not being fed for over 24 hours. Rest in peace.' : archetype.description}`)
 		.setImage(isEgg ? "https://images.everydayhealth.com/images/news/an-egg-day-lower-dementia-risk-1440x810.jpg?sfvrsn=d81b2e39_3" : isDead ? "https://media.istockphoto.com/id/901964114/photo/rip-headstone.jpg?s=612x612&w=0&k=20&c=GV_qkhh8VxGFtTHu5950cvhKzlfOMw7DS7dHqoo3rRE=" : archetype.image)

@@ -1,8 +1,8 @@
 import { EmbedBuilder } from 'discord.js';
 
-export function build_new_building(build, costModifier, currentSnow) {
+export function build_new_building(build, costModifier, currentSnow, isActive) {
 	return new EmbedBuilder()
-        .setColor(currentSnow >= build.cost + costModifier ? 0x00FF00 : 0xFF0000)
+        .setColor(currentSnow >= build.cost + costModifier || isActive ? 0x00FF00 : 0xFF0000)
 		.setTitle(`${build.icon} **${build.name}**`)
 		.setDescription(`${build.description}`)
         .setImage(build.image)

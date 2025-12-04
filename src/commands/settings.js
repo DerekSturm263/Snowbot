@@ -44,8 +44,7 @@ export const command = {
 			if (i.customId == 'togglePetUpdates') {
 				await i.deferUpdate();
 
-                user_data.show_pet_updates = !user_data.show_pet_updates;
-				await set_show_pet_updates(interaction.member.id, user_data.show_pet_updates);
+				await set_show_pet_updates(user_data, !user_data.show_pet_updates);
 
 				row.components[0].setLabel(`Turn Pet Updates ${user_data.show_pet_updates ? 'Off' : 'On'}`);
                 row.components[0].setStyle(user_data.show_pet_updates ? 'Danger' : 'Success');
@@ -58,8 +57,7 @@ export const command = {
 			} else if (i.customId == 'toggleAchievements') {
 				await i.deferUpdate();
 
-                user_data.show_achievements = !user_data.show_achievements;
-                await set_show_achievements(interaction.member.id, user_data.show_achievements);
+                await set_show_achievements(user_data, !user_data.show_achievements);
 
                 row.components[1].setLabel(`Turn Achievements ${user_data.show_achievements ? 'Off' : 'On'}`);
                 row.components[1].setStyle(user_data.show_achievements ? 'Danger' : 'Success');
@@ -72,8 +70,7 @@ export const command = {
 			} else if (i.customId == 'togglePings') {
 				await i.deferUpdate();
 
-                user_data.show_pings = !user_data.show_pings;
-                await set_show_pings(interaction.member.id, user_data.show_pings);
+                await set_show_pings(user_data, !user_data.show_pings);
 
                 row.components[2].setLabel(`Turn Pings ${user_data.show_pings ? 'Off' : 'On'}`);
                 row.components[2].setStyle(user_data.show_pings ? 'Danger' : 'Success');

@@ -14,11 +14,11 @@ export const command = {
 
 		log(`\n${interaction.user.displayName} from ${interaction.guild.name} used /stats:`);
 
-		reset_user_data(interaction.member.id);
+		await reset_user_data(interaction.member.id);
 
         // Tell the user everything about the bot.
 		await interaction.editReply({
-			content: 'All progress has been reset.',
+			content: 'All your progress has been reset.',
 			flags: MessageFlags.Ephemeral
 		});
 	}

@@ -2,7 +2,7 @@
 
 import { ActionRowBuilder, ButtonBuilder, MessageFlags, SlashCommandBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from 'discord.js';
 import { build_new_pet } from '../embeds/new_pet.js';
-import { get_user_data, set_pet_last_eat_time, set_active_pet, set_pet_total_food, set_snow_amount, set_pet_appetite, set_pet_level, remove_pet, set_packed_object, set_building, get_server_data, get_weather } from '../miscellaneous/database.js';
+import { get_user_data, set_pet_last_eat_time, set_active_pet, set_pet_total_food, set_snow_amount, set_pet_appetite, set_pet_level, remove_pet, set_packed_object, set_building, get_server_data, get_weather, invoke_event } from '../miscellaneous/database.js';
 import log from '../miscellaneous/debug.js';
 
 function build_pet(row1, row2, archetype, instance, currentSnow) {
@@ -29,16 +29,14 @@ export const command = {
 			get_weather(0)
 		];
 
+		await invoke_event(0, server_data);
+
 		if (weather.cooldown == -2) {
 			await Promise.all([
-				set_snow_amount(interaction.member.id, 0),
-				set_packed_object(interaction.member.id, { id: "" }),
-				set_building(interaction.member.id, { id: "", hits: 0 })
+				set_snow_amount(user_data, 0),
+				set_packed_object(user_data, { id: "" }),
+				set_building(user_data, { id: "", hits: 0 })
 			]);
-
-			user_data.snow_amount = 0;
-			user_data.packed_object = "";
-			user_data.building = { id: "", hits_left: 0 };
 		}
 
 		if (user_data.pets.length == 0) {
@@ -104,8 +102,7 @@ export const command = {
 		}
 
 		async function setActive(index) {
-			user_data.active_pet = user_data.pets[index].uuid;
-			await set_active_pet(interaction.member.id, user_data.pets[index]);
+			await set_active_pet(user_data, user_data.pets[index].uuid);
 
 			for (let i = 0; i < user_data.pets.length; ++i) {
 				const now = new Date();
@@ -137,18 +134,11 @@ export const command = {
 					flags: MessageFlags.Ephemeral
 				});
 			} else {
-				++user_data.pets[index].total_food;
-				user_data.pets[index].last_eat_time = now.getTime();
-				--user_data.snow_amount;
-
 				if (user_data.pets[index].level < 5 && user_data.pets[index].total_food >= user_data.pets[index].appetite) {
-					user_data.pets[index].appetite += 5;
-					++user_data.pets[index].level;
-					user_data.pets[index].total_food = 0;
-
 					await Promise.all([
-						set_pet_appetite(interaction.member.id, index, user_data.pets[index].appetite),
-						set_pet_level(interaction.member.id, index, user_data.pets[index].level)
+						set_pet_total_food(user_data, index, -1),
+						set_pet_appetite(user_data, index, user_data.pets[index].appetite + 5),
+						set_pet_level(user_data, index, user_data.pets[index].level + 1)
 					]);
 
 					await interaction.followUp({
@@ -158,32 +148,34 @@ export const command = {
 				}
 
 				await Promise.all([
-					set_pet_total_food(interaction.member.id, index, user_data.pets[index].total_food),
-					set_pet_last_eat_time(interaction.member.id, index, user_data.pets[index].last_eat_time),
-					set_snow_amount(interaction.member.id, user_data.snow_amount)
+					set_pet_total_food(user_data, index, user_data.pets[index].total_food + 1),
+					set_pet_last_eat_time(user_data, index, now.getTime()),
+					set_snow_amount(user_data, user_data.snow_amount - 1)
 				]);
 			}
 		}
 
 		async function release(index) {
-			const oldPet = user_data.pets.splice(index, 1);
-			await remove_pet(interaction.member.id, index);
+			const oldPet = user_data.pets[index];
+			await remove_pet(user_data, index);
 
 			petsRow.components[0].options.splice(index, 1);
+			for (let i = 0; i < petsRow.components[0].options.length; ++i) {
+				petsRow.components[0].options[i].setValue(`${i}`);
+			}
 
 			// If the released pet was active, set no pets as active.
 			if (user_data.active_pet == oldPet.id) {
-				user_data.active_pet = "";
-				await set_active_pet(interaction.member.id, "");
+				await set_active_pet(user_data, "");
 			}
 
 			// If there are still pets left in your inventory, select the first one.
 			if (user_data.pets.length > 0) {
-				selectPet(0);
+				petIndex = selectPet(0);
 			}
 
 			await interaction.followUp({
-				content: `You released ${oldPet[0].name}!`,
+				content: `You released ${oldPet.name}!`,
 				flags: MessageFlags.Ephemeral
 			});
 		}

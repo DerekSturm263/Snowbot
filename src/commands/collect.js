@@ -3,7 +3,7 @@
 
 import { MessageFlags, SlashCommandBuilder 													} from 'discord.js';
 import { build_new_collect } from '../embeds/new_collect.js';
-import { tryGetAchievements, get_user_data, set_snow_amount, set_ready_time, get_weather, set_packed_object, set_building, set_total_snow_amount, add_pet, get_server_data, set_total_pets, try_pet_ability	} from '../miscellaneous/database.js';
+import { get_user_data, set_snow_amount, set_ready_time, get_weather, set_packed_object, set_building, set_total_snow_amount, add_pet, get_server_data, set_total_pets, invoke_pet_events, invoke_event	} from '../miscellaneous/database.js';
 import { build_new_pet_unlocked } from '../embeds/new_pet.js';
 import log from '../miscellaneous/debug.js';
 
@@ -23,24 +23,21 @@ export const command = {
 			get_weather(0)
 		];
 
+		await invoke_event(0, server_data);
+
 		let bypassWeather = false;
 		let bypassCooldown = 0;
 
-		try_pet_ability(user_data, "snowman", (pet) => {
-			bypassWeather = true;
-			bypassCooldown = 10 - pet.level;
-		});
+		invoke_pet_events(user_data, server_data, "onCheckWeather");
+		//bypassWeather = true;
+		//bypassCooldown = 10 - pet.level;
 
 		if (!bypassWeather && weather.cooldown == -2) {
 			await Promise.all([
-				set_snow_amount(interaction.member.id, 0),
-				set_packed_object(interaction.member.id, { id: "" }),
-				set_building(interaction.member.id, { id: "", hits: 0 })
+				set_snow_amount(user_data, 0),
+				set_packed_object(user_data, { id: "" }),
+				set_building(user_data, { id: "", hits: 0 })
 			]);
-
-			user_data.snow_amount = 0;
-			user_data.packed_object = "";
-			user_data.building = { id: "", hits_left: 0 };
 		}
 		
 		// Check if it isn't snowing.
@@ -62,7 +59,7 @@ export const command = {
 		}
 
 		// Get the amount of snow the user has and check if they already have the max.
-		if (user_data.snow_amount >= 20) {
+		if (user_data.snow_amount >= server_data.max_snow_amount) {
 			await interaction.editReply({
 				content: `Your arms are full! You already have 20 snow!`,
 				flags: MessageFlags.Ephemeral
@@ -72,18 +69,14 @@ export const command = {
 
 		let readyTime = new Date().getTime() + (bypassWeather ? bypassCooldown : weather.cooldown) * 1000;
 		
-		try_pet_ability(user_data, "snow_wolf", (pet) => {
-			readyTime -= pet.level * 1000;
-		});
-
-		++user_data.snow_amount;
-		++user_data.total_snow_amount;
+		invoke_pet_events(user_data, server_data, "onTryCollect");
+		//readyTime -= pet.level * 1000;
 
 		// Increment the user's snow amount and tell them it was a success.
 		await Promise.all([
-			set_ready_time(interaction.user.id, readyTime),
-			set_snow_amount(interaction.member.id, user_data.snow_amount),
-			set_total_snow_amount(interaction.member.id, user_data.total_snow_amount)
+			set_ready_time(user_data, readyTime),
+			set_snow_amount(user_data, user_data.snow_amount + server_data.snow_collect_amount),
+			set_total_snow_amount(user_data, interaction.member, user_data.total_snow_amount + server_data.snow_collect_amount)
 		]);
 		
 		await interaction.editReply({
@@ -93,11 +86,10 @@ export const command = {
 
 		let petChance = Math.random();
 
-		try_pet_ability(user_data, "snow_dragon", (pet) => {
-			petChance += pet.level * 0.075;
-		});
+		invoke_pet_events(user_data, server_data, "onCollect");
+		//petChance += pet.level * 0.075;
 
-		if (petChance > 0.95) {
+		if (petChance > server_data.egg_chance) {
 			const pets = server_data.pets.map(pet => new Array(pet.count).fill(pet.id)).flat();
 
 			const randomIndex = Math.floor(Math.random() * pets.length);
@@ -105,21 +97,17 @@ export const command = {
 
 			let hatchOffset = 0;
 
-			try_pet_ability(user_data, "snow_dog", (pet) => {
-				hatchOffset = pet.level * 0.4;
-			});
+			invoke_pet_events(user_data, server_data, "onGetEgg");
+			//hatchOffset = pet.level * 0.4;
 
-			++user_data.total_pets;
-			const instance = await add_pet(interaction.member.id, archetype, hatchOffset);
+			const instance = await add_pet(user_data, archetype, hatchOffset);
 
-			set_total_pets(interaction.member.id, user_data.total_pets);
+			await set_total_pets(user_data, interaction.member, user_data.total_pets + 1);
 
 			await interaction.followUp({
 				embeds: [ build_new_pet_unlocked(archetype, instance) ],
 				flags: MessageFlags.Ephemeral
 			});
 		}
-
-		await tryGetAchievements(user_data, interaction.member);
 	}
 };

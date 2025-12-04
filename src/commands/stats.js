@@ -28,14 +28,10 @@ export const command = {
 
 		if (weather.cooldown == -2) {
 			await Promise.all([
-				set_snow_amount(target.id, 0),
-				set_packed_object(target.id, { id: "" }),
-				set_building(target.id, { id: "", hits: 0 })
+				set_snow_amount(user_data, 0),
+				set_packed_object(user_data, { id: "" }),
+				set_building(user_data, { id: "", hits: 0 })
 			]);
-
-			user_data.snow_amount = 0;
-			user_data.packed_object = "";
-			user_data.building = { id: "", hits_left: 0 };
 		}
 		
 		// Tell the user the stats.
