@@ -512,10 +512,13 @@ export async function set_pet_level(user_data, petIndex, val) {
 }
 
 export function invoke_pet_events(user_data, server_data, weather, eventType) {
-    /*if (user_data.active_pet == "")
+    if (user_data.active_pet == "")
         return;
     
 	const instance = user_data.pets.find(pet => pet.uuid == user_data.active_pet);
+    if (!instance)
+        return;
+
     const archetype = server_data.pets.find(item => item.id == instance.archetype_id);
 	
     if (archetype.event_type == eventType) {
@@ -542,7 +545,7 @@ export function invoke_pet_events(user_data, server_data, weather, eventType) {
                 weather[key] += archetype.weather_changes[key].values[instance.level - 1];
             }
         }
-	}*/
+	}
 }
 
 async function tryGetAchievements(user_data, member) {
