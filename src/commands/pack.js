@@ -53,10 +53,9 @@ export const command = {
 			return;
 		}
 
-		let chance = Math.random() + user_data.snow_amount / 80;
+		const chance = Math.random() + weather.pack_luck_modifier + user_data.snow_amount / 80;
 
-		invoke_pet_events(user_data, server_data, "onPack");
-		//chance += pet.level * 0.1;
+		invoke_pet_events(user_data, server_data, weather, "onPack");
 
 		const objects = server_data.objects.map(object => new Array(object.count).fill(object.id)).flat();
 

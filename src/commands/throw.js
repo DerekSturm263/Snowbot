@@ -79,15 +79,14 @@ export const command = {
 			state += 0.5;
 		}
 
-		invoke_pet_events(user_data, target_data, "onTryThrow");
-		//state += pet.level * 0.1;
+		invoke_pet_events(user_data, target_data, weather, "onTryThrow");
 
 		const miss = state < server_data.miss_chance;
 		const crit = state >= server_data.crit_chance;
 		const critMultiplier = crit ? 2 : 1;
 
 		let amount = critMultiplier * (((user_data.packed_object != "" ? server_data.objects.find(item => item.id == user_data.packed_object).damage : 0) + 1));
-		let oldObject = user_data.packed_object;
+		const oldObject = user_data.packed_object;
 
 		// Decrement the snow amount.
 		await Promise.all([
@@ -98,13 +97,7 @@ export const command = {
 		let petName = "";
 		let hitPet = false;
 
-		invoke_pet_events(user_data, target_data, "onThrow");
-		//petName = pet.name;
-		//const blockChance = Math.random();
-
-		//if (blockChance < pet.level * 0.1) {
-		//	hitPet = true;
-		//}
+		invoke_pet_events(user_data, target_data, weather, "onThrow");
 
 		// Check if the snowball missed.
 		if (miss || hitPet) {

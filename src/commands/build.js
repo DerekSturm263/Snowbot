@@ -55,12 +55,10 @@ export const command = {
 					)
 				);
 
-		let buildModifier = weather.building_cost_modifier;
+		invoke_pet_events(user_data, server_data, weather, "onTryBuild");
 
-		invoke_pet_events(user_data, server_data, "onTryBuild");
-
-		const cost = server_data.buildings[buildingIndex].cost + buildModifier;
-		const suffix = user_data.building.id != "" ? ' (Something Already Built!)' : cost > user_data.snow_amount ? ' (Can\'t Afford!!)' : '';
+		const cost = server_data.buildings[buildingIndex].cost + weather.building_cost_modifier;
+		const suffix = user_data.building.id != "" ? ' (Something Already Built!)' : cost > user_data.snow_amount ? ' (Can\'t Afford!)' : '';
 
 		const buttonsRow = new ActionRowBuilder()
 			.addComponents(
@@ -77,7 +75,7 @@ export const command = {
 			);
 
 		function selectBuilding(index) {
-			const cost = server_data.buildings[index].cost + buildModifier;
+			const cost = server_data.buildings[index].cost + weather.building_cost_modifier;
 			const suffix = user_data.building.id != "" ? ' (Something Already Built!)' : cost > user_data.snow_amount ? ' (Can\'t Afford!)' : '';
 
 			for (let i = 0; i < server_data.buildings.length; ++i) {
@@ -92,7 +90,7 @@ export const command = {
 		}
 
 		async function createBuilding(index) {
-			const cost = server_data.buildings[index].cost + buildModifier;
+			const cost = server_data.buildings[index].cost + weather.building_cost_modifier;
 
 			// Set the new building and decrement the user's snow amount.
 			await Promise.all([
@@ -108,7 +106,7 @@ export const command = {
 		}
 
 		async function destroyBuilding() {
-			const cost = server_data.buildings[buildingIndex].cost + buildModifier;
+			const cost = server_data.buildings[buildingIndex].cost + weather.building_cost_modifier;
 			const suffix = cost > user_data.snow_amount ? ' (Can\'t Afford!)' : '';
 
 			const oldBuilding = server_data.buildings.find(item => item.id == user_data.building.id);
@@ -125,7 +123,7 @@ export const command = {
 			});
 		}
 
-		const message = await interaction.editReply(build_building(buildingsRow, buttonsRow, server_data.buildings[buildingIndex], buildModifier, user_data.snow_amount, server_data.buildings[buildingIndex].id == user_data.building.id));
+		const message = await interaction.editReply(build_building(buildingsRow, buttonsRow, server_data.buildings[buildingIndex], weather.building_cost_modifier, user_data.snow_amount, server_data.buildings[buildingIndex].id == user_data.building.id));
 
 		const collector = message.createMessageComponentCollector({ time: 2 * 60 * 1000 });
 		collector.on('collect', async i => {
@@ -134,19 +132,19 @@ export const command = {
 
 				buildingIndex = selectBuilding(Number(i.values[0]));
 
-				await interaction.editReply(build_building(buildingsRow, buttonsRow, server_data.buildings[buildingIndex], buildModifier, user_data.snow_amount, server_data.buildings[buildingIndex].id == user_data.building.id));
+				await interaction.editReply(build_building(buildingsRow, buttonsRow, server_data.buildings[buildingIndex], weather.building_cost_modifier, user_data.snow_amount, server_data.buildings[buildingIndex].id == user_data.building.id));
 			} else if (i.customId == 'build') {
 				await i.deferUpdate();
 
 				await createBuilding(buildingIndex);
 
-				await interaction.editReply(build_building(buildingsRow, buttonsRow, server_data.buildings[buildingIndex], buildModifier, user_data.snow_amount, server_data.buildings[buildingIndex].id == user_data.building.id));
+				await interaction.editReply(build_building(buildingsRow, buttonsRow, server_data.buildings[buildingIndex], weather.building_cost_modifier, user_data.snow_amount, server_data.buildings[buildingIndex].id == user_data.building.id));
 			} else if (i.customId == 'destroy') {
 				await i.deferUpdate();
 
 				await destroyBuilding();
 
-				await interaction.editReply(build_building(buildingsRow, buttonsRow, server_data.buildings[buildingIndex], buildModifier, user_data.snow_amount, server_data.buildings[buildingIndex].id == user_data.building.id));
+				await interaction.editReply(build_building(buildingsRow, buttonsRow, server_data.buildings[buildingIndex], weather.building_cost_modifier, user_data.snow_amount, server_data.buildings[buildingIndex].id == user_data.building.id));
 			}
 		});
 	}

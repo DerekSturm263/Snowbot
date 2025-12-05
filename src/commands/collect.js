@@ -25,14 +25,9 @@ export const command = {
 
 		await invoke_event(0, server_data);
 
-		let bypassWeather = false;
-		let bypassCooldown = 0;
+		invoke_pet_events(user_data, server_data, weather, "onCheckWeather");
 
-		invoke_pet_events(user_data, server_data, "onCheckWeather");
-		//bypassWeather = true;
-		//bypassCooldown = 10 - pet.level;
-
-		if (!bypassWeather && weather.cooldown == -2) {
+		if (weather.cooldown == -2) {
 			await Promise.all([
 				set_snow_amount(user_data, 0),
 				set_packed_object(user_data, { id: "" }),
@@ -41,7 +36,7 @@ export const command = {
 		}
 		
 		// Check if it isn't snowing.
-		if (!bypassWeather && weather.cooldown < 0) {
+		if (weather.cooldown < 0) {
 			await interaction.editReply({
 				content: 'It isn\'t snowing right now! Use `/forecast` to see when it will change.',
 				flags: MessageFlags.Ephemeral
@@ -58,6 +53,8 @@ export const command = {
 			return;
 		}
 
+		invoke_pet_events(user_data, server_data, weather, "onTryCollect");
+
 		// Get the amount of snow the user has and check if they already have the max.
 		if (user_data.snow_amount >= server_data.max_snow_amount) {
 			await interaction.editReply({
@@ -66,11 +63,9 @@ export const command = {
 			});
 			return;
 		}
-
-		let readyTime = new Date().getTime() + (bypassWeather ? bypassCooldown : weather.cooldown) * 1000;
 		
-		invoke_pet_events(user_data, server_data, "onTryCollect");
-		//readyTime -= pet.level * 1000;
+		const now = new Date();
+		const readyTime = now.getTime() + (weather.cooldown < 0 ? 0 : weather.cooldown) * 1000;
 
 		// Increment the user's snow amount and tell them it was a success.
 		await Promise.all([
@@ -80,14 +75,13 @@ export const command = {
 		]);
 		
 		await interaction.editReply({
-			embeds: [ build_new_collect(user_data.snow_amount, readyTime) ],
+			embeds: [ build_new_collect(user_data.snow_amount, server_data.max_snow_amount, readyTime) ],
 			flags: MessageFlags.Ephemeral
 		});
 
-		let petChance = Math.random();
+		const petChance = Math.random();
 
-		invoke_pet_events(user_data, server_data, "onCollect");
-		//petChance += pet.level * 0.075;
+		invoke_pet_events(user_data, server_data, weather, "onCollect");
 
 		if (petChance > server_data.egg_chance) {
 			const pets = server_data.pets.map(pet => new Array(pet.count).fill(pet.id)).flat();
@@ -95,13 +89,9 @@ export const command = {
 			const randomIndex = Math.floor(Math.random() * pets.length);
 			const archetype = server_data.pets.find(item => item.id == pets[randomIndex]);
 
-			let hatchOffset = 0;
+			invoke_pet_events(user_data, server_data, weather, "onGetEgg");
 
-			invoke_pet_events(user_data, server_data, "onGetEgg");
-			//hatchOffset = pet.level * 0.4;
-
-			const instance = await add_pet(user_data, archetype, hatchOffset);
-
+			const instance = await add_pet(user_data, archetype, weather.egg_hatch_time_modifier);
 			await set_total_pets(user_data, interaction.member, user_data.total_pets + 1);
 
 			await interaction.followUp({

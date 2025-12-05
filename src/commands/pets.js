@@ -21,7 +21,7 @@ export const command = {
 	async execute(interaction) {
 		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-		log(`\n${interaction.user.displayName} from ${interaction.guild.name} from ${interaction.guild.name} used /pets:`);
+		log(`\n${interaction.user.displayName} from ${interaction.guild.name} used /pets:`);
 
 		const [ user_data, server_data, weather ] = [
 			await get_user_data(interaction.member.id),
@@ -92,7 +92,7 @@ export const command = {
 
 			const now = new Date();
 			const wayEarlier = new Date(now.getTime() - 48 * 60 * 60 * 1000);
-			
+
 			const isEgg = now.getTime() < user_data.pets[index].hatch_time;
 			const isDead = user_data.pets[index].last_eat_time < wayEarlier;
 

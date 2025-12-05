@@ -115,6 +115,7 @@ export async function set_snow_collect_amount(server_data, val) {
 }
 
 
+
 // User Data.
 
 async function create_user_data(id) {
@@ -406,7 +407,7 @@ export async function set_total_pets(user_data, member, val) {
 
 export async function add_pet(user_data, archetype, hatchOffset) {
     const now = new Date();
-    const delay = archetype.delay - hatchOffset;
+    const delay = archetype.delay + hatchOffset;
     const later = new Date(now.getTime() + (delay < 0 ? 0 : delay) * 60 * 60 * 1000);
 
     const instance = {
@@ -510,16 +511,38 @@ export async function set_pet_level(user_data, petIndex, val) {
     return result;
 }
 
-export function invoke_pet_events(user_data, server_data, eventType) {
+export function invoke_pet_events(user_data, server_data, weather, eventType) {
     if (user_data.active_pet == "")
         return;
-    /*
+    
 	const instance = user_data.pets.find(pet => pet.uuid == user_data.active_pet);
     const archetype = server_data.pets.find(item => item.id == instance.archetype_id);
 	
     if (archetype.event_type == eventType) {
+        for (const key in archetype.server_changes) {
+            if (archetype.server_changes[key].type == "set") {
+                server_data[key] = archetype.server_changes[key].values[instance.level - 1];
+            } else if (archetype.server_changes[key].type == "delta") {
+                server_data[key] += archetype.server_changes[key].values[instance.level - 1];
+            }
+        }
         
-	}*/
+        for (const key in archetype.user_changes) {
+            if (archetype.user_changes[key].type == "set") {
+                user_data[key] = archetype.user_changes[key].values[instance.level - 1];
+            } else if (archetype.user_changes[key].type == "delta") {
+                user_data[key] += archetype.user_changes[key].values[instance.level - 1];
+            }
+        }
+        
+        for (const key in archetype.weather_changes) {
+            if (archetype.weather_changes[key].type == "set") {
+                weather[key] = archetype.weather_changes[key].values[instance.level - 1];
+            } else if (archetype.weather_changes[key].type == "delta") {
+                weather[key] += archetype.weather_changes[key].values[instance.level - 1];
+            }
+        }
+	}
 }
 
 async function tryGetAchievements(user_data, member) {

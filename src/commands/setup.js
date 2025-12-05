@@ -490,7 +490,6 @@ export const command = {
                         createNewPetModal()
                     );
                 }
-                
             } else if (i.customId == 'edit') {
 				await i.deferUpdate();
 

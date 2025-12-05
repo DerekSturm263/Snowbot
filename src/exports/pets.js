@@ -7,6 +7,15 @@ const snow_worm = {
     appetite: 10,
     delay: 0.5,
     event_type: "",
+    server_changes: {
+        
+    },
+    user_changes: {
+
+    },
+    weather_changes: {
+
+    },
     count: 1
 }
 
@@ -19,6 +28,18 @@ const snow_dog = {
     appetite: 15,
     delay: 1,
     event_type: "onGetEgg",
+    server_changes: {
+        
+    },
+    user_changes: {
+
+    },
+    weather_changes: {
+        egg_hatch_time_modifier: {
+            type: "set",
+            values: [ -0.2, -0.4, -0.6, -0.8, -1 ]
+        }
+    },
     count: 2
 };
 
@@ -31,6 +52,18 @@ const snow_cat = {
     appetite: 15,
     delay: 1,
     event_type: "onPack",
+    server_changes: {
+        
+    },
+    user_changes: {
+
+    },
+    weather_changes: {
+        pack_luck_modifier: {
+            type: "set",
+            values: [ 0.1, 0.2, 0.3, 0.4, 0.5 ]
+        }
+    },
     count: 2
 };
 
@@ -43,6 +76,18 @@ const snow_wolf = {
     appetite: 20,
     delay: 1.5,
     event_type: "onTryCollect",
+    server_changes: {
+        
+    },
+    user_changes: {
+
+    },
+    weather_changes: {
+        cooldown: {
+            type: "delta",
+            values: [ -2, -4, -6, -8, -10 ] 
+        }
+    },
     count: 2
 };
 
@@ -55,18 +100,46 @@ const snow_bunny = {
     appetite: 20,
     delay: 1.5,
     event_type: "onTryThrow",
+    server_changes: {
+        
+    },
+    user_changes: {
+
+    },
+    weather_changes: {
+        miss_chance: {
+            type: "set",
+            values: [ 0.1, 0.05, 0, 0, 0 ]
+        },
+        crit_chance: {
+            type: "set",
+            values: [ 0.85, 0.8, 0.75, 0.7, 0.65 ]
+        }
+    },
     count: 2
 };
 
 const snow_fox = {
     id: "snow_fox",
     name: "Snow Fox",
-    description: "A sly snow fox that helps out by jumping in the way of oncoming snowballs.",
+    description: "A sly snow fox that helps out by increasing your snow carrying limit.",
     image: "https://t3.ftcdn.net/jpg/02/25/52/78/360_F_225527887_1r2EaZbOrvCttqUDCvnA6HB9exVMrLXj.jpg",
     icon: "🦊",
     appetite: 20,
     delay: 1.5,
-    event_type: "onThrow",
+    event_type: "onTryCollect",
+    server_changes: {
+        max_snow_amount: {
+            type: "set",
+            values: [ 25, 30, 35, 40, 45 ]
+        }
+    },
+    user_changes: {
+
+    },
+    weather_changes: {
+
+    },
     count: 2
 };
 
@@ -79,6 +152,18 @@ const snowman = {
     appetite: 25,
     delay: 2,
     event_type: "onCheckWeather",
+    server_changes: {
+        
+    },
+    user_changes: {
+
+    },
+    weather_changes: {
+        cooldown: {
+            type: "set",
+            values: [ 10, 8, 6, 4, 2 ]
+        }
+    },
     count: 2
 };
 
@@ -91,6 +176,18 @@ const snow_owl = {
     appetite: 25,
     delay: 2,
     event_type: "onTryBuild",
+    server_changes: {
+        
+    },
+    user_changes: {
+
+    },
+    weather_changes: {
+        building_cost_modifier: {
+            type: "delta",
+            values: [ -1, -2, -3, -4, -5 ]
+        }
+    },
     count: 1
 };
 
@@ -103,6 +200,18 @@ const snow_dragon = {
     appetite: 30,
     delay: 2.5,
     event_type: "onCollect",
+    server_changes: {
+        egg_chance: {
+            type: "set",
+            values: [ 0.9, 0.85, 0.8, 0.75, 0.7 ]
+        }
+    },
+    user_changes: {
+
+    },
+    weather_changes: {
+
+    },
     count: 1
 };
 

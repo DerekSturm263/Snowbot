@@ -29,9 +29,14 @@ Click the above link to invite Snowbot to your server for free! From there, you 
   - [ ] Objects
   - [ ] Pets
   - [ ] Events
+  - [ ] Shop Items
 - [x] Settings
 - [x] Help
 - [x] Reset
+- [ ] Economy
+  - [ ] Currency
+  - [ ] Shop
+  - [ ] Gacha 
 
 ## Issues/Feedback/Proposals
 
