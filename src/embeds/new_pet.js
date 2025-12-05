@@ -3,7 +3,7 @@ import { EmbedBuilder } from 'discord.js';
 export function build_new_pet(archetype, instance, currentSnow) {
 	const now = new Date();
 	const earlier = new Date(now.getTime() - 1 * 60 * 60 * 1000);
-	const wayEarlier = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+	const wayEarlier = new Date(now.getTime() - 48 * 60 * 60 * 1000);
 
 	const isEgg = now.getTime() < instance.hatch_time;
 	const isDead = instance.last_eat_time < wayEarlier;

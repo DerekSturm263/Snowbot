@@ -55,7 +55,7 @@ export const command = {
 					.setCustomId('pets')
 					.addOptions(
 						user_data.pets.map((pet, index) => new StringSelectMenuOptionBuilder()
-							.setLabel(`${new Date().getTime() < pet.hatch_time ? '🥚 Unhatched Egg' : `${pet.last_eat_time < new Date(new Date().getTime() - 24 * 60 * 60 * 1000) ? '💀' : server_data.pets.find(pet => pet.id == user_data.pets[index].archetype_id).icon} ${pet.name}` + (pet.last_eat_time < new Date(new Date().getTime() - 24 * 60 * 60 * 1000) ? ' (RIP)' : pet.uuid == user_data.active_pet ? ' (Active)' : '')}`)
+							.setLabel(`${new Date().getTime() < pet.hatch_time ? '🥚 Unhatched Egg' : `${pet.last_eat_time < new Date(new Date().getTime() - 48 * 60 * 60 * 1000) ? '💀' : server_data.pets.find(pet => pet.id == user_data.pets[index].archetype_id).icon} ${pet.name}` + (pet.last_eat_time < new Date(new Date().getTime() - 48 * 60 * 60 * 1000) ? ' (RIP)' : pet.uuid == user_data.active_pet ? ' (Active)' : '')}`)
 							.setValue(`${index}`)
 							.setDefault(index == petIndex)
 						)
@@ -64,7 +64,7 @@ export const command = {
 
 		const now = new Date();
 		const isEgg = now.getTime() < user_data.pets[petIndex].hatch_time;
-		const isDead = user_data.pets[petIndex].last_eat_time < new Date(now.getTime() - 24 * 60 * 60 * 1000);
+		const isDead = user_data.pets[petIndex].last_eat_time < new Date(now.getTime() - 48 * 60 * 60 * 1000);
 
 		const buttonsRow = new ActionRowBuilder()
 			.addComponents(
@@ -91,8 +91,10 @@ export const command = {
 			}
 
 			const now = new Date();
+			const wayEarlier = new Date(now.getTime() - 48 * 60 * 60 * 1000);
+			
 			const isEgg = now.getTime() < user_data.pets[index].hatch_time;
-			const isDead = user_data.pets[index].last_eat_time < new Date(now.getTime() - 24 * 60 * 60 * 1000);
+			const isDead = user_data.pets[index].last_eat_time < wayEarlier;
 
 			buttonsRow.components[0].setDisabled(user_data.pets[index].uuid == user_data.active_pet || isEgg || isDead);
 			buttonsRow.components[1].setDisabled(isEgg || isDead);
@@ -106,8 +108,10 @@ export const command = {
 
 			for (let i = 0; i < user_data.pets.length; ++i) {
 				const now = new Date();
+				const wayEarlier = new Date(now.getTime() - 48 * 60 * 60 * 1000);
+
 				const isEgg = now.getTime() < user_data.pets[i].hatch_time;
-				const isDead = user_data.pets[i].last_eat_time < new Date(now.getTime() - 24 * 60 * 60 * 1000);
+				const isDead = user_data.pets[i].last_eat_time < wayEarlier;
 
 				const suffix = isDead ? ' (RIP)' : user_data.pets[i].uuid == user_data.active_pet ? ' (Active)' : '';
 				const archetype = server_data.pets.find(pet => pet.id == user_data.pets[i].archetype_id);
