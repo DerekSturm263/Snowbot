@@ -1,7 +1,8 @@
+import { Events } from "discord.js";
 import log from "../miscellaneous/debug.js";
 
 export const event = {
-    name: 'clientReady',
+    name: Events.ClientReady,
     async execute(client) {
         log('Servers the bot is in:');
         client.guilds.cache.forEach(guild => {

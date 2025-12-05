@@ -1,8 +1,8 @@
-import { MessageFlags } from "discord.js";
+import { Events, MessageFlags } from "discord.js";
 import { logError } from "../miscellaneous/debug.js"
 
 export const event = {
-    name: 'interactionCreate',
+    name: Events.InteractionCreate,
     async execute(interaction) {
         if (!interaction.isChatInputCommand())
             return;
@@ -13,16 +13,14 @@ export const event = {
             return;
         }
     
-        try {
-            await command.execute(interaction)
-                .catch(err => logError(err));
-        } catch (err) {
-            logError(err);
-            
-            await interaction.reply({
-                content: 'The command could not be executed.',
-                flags: MessageFlags.Ephemeral
+        await command.execute(interaction)
+            .catch(async err => {
+                logError(err);
+                    
+                await interaction.reply({
+                    content: 'An error occurred. Please report this bug [here](https://github.com/DerekSturm263/Snowbot/issues)',
+                    flags: MessageFlags.Ephemeral
+                });
             });
-        }
     }
 };
