@@ -618,21 +618,17 @@ export async function get_event(hourOffset, id) {
     const hourIndex = withOffset.getUTCHours();
 
     const rng = seedrandom((hourIndex + dayIndex + 1).toString());
-
     const hasEvent = rng() < 0.1;
-    if (!hasEvent || get_weather(hourOffset).cooldown < 0) {
-        log(`Getting current event as null`);
-
-        return {
+    
+    const events = (!hasEvent || get_weather(hourOffset).cooldown < 0) ? (await get_server_data(id)).events : [
+        {
             id: "none",
             name: "None",
             description: "There are no active events.",
             icon: " ",
             changes: { }
-        };
-    }
-
-    const events = (await get_server_data(id)).events;
+        }
+    ];
 
     const random = Math.floor(rng() * events.length);
     const event = events[random];
