@@ -41,7 +41,7 @@ export function build_new_weather(weather, event, offset) {
 			}
 		]);
 
-	if (event != null) {
+	if (event.id != "none") {
 		embed.addFields({
 			name: 'Event!',
 			value: `${event.icon} **${event.name}**: ${event.description}`

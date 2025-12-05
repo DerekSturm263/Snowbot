@@ -622,7 +622,14 @@ export async function get_event(hourOffset, id) {
     const hasEvent = rng() < 0.1;
     if (!hasEvent || get_weather(hourOffset).cooldown < 0) {
         log(`Getting current event as null`);
-        return null;
+
+        return {
+            id: "none",
+            name: "None",
+            description: "There are no active events.",
+            icon: " ",
+            changes: { }
+        };
     }
 
     const events = (await get_server_data(id)).events;
@@ -637,7 +644,7 @@ export async function get_event(hourOffset, id) {
 
 export async function invoke_event(hourOffset, server_data) {
     const event = await get_event(hourOffset, server_data.guildID);
-    if (event == null)
+    if (event.id == "none")
         return;
 
     for (const key in event.changes) {
