@@ -3,10 +3,11 @@ import { EmbedBuilder } from 'discord.js';
 export function build_new_pet(archetype, instance, currentSnow) {
 	const now = new Date();
 	const earlier = new Date(now.getTime() - 1 * 60 * 60 * 1000);
-	const wayEarlier = new Date(now.getTime() - 48 * 60 * 60 * 1000);
+	const dayEarlier = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+	const twoDaysEarlier = new Date(now.getTime() - 48 * 60 * 60 * 1000);
 
 	const isEgg = now.getTime() < instance.hatch_time;
-	const isDead = instance.last_eat_time < wayEarlier;
+	const isDead = instance.last_eat_time < twoDaysEarlier;
 	
 	return new EmbedBuilder()
         .setColor(isDead ? 0xFF0000 : 0x00FF00)
@@ -28,7 +29,7 @@ export function build_new_pet(archetype, instance, currentSnow) {
 				name: 'Hunger',
 				value: `${isEgg || isDead ? 'N/A'
 					: instance.last_eat_time >= earlier ? 'Full!'
-					: instance.last_eat_time <= wayEarlier ? 'Starving!'
+					: instance.last_eat_time <= dayEarlier ? 'Starving!'
 					: 'Could eat...' }`,
 				inline: true
 			},
