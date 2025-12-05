@@ -620,7 +620,7 @@ export async function get_event(hourOffset, id) {
     const rng = seedrandom((hourIndex + dayIndex + 1).toString());
     const hasEvent = rng() < 0.1;
     
-    const events = (hasEvent && get_weather(hourOffset).cooldown < 0) ? (await get_server_data(id)).events : [
+    const events = (hasEvent && get_weather(hourOffset).cooldown > 0) ? (await get_server_data(id)).events : [
         {
             id: "none",
             name: "None",
