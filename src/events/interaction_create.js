@@ -18,7 +18,7 @@ export const event = {
                 logError(err);
                     
                 await interaction.followUp({
-                    content: 'An error occurred. Please report this bug [here](https://github.com/DerekSturm263/Snowbot/issues)',
+                    content: 'An error occurred. Please report this bug [here](https://github.com/DerekSturm263/Snowbot/issues) with as many details as possible.',
                     flags: MessageFlags.Ephemeral
                 });
             });
