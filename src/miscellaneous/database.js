@@ -606,7 +606,7 @@ export function get_weather(hourOffset) {
     if (newWeather.cooldown > 0)
         newWeather.cooldown += Math.floor(rng() * 5) - 2;
 
-    log(`Getting current weather as ${JSON.stringify(newWeather, null, 2)}`);
+    log(`Getting weather with offset ${hourOffset} as ${JSON.stringify(newWeather, null, 2)}`);
 
     return newWeather;
 }
@@ -633,7 +633,7 @@ export async function get_event(hourOffset, id) {
     const random = Math.floor(rng() * events.length);
     const event = events[random];
 
-    log(`Getting current event as ${JSON.stringify(event, null, 2)}`);
+    log(`Getting event with offset ${hourOffset} as ${JSON.stringify(event, null, 2)}`);
 
     return event;
 }

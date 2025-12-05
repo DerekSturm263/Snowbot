@@ -439,6 +439,12 @@ export const command = {
 
         log(`\n${interaction.user.displayName} from ${interaction.guild.name} used /setup ${interaction.options.getSubcommand()}:`);
 
+        await interaction.editReply({
+            content: "This feature is under construction! If you'd like to test it out, join the [official development server](https://discord.gg/tpfVdFsYKg).",
+            flags: MessageFlags.Ephemeral
+        });
+        return;
+
         const server_data = await get_server_data(interaction.guild.id);
 
 		let index = 0;
