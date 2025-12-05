@@ -17,7 +17,7 @@ export const event = {
             .catch(async err => {
                 logError(err);
                     
-                await interaction.reply({
+                await interaction.followUp({
                     content: 'An error occurred. Please report this bug [here](https://github.com/DerekSturm263/Snowbot/issues)',
                     flags: MessageFlags.Ephemeral
                 });
