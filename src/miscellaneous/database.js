@@ -3,7 +3,7 @@ import { build_new_get_achievement } from "../embeds/new_achievement.js";
 import { create_default_server, create_default_user } from "../exports/defaults.js";
 import { v4 as uuidv4 } from 'uuid';
 import seedrandom from "seedrandom";
-import log from "./debug.js";
+import log, { logError } from "./debug.js";
 import achievements from "../exports/achievements.js";
 import weather from "../exports/weathers.js";
 
@@ -533,6 +533,14 @@ export function invoke_pet_events(user_data, server_data, weather, eventType) {
         return;
 
     const archetype = server_data.pets.find(item => item.id == instance.archetype_id);
+    if (!archetype)
+    {
+        logError(user_data.active_pet);
+        logError(JSON.stringify(instance));
+        logError(JSON.stringify(archetype));
+
+        return;
+    }
 	
     if (archetype.event_type == eventType) {
         for (const key in archetype.server_changes) {
