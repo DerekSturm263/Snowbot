@@ -1,6 +1,7 @@
 import buildings from "../exports/buildings.js";
 import pets from "../exports/pets.js";
 import objects from "../exports/objects.js";
+import items from "../exports/items.js";
 import events from "../exports/events.js";
 
 export function create_default_user(id) {
@@ -39,6 +40,7 @@ export function create_default_server(id) {
         buildings: buildings,
         objects: objects,
         pets: pets,
+        items: items,
         events: events,
         snow_collect_amount: 1,
         max_snow_amount: 20,

@@ -1,4 +1,4 @@
-// Lets server admins manage the server's buildings, objects, pets, and events.
+// Lets server admins manage the server's buildings, objects, pets, items, and events.
 
 import { ActionRowBuilder, ButtonBuilder, LabelBuilder, MessageFlags, ModalBuilder, PermissionFlagsBits, SlashCommandBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, TextInputBuilder, TextInputStyle } from 'discord.js';
 import { get_server_data } from '../miscellaneous/database.js';
@@ -419,7 +419,7 @@ function editExistingPetModal(pet) {
 export const command = {
     data: new SlashCommandBuilder()
         .setName('setup')
-        .setDescription('Setup this server\'s custom buildings, objects, pets, and events.')
+        .setDescription('Setup this server\'s custom buildings, objects, pets, items, and events.')
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
         .addSubcommand(subcommand => subcommand
             .setName('buildings')
@@ -430,6 +430,9 @@ export const command = {
         .addSubcommand(subcommand => subcommand
             .setName('pets')
             .setDescription('Manage this server\'s custom pets.'))
+        .addSubcommand(subcommand => subcommand
+            .setName('items')
+            .setDescription('Manage this server\'s custom items.'))
         .addSubcommand(subcommand => subcommand
             .setName('events')
             .setDescription('Manage this server\'s custom events.')),
