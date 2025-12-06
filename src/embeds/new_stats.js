@@ -6,6 +6,11 @@ export function build_new_stats(name, user_data, server_data, hide_data) {
 		.setTitle(`${name}'s Stats`)
         .addFields(
 			{
+				name: 'Coins',
+				value: `${user_data.coins}`,
+				inline: true
+			},
+			{
 				name: 'Current Score',
 				value: `${user_data.score}`,
 				inline: true

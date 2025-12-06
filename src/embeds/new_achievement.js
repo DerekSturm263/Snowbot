@@ -15,8 +15,18 @@ export function build_new_list_achievement(achievement, isUnlocked) {
 };
 
 export function build_new_get_achievement(achievement) {
-    return new EmbedBuilder()
+    const embed = new EmbedBuilder()
         .setColor(0xFFFFFF)
         .setTitle(`Achievement Unlocked: ${achievement.icon} **${achievement.name}**`)
         .setDescription(`${achievement.description}`);
+
+    for (const key in achievement.rewards) {
+        embed.addFields({
+            name: key.charAt(0).toUpperCase() + key.slice(1),
+            value: `+${achievement.rewards[key]}`,
+            inline: true
+        });
+    }
+
+    return embed;
 };

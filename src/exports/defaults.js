@@ -15,6 +15,7 @@ export function create_default_user(id) {
             hits_left: 0
         },
         total_buildings: 0,
+        coins: 0,
         score: 0,
         hits: 0,
         crits: 0,
@@ -43,6 +44,7 @@ export function create_default_server(id) {
         max_snow_amount: 20,
         miss_chance: 0.15,
         crit_chance: 0.9,
-        egg_chance: 0.95
+        egg_chance: 0.95,
+        coin_chance: 0.25
     };
 }

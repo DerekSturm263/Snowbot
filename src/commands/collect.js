@@ -58,7 +58,7 @@ export const command = {
 		// Get the amount of snow the user has and check if they already have the max.
 		if (user_data.snow_amount >= server_data.max_snow_amount) {
 			await interaction.editReply({
-				content: `Your arms are full! You already have 20 snow!`,
+				content: `Your arms are full! You already have ${user_data.snow_amount} snow!`,
 				flags: MessageFlags.Ephemeral
 			});
 			return;

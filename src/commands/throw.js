@@ -2,9 +2,10 @@
 // Throwing a snowball has a small chance to miss and a smaller chance to crit.
 
 import { MessageFlags, SlashCommandBuilder,  																							} from 'discord.js';
-import { get_user_data, set_packed_object, set_snow_amount, set_building, set_score, set_misses, set_hits, set_crits, set_times_hit, get_weather, get_server_data, invoke_pet_events, invoke_event	} from '../miscellaneous/database.js';
+import { get_user_data, set_packed_object, set_snow_amount, set_building, set_score, set_misses, set_hits, set_crits, set_times_hit, get_weather, get_server_data, invoke_pet_events, invoke_event, set_coins	} from '../miscellaneous/database.js';
 import { build_snowball_hit, build_snowball_miss, build_snowball_block, build_snowball_block_break					    } from '../embeds/snowball.js';
 import log from '../miscellaneous/debug.js';
+import { build_new_coins } from '../embeds/new_coins.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -142,7 +143,7 @@ export const command = {
 			});
 			return;
 		}
-		
+
 		await Promise.all([
 			set_hits(user_data, interaction.member, user_data.hits + 1),
 			set_times_hit(target_data, target.user, target_data.times_hit + 1),
@@ -155,6 +156,16 @@ export const command = {
 			withResponse: true
 		});
 
+		const coinChance = Math.random();
+		if (coinChance <= server_data.coin_chance) {
+			await set_coins(user_data, user_data.coins + 1);
+
+			await interaction.followUp({
+				embeds: [ build_new_coins(user_data) ],
+				flags: MessageFlags.Ephemeral
+			});
+		}
+		
 		const ping = interaction.options.getBoolean('ping') ?? false;
 
 		if (target_data.show_pings && ping) {

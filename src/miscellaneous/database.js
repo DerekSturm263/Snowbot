@@ -293,6 +293,19 @@ export async function set_show_pings(user_data, val) {
     return result;
 }
 
+export async function set_coins(user_data, val) {
+    user_data.coins = val;
+
+    const result = await client.db('database').collection('users').updateOne(
+        { userID: user_data.userID },
+        { $set: { coins: user_data.coins }}
+    );
+
+    log(`Setting user with id ${user_data.userID}'s coins to ${val}`);
+
+    return result;
+}
+
 export async function set_score(user_data, serverID, member, val) {
     user_data.score = val;
 
@@ -567,7 +580,7 @@ async function parseAchievements(user_data) {
         const achievement = achievements[i];
 
         if (user_data[achievement.property] >= achievement.value && !user_data.achievements.includes(achievement.id)) {
-            await add_achievement(user_data, achievement.id);
+            await add_achievement(user_data, achievement);
             achievementsOut.push(achievement);
         }
     }
@@ -576,12 +589,21 @@ async function parseAchievements(user_data) {
 };
 
 async function add_achievement(user_data, val) {
-    user_data.achievements.push(val);
+    user_data.achievements.push(val.id);
 
     const result = await client.db('database').collection('users').updateOne(
         { userID: user_data.userID },
         { $set: { achievements: user_data.achievements }}
     );
+
+    for (const key in val.rewards) {
+        user_data[key] += val.rewards[key];
+
+        await client.db('database').collection('users').updateOne(
+            { userID: user_data.userID },
+            { $set: { [key]: user_data[key] }}
+        );
+    }
 
     log(`Giving user with id ${user_data.userID} the ${val} achievement`);
 

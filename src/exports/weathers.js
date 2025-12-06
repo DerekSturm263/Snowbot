@@ -85,9 +85,12 @@ export default [
     sunny,
     clear,
     light_snow,
+    light_snow,
     medium_snow,
     medium_snow,
     heavy_snow,
+    heavy_snow,
+    snowstorm,
     snowstorm,
     blizzard
 ];

@@ -4,7 +4,10 @@ const snow_hoarder = {
     description: "Collect a total of 10 snow.",
     icon: "❄️",
     property: "total_snow_amount",
-    value: 10
+    value: 10,
+    rewards: {
+        coins: 1
+    }
 };
 
 const snow_hoarder2 = {
@@ -13,7 +16,10 @@ const snow_hoarder2 = {
     description: "Collect a total of 25 snow.",
     icon: "❄️",
     property: "total_snow_amount",
-    value: 25
+    value: 25,
+    rewards: {
+        coins: 5
+    }
 };
 
 const snow_hoarder3 = {
@@ -22,7 +28,10 @@ const snow_hoarder3 = {
     description: "Collect a total of 50 snow.",
     icon: "❄️",
     property: "total_snow_amount",
-    value: 50
+    value: 50,
+    rewards: {
+        coins: 10
+    }
 };
 
 const snow_hoarder4 = {
@@ -31,7 +40,10 @@ const snow_hoarder4 = {
     description: "Collect a total of 100 snow.",
     icon: "❄️",
     property: "total_snow_amount",
-    value: 100
+    value: 100,
+    rewards: {
+        coins: 25
+    }
 };
 
 const snow_hoarder5 = {
@@ -40,7 +52,10 @@ const snow_hoarder5 = {
     description: "Collect a total of 200 snow.",
     icon: "❄️",
     property: "total_snow_amount",
-    value: 200
+    value: 200,
+    rewards: {
+        coins: 50
+    }
 };
 
 const sharpshooter = {
@@ -49,7 +64,10 @@ const sharpshooter = {
     description: "Hit someone with a snowball for the first time.",
     icon: "🎯",
     property: "hits",
-    value: 1
+    value: 1,
+    rewards: {
+        coins: 1
+    }
 };
 
 const sharpshooter2 = {
@@ -58,7 +76,10 @@ const sharpshooter2 = {
     description: "Hit users with snowballs 10 times.",
     icon: "🎯",
     property: "hits",
-    value: 10
+    value: 10,
+    rewards: {
+        coins: 5
+    }
 };
 
 const sharpshooter3 = {
@@ -67,7 +88,10 @@ const sharpshooter3 = {
     description: "Hit users with snowballs 25 times.",
     icon: "🎯",
     property: "hits",
-    value: 25
+    value: 25,
+    rewards: {
+        coins: 10
+    }
 };
 
 const sharpshooter4 = {
@@ -76,7 +100,10 @@ const sharpshooter4 = {
     description: "Hit users with snowballs 50 times.",
     icon: "🎯",
     property: "hits",
-    value: 50
+    value: 50,
+    rewards: {
+        coins: 25
+    }
 };
 
 const sharpshooter5 = {
@@ -85,7 +112,10 @@ const sharpshooter5 = {
     description: "Hit users with snowballs 100 times.",
     icon: "🎯",
     property: "hits",
-    value: 100
+    value: 100,
+    rewards: {
+        coins: 50
+    }
 };
 
 const lucky_shot = {
@@ -94,7 +124,10 @@ const lucky_shot = {
     description: "Get a critical hit for the first time.",
     icon: "💥",
     property: "crits",
-    value: 1
+    value: 1,
+    rewards: {
+        coins: 1
+    }
 };
 
 const lucky_shot2 = {
@@ -103,7 +136,10 @@ const lucky_shot2 = {
     description: "Get 10 critical hits.",
     icon: "💥",
     property: "crits",
-    value: 10
+    value: 10,
+    rewards: {
+        coins: 5
+    }
 };
 
 const lucky_shot3 = {
@@ -112,7 +148,10 @@ const lucky_shot3 = {
     description: "Get 25 critical hits.",
     icon: "💥",
     property: "crits",
-    value: 25
+    value: 25,
+    rewards: {
+        coins: 10
+    }
 };
 
 const lucky_shot4 = {
@@ -121,7 +160,10 @@ const lucky_shot4 = {
     description: "Get 50 critical hits.",
     icon: "💥",
     property: "crits",
-    value: 50
+    value: 50,
+    rewards: {
+        coins: 25
+    }
 };
 
 const lucky_shot5 = {
@@ -130,7 +172,10 @@ const lucky_shot5 = {
     description: "Get 100 critical hits.",
     icon: "💥",
     property: "crits",
-    value: 100
+    value: 100,
+    rewards: {
+        coins: 50
+    }
 };
 
 const blindfolded = {
@@ -139,7 +184,10 @@ const blindfolded = {
     description: "Miss a shot for the first time.",
     icon: "😵",
     property: "misses",
-    value: 1
+    value: 1,
+    rewards: {
+        coins: 1
+    }
 };
 
 const blindfolded2 = {
@@ -148,7 +196,10 @@ const blindfolded2 = {
     description: "Miss 10 shots.",
     icon: "😵",
     property: "misses",
-    value: 10
+    value: 10,
+    rewards: {
+        coins: 5
+    }
 };
 
 const blindfolded3 = {
@@ -157,7 +208,10 @@ const blindfolded3 = {
     description: "Miss 25 shots.",
     icon: "😵",
     property: "misses",
-    value: 25
+    value: 25,
+    rewards: {
+        coins: 10
+    }
 };
 
 const blindfolded4 = {
@@ -166,7 +220,10 @@ const blindfolded4 = {
     description: "Miss 50 shots.",
     icon: "😵",
     property: "misses",
-    value: 50
+    value: 50,
+    rewards: {
+        coins: 25
+    }
 };
 
 const blindfolded5 = {
@@ -175,7 +232,10 @@ const blindfolded5 = {
     description: "Miss 100 shots.",
     icon: "😵",
     property: "misses",
-    value: 100
+    value: 100,
+    rewards: {
+        coins: 50
+    }
 };
 
 const target_practice = {
@@ -184,7 +244,10 @@ const target_practice = {
     description: "Get hit with a snowball for the first time.",
     icon: "🤕",
     property: "times_hit",
-    value: 1
+    value: 1,
+    rewards: {
+        coins: 1
+    }
 };
 
 const target_practice2 = {
@@ -193,7 +256,10 @@ const target_practice2 = {
     description: "Get hit with 15 snowballs.",
     icon: "🤕",
     property: "times_hit",
-    value: 15
+    value: 15,
+    rewards: {
+        coins: 5
+    }
 };
 
 const target_practice3 = {
@@ -202,7 +268,10 @@ const target_practice3 = {
     description: "Get hit with 40 snowballs.",
     icon: "🤕",
     property: "times_hit",
-    value: 40
+    value: 40,
+    rewards: {
+        coins: 10
+    }
 };
 
 const target_practice4 = {
@@ -211,7 +280,10 @@ const target_practice4 = {
     description: "Get hit with 80 snowballs.",
     icon: "🤕",
     property: "times_hit",
-    value: 80
+    value: 80,
+    rewards: {
+        coins: 25
+    }
 };
 
 const target_practice5 = {
@@ -220,7 +292,10 @@ const target_practice5 = {
     description: "Get hit with 150 snowballs.",
     icon: "🤕",
     property: "times_hit",
-    value: 150
+    value: 150,
+    rewards: {
+        coins: 50
+    }
 };
 
 const snow_novice = {
@@ -229,7 +304,10 @@ const snow_novice = {
     description: "Create your first snow building.",
     icon: "🏠",
     property: "total_buildings",
-    value: 1
+    value: 1,
+    rewards: {
+        coins: 1
+    }
 };
 
 const snow_novice2 = {
@@ -238,7 +316,10 @@ const snow_novice2 = {
     description: "Create a total of 10 snow buildings.",
     icon: "🏠",
     property: "total_buildings",
-    value: 10
+    value: 10,
+    rewards: {
+        coins: 5
+    }
 };
 
 const snow_novice3 = {
@@ -247,7 +328,10 @@ const snow_novice3 = {
     description: "Create a total of 25 snow buildings.",
     icon: "🏠",
     property: "total_buildings",
-    value: 25
+    value: 25,
+    rewards: {
+        coins: 10
+    }
 };
 
 const snow_novice4 = {
@@ -256,7 +340,10 @@ const snow_novice4 = {
     description: "Create a total of 50 snow buildings.",
     icon: "🏠",
     property: "total_buildings",
-    value: 50
+    value: 50,
+    rewards: {
+        coins: 25
+    }
 };
 
 const snow_novice5 = {
@@ -265,7 +352,10 @@ const snow_novice5 = {
     description: "Create a total of 100 snow buildings.",
     icon: "🏠",
     property: "total_buildings",
-    value: 100
+    value: 100,
+    rewards: {
+        coins: 50
+    }
 };
 
 const finders_keepers = {
@@ -274,7 +364,10 @@ const finders_keepers = {
     description: "Find your first snow egg.",
     icon: "🥚",
     property: "total_pets",
-    value: 1
+    value: 1,
+    rewards: {
+        coins: 1
+    }
 };
 
 const finders_keepers2 = {
@@ -283,7 +376,10 @@ const finders_keepers2 = {
     description: "Find a total of 5 snow eggs.",
     icon: "🥚",
     property: "total_pets",
-    value: 5
+    value: 5,
+    rewards: {
+        coins: 5
+    }
 };
 
 const finders_keepers3 = {
@@ -292,7 +388,10 @@ const finders_keepers3 = {
     description: "Find a total of 10 snow eggs.",
     icon: "🥚",
     property: "total_pets",
-    value: 10
+    value: 10,
+    rewards: {
+        coins: 10
+    }
 };
 
 const finders_keepers4 = {
@@ -301,7 +400,10 @@ const finders_keepers4 = {
     description: "Find a total of 25 snow eggs.",
     icon: "🥚",
     property: "total_pets",
-    value: 25
+    value: 25,
+    rewards: {
+        coins: 25
+    }
 };
 
 const finders_keepers5 = {
@@ -310,7 +412,10 @@ const finders_keepers5 = {
     description: "Find a total of 50 snow eggs.",
     icon: "🥚",
     property: "total_pets",
-    value: 50
+    value: 50,
+    rewards: {
+        coins: 50
+    }
 };
 
 const snow_stuffer = {
@@ -319,7 +424,10 @@ const snow_stuffer = {
     description: "Pack your first object inside snow.",
     icon: "📦",
     property: "total_packed_objects",
-    value: 1
+    value: 1,
+    rewards: {
+        coins: 1
+    }
 };
 
 const snow_stuffer2 = {
@@ -328,7 +436,10 @@ const snow_stuffer2 = {
     description: "Pack a total of 10 objects inside snow.",
     icon: "📦",
     property: "total_packed_objects",
-    value: 10
+    value: 10,
+    rewards: {
+        coins: 5
+    }
 };
 
 const snow_stuffer3 = {
@@ -337,7 +448,10 @@ const snow_stuffer3 = {
     description: "Pack a total of 25 objects inside snow.",
     icon: "📦",
     property: "total_packed_objects",
-    value: 25
+    value: 25,
+    rewards: {
+        coins: 10
+    }
 };
 
 const snow_stuffer4 = {
@@ -346,7 +460,10 @@ const snow_stuffer4 = {
     description: "Pack a total of 50 objects inside snow.",
     icon: "📦",
     property: "total_packed_objects",
-    value: 50
+    value: 50,
+    rewards: {
+        coins: 25
+    }
 };
 
 const snow_stuffer5 = {
@@ -355,7 +472,10 @@ const snow_stuffer5 = {
     description: "Pack a total of 100 objects inside snow.",
     icon: "📦",
     property: "total_packed_objects",
-    value: 100
+    value: 100,
+    rewards: {
+        coins: 50
+    }
 };
 
 export default [
