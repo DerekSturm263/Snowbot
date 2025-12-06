@@ -605,7 +605,7 @@ async function add_achievement(user_data, val) {
         );
     }
 
-    log(`Giving user with id ${user_data.userID} the ${val} achievement`);
+    log(`Giving user with id ${user_data.userID} the ${val.id} achievement`);
 
     return result;
 }
