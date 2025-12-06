@@ -31,12 +31,16 @@ export const command = {
 				new ButtonBuilder()
 					.setCustomId('prev')
 					.setEmoji('◀️')
+					.setStyle('Secondary'),
+				new ButtonBuilder()
+					.setCustomId('current')
+					.setLabel('Current')
 					.setStyle('Primary')
 					.setDisabled(true),
 				new ButtonBuilder()
 					.setCustomId('next')
 					.setEmoji('▶️')
-					.setStyle('Primary')
+					.setStyle('Secondary')
 			);
 
 		// Tell the user the current and upcoming weather.
@@ -48,18 +52,21 @@ export const command = {
 				await i.deferUpdate();
 
 				--offset;
+				row.components[1].setDisabled(offset == 0);
 
-				row.components[0].setDisabled(offset == 0);
-				row.components[1].setDisabled(false);
+				await interaction.editReply(await build_weather(row, offset, interaction.guild.id));
+			} else if (i.customId == 'current') {
+				await i.deferUpdate();
+
+				offset = 0;
+				row.components[1].setDisabled(true);
 
 				await interaction.editReply(await build_weather(row, offset, interaction.guild.id));
 			} else if (i.customId == 'next') {
 				await i.deferUpdate();
 
 				++offset;
-
-				row.components[0].setDisabled(false);
-				row.components[1].setDisabled(offset == 24 * 7);
+				row.components[1].setDisabled(offset == 0);
 
 				await interaction.editReply(await build_weather(row, offset, interaction.guild.id));
 			}
