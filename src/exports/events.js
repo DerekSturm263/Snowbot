@@ -38,9 +38,20 @@ const extra_snow = {
     }
 }
 
+const higher_coin_chance = {
+    id: "higher_coin_chance",
+    name: "Higher Coin Chance",
+    description: "Increases chance of getting coins when using `/throw`.",
+    icon: "🪙",
+    changes: {
+        coin_chance: 0.5
+    }
+}
+
 export default [
     no_misses,
     only_criticals,
     higher_egg_chance,
-    extra_snow
+    extra_snow,
+    higher_coin_chance
 ];
